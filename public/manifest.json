@@ -1,0 +1,16 @@
+{
+  "short_name": "Otrera",
+  "name": "Otrera Fitness",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#3f50b5",
+  "background_color": "#ffffff"
+}
