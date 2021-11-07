@@ -226,7 +226,7 @@ const Auth = () => {
               {isSignup ? "Sign up" : "Sign in"}
             </Button>
             <GoogleLogin
-              clientId="100332997207-dspv1dcq2hcm95s0hkr3bhp5l7fefbko.apps.googleusercontent.com"
+              clientId="100332997207-anb2tacm6a0kjonokavbqrjnng47fb7a.apps.googleusercontent.com"
               onSuccess={googleSuccess}
               onFailure={googleFailure}
               cookiePolicy="single_host_origin"
