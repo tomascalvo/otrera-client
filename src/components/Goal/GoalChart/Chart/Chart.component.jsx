@@ -33,19 +33,19 @@ const Chart = ({ goals, selectedGoal }) => {
 
   const [EDBmovements, setEDBmovements] = useState([]);
 
-  useEffect(() => {
-    const getEDB = async () => {
-      if (!localStorage.getItem("EDBmovements")) {
-        const { data: EDBmovements } = await fetchEDB();
-        localStorage.setItem("EDBmovements", JSON.stringify(EDBmovements));
-      }
-      const parsedEDBMovements = JSON.parse(
-        localStorage.getItem("EDBmovements")
-      );
-      setEDBmovements(parsedEDBMovements);
-    };
-    getEDB();
-  }, []);
+  // useEffect(() => {
+  //   const getEDB = async () => {
+  //     if (!localStorage.getItem("EDBmovements")) {
+  //       const { data: EDBmovements } = await fetchEDB();
+  //       localStorage.setItem("EDBmovements", JSON.stringify(EDBmovements));
+  //     }
+  //     const parsedEDBMovements = JSON.parse(
+  //       localStorage.getItem("EDBmovements")
+  //     );
+  //     setEDBmovements(parsedEDBMovements);
+  //   };
+  //   getEDB();
+  // }, []);
 
   if (selectedGoal) {
     datasets = [getDataset(selectedGoal, theme.palette.primary.main)];

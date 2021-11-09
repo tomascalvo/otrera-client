@@ -1,5 +1,6 @@
 // hooks
 import React, { useState } from "react";
+import { useTheme } from '@mui/styles';
 import useStyles from "./Movements.styles";
 
 // components
@@ -12,13 +13,14 @@ import MovementCard from "./MovementCard/MovementCard.component";
 const Movements = () => {
   // hooks
 
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   // state
 
   const defaultMovements = JSON.parse(
-    localStorage.getItem("EDBmovements") || []
-  );
+    localStorage.getItem("EDBmovements")) || [];
+    
   const [movements, setMovements] = useState(defaultMovements);
 
   return (
