@@ -22,7 +22,7 @@ API.interceptors.request.use((config) => {
     const authHeader = `Bearer ${
       JSON.parse(localStorage.getItem("profile")).token
     }`
-    console.log(`Adding authorization header to request: ${authHeader}`);
+    console.log(`Adding authorization header to request: ${authHeader.slice(0, 11)}...`);
     config.headers.Authorization = authHeader;
   }
   return config;
