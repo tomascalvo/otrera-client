@@ -33,7 +33,7 @@ const PlanCard = ({
     _id: planId,
     title,
     image,
-    creator: { name: creator } = "Missing name",
+    creator = { name: "Otrera" },
     description,
   },
   setWorkoutData,
@@ -113,9 +113,13 @@ const PlanCard = ({
           >
             {title}
           </Typography>
-          <Typography gutterBottom color="textSecondary">
-            Created by {creator}
-          </Typography>
+          {
+            creator && (
+              <Typography gutterBottom color="textSecondary">
+                Created by {creator.name}
+              </Typography>
+            )
+          }
           <Typography>{description}</Typography>
         </CardContent>
         <CardActions>
