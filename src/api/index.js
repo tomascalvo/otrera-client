@@ -17,10 +17,13 @@ const EDB = axios.create(
 // !! create an interceptor to add the authorization header to requests
 
 API.interceptors.request.use((config) => {
+  console.log(`Authorization intercepter invoked.`);
   if (localStorage.getItem("profile")) {
-    config.headers.Authorization = `Bearer ${
+    const authHeader = `Bearer ${
       JSON.parse(localStorage.getItem("profile")).token
-    }`;
+    }`
+    console.log(`Adding authorization header to request: ${authHeader}`);
+    config.headers.Authorization = authHeader;
   }
   return config;
 }, (error) => {
