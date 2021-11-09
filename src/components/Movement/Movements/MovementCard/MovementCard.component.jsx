@@ -25,8 +25,8 @@ const MovementCard = ({
         {gifUrl ? (
           <CardMedia
             className={classes.cardMedia}
-            // component="img"
-            // height="200"
+            component="image"
+            height={"200"}
             image={
               gifUrl !== undefined
                 ? gifUrl
