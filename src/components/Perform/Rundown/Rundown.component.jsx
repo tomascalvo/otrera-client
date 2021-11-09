@@ -90,14 +90,18 @@ const Rundown = ({
   }
 
   function addSet() {
+    console.log(`Rundown.component.jsx invokes addSet()`);
     const attempts = performance.attempts;
     const currentAttempt = attempts[activeStep - 1];
+    console.log(`currentAttempt:`);
+    console.dir(currentAttempt);
     const updatedAttempt = {
       ...currentAttempt,
       sets: [
         ...currentAttempt.sets,
         {
-          resistance: currentAttempt.exercise.resistance,
+          // make starting resistance 45 if it's a barbell exercise and the workout plan has no recommended resistance and the previous set has no resistance specified
+          resistance: (currentAttempt?.EDBmovement?.equipment === "barbell" || currentAttempt?.movement?.equipment === "barbell") ? 45 : currentAttempt?.sets[currentAttempt?.sets.length]?.resistance || currentAttempt?.resistance,
           reps: 0,
         },
       ],

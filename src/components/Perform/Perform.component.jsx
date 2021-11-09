@@ -140,10 +140,10 @@ const Perform = () => {
 
         const attempts = sessionData.plan.exercises.map((exercise) => {
           let attemptSets = [];
-          const setsQuantity = exercise.sets || 3;
+          const setsQuantity = exercise?.sets || 3;
           for (let i = 0; i < setsQuantity; i++) {
             attemptSets.push({
-              resistance: undefined,
+              resistance: (exercise?.EDBmovement?.equipment === "barbell" || exercise?.movement?.equipment === "barbell") ? 45 : (exercise?.EDBmovement?.equipment === "dumbbell" || exercise?.movement?.equipment === "dumbbell") ? 5 : undefined,
               reps: undefined,
             });
           }
@@ -341,18 +341,18 @@ const Perform = () => {
                   participants={
                     session?.invitees
                       ? session?.invitees.map((invitee) => {
-                          const participant = participants.find(
-                            (participant) => {
-                              return participant._id === invitee._id;
-                            }
-                          );
-                          // console.log('participant: ', participant);
-                          return {
-                            ...invitee,
-                            isOnline: participant,
-                            step: participant?.step,
-                          };
-                        })
+                        const participant = participants.find(
+                          (participant) => {
+                            return participant._id === invitee._id;
+                          }
+                        );
+                        // console.log('participant: ', participant);
+                        return {
+                          ...invitee,
+                          isOnline: participant,
+                          step: participant?.step,
+                        };
+                      })
                       : "loading"
                   }
                   messages={messages}
@@ -374,17 +374,17 @@ const Perform = () => {
           participants={
             session?.invitees
               ? session?.invitees.map((invitee) => {
-                  const participant = participants.find((participant) => {
-                    return participant._id === invitee._id;
-                  });
-                  console.log(`Perform.component participant:`);
-                  console.dir(participant);
-                  return {
-                    ...invitee,
-                    isOnline: participant?.isOnline,
-                    step: participant?.step,
-                  };
-                })
+                const participant = participants.find((participant) => {
+                  return participant._id === invitee._id;
+                });
+                console.log(`Perform.component participant:`);
+                console.dir(participant);
+                return {
+                  ...invitee,
+                  isOnline: participant?.isOnline,
+                  step: participant?.step,
+                };
+              })
               : "loading"
           }
           messages={messages}
