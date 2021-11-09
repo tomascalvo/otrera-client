@@ -115,7 +115,7 @@ const App = ({ handleDarkModeToggle }) => {
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    history.push("/");
+    history.push("/auth");
     setUser(null);
   };
 
