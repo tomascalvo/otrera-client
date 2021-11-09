@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     cardMedia: {
+        height: 0,
         padding: '50%',
         objectFit: "cover",
         objectPosition: "50% 0%",
