@@ -12,6 +12,7 @@ import {
   Menu,
   MenuItem,
   Box,
+  Button,
   IconButton,
   Tooltip,
 } from "@mui/material";
@@ -28,11 +29,13 @@ import {
   // bodyParts as bodyPartStrings,
   conditions,
 } from "./queryStrings";
+import { targets, bodyParts } from '../../constants/anatomicalTerms';
 
 // api
 import {
   fetchCurrentBodyStatusesByUser as fetchStatus,
   createBodyStatusesByUser as updateStatus,
+  postRecovery,
 } from "../../api/index";
 
 // function useWindowSize() {
@@ -63,35 +66,42 @@ const BodyStatusPicker = ({
     // console.log("status change");
   },
 }) => {
+
+  // auth
+
+  const userId = JSON.parse(localStorage.getItem("profile"))?.user?._id;
   // hooks
+
+  const theme = useTheme();
   const classes = useStyles();
+
+
   // const width = useWindowSize()[1];
   // const width = useWindowSize();
-  // const [width, setWidth] = useState(window.innerWidth);
-  // console.log('width: ', width);
-  const theme = useTheme();
   // const isXs = useMediaQuery(theme.breakpoints.only("xs"));
   // const isSm = useMediaQuery(theme.breakpoints.only("sm"));
   // const isMd = useMediaQuery(theme.breakpoints.only("md"));
   // const isLg = useMediaQuery(theme.breakpoints.only("lg"));
   // const isXl = useMediaQuery(theme.breakpoints.only("xl"));
-  
+
   // state
 
-  // auth
-  const userId = JSON.parse(localStorage.getItem("profile"))?.user?._id;
+  // data
+
+  const [bodyStatus, setBodyStatus] = useState({});
+
+  // const [width, setWidth] = useState(window.innerWidth);
+  // const [width, setWidth] = useState(useWindowSize()[0]);
+
 
   // layout
-  // const [width, setWidth] = useState(useWindowSize()[0]);
+
   const [hoveredArea, setHoveredArea] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorCoords, setAnchorCoords] = useState([0, 0]);
   const [anatomyMap, setAnatomyMap] = useState(anatomyMapper({ theme }));
   const [isFrontView, setIsFrontView] = useState(true);
-
-  // data
-  const [bodyStatus, setBodyStatus] = useState({});
 
   // lifecycle
 
@@ -165,8 +175,7 @@ const BodyStatusPicker = ({
   };
 
   const toggleRotation = () => {
-    // console.log('toggleRotation called');
-    // console.log('isFrontView:', isFrontView);
+    console.log(`Rotating BodyStatusPicker to display ${!isFrontView ? "anterior" : "posterior"} view.`);
     setIsFrontView((previous) => !previous);
     setAnatomyMap(
       anatomyMapper({
@@ -179,29 +188,69 @@ const BodyStatusPicker = ({
     );
   };
 
+  const clearSelection = () => {
+    setSelectedArea(null);
+    setAnchorEl(null);
+    setAnchorCoords([0, 0]);
+  }
+
   // data
 
   const handleChange = async (event) => {
     event.preventDefault();
     // data
     const statusUpdate = { ...bodyStatus, [selectedArea.id]: event.target.id };
-    const { data: confirmedUpdate } = await updateStatus(userId, statusUpdate);
-    console.log("BodyStatus successfully posted", confirmedUpdate);
-    setBodyStatus(confirmedUpdate);
-    setAnatomyMap(
-      anatomyMapper({
-        startingWidth: 333,
-        finalWidth: 200,
-        bodyStatus: confirmedUpdate,
-        theme,
-        isFrontView: true,
-      })
-    );
+    try {
+      const { data: confirmedUpdate } = await updateStatus(userId, statusUpdate);
+      console.log("BodyStatus successfully posted", confirmedUpdate);
+      setBodyStatus(confirmedUpdate);
+      setAnatomyMap(
+        anatomyMapper({
+          startingWidth: 333,
+          finalWidth: 200,
+          bodyStatus: confirmedUpdate,
+          theme,
+          isFrontView,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
     // layout
-    setSelectedArea(null);
-    setAnchorEl(null);
-    setAnchorCoords([0, 0]);
+    clearSelection();
   };
+
+  const handleRecoverAll = async (e) => {
+    e.preventDefault();
+    console.log(`handleRecoverAll event handler invoked.`);
+    try {
+      // const fullRecovery = [...targets, ...bodyParts].map((muscleName) => ({ [muscleName]: "recovered" }
+      // )).reduce((target, source) => {
+      //   return Object.assign(target, source);
+      // });
+      // console.log("fullRecovery:")
+      // console.dir(fullRecovery);
+      const { data: recoveryConfirmation } = await postRecovery(userId);
+      console.log("recoveryConfirmation:")
+      console.dir(recoveryConfirmation);
+      setBodyStatus(recoveryConfirmation);
+      setAnatomyMap(
+        anatomyMapper({
+          startingWidth: 333,
+          finalWidth: 200,
+          bodyStatus: recoveryConfirmation,
+          theme,
+          isFrontView,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    // layout
+    clearSelection();
+  }
+
+  // render
 
   return (
     <div
@@ -236,70 +285,76 @@ const BodyStatusPicker = ({
         </Tooltip>
       </Box>
       {/* <div */}
-        {/* style={{
+      {/* style={{
           // width: '60%',
           margin: "0 auto",
         }} */}
       {/* > */}
-        <ImageMapper
-          src={
-            theme.palette.mode === "dark" ? anatomyImageInverted : anatomyImage
-          }
-          map={anatomyMap}
-          imgWidth={333}
-          width={150}
-          // width={() => document.getElementById('bodyStatusPicker').parentElement.clientWidth}
-          // width={width / 8}
-          // width={
-          //   isXs ? '150' : isSm? '300' : isXl ? '150' : '150'
-          // }
-          onMouseEnter={(area) => onHover(area)}
-          onMouseLeave={(area) => onMouseOut(area)}
-          onClick={(area, _, event) => {
-            handleClickArea(area, event);
-          }}
-          fillColor="#1976d2"
-          styles={{
-            // display: 'block',
-            flexGrow: '1',
-            margin: "0 auto",
-            alignSelf: 'flex-end'
-          }}
-        />
-        {hoveredArea && (
-          <span
-            className={classes.tooltip}
-            style={{
-              top: `${hoveredArea.center[1]}px`,
-              left: `${hoveredArea.center[0]}px`,
-            }}
-          >
-            {hoveredArea && hoveredArea.name}
-          </span>
-        )}
-        <Menu
-          id="bodyStatus-menu"
-          anchorEl={anchorEl}
-          autoFocus
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleCloseMenu}
+      <ImageMapper
+        src={
+          theme.palette.mode === "dark" ? anatomyImageInverted : anatomyImage
+        }
+        map={anatomyMap}
+        imgWidth={333}
+        width={150}
+        // width={() => document.getElementById('bodyStatusPicker').parentElement.clientWidth}
+        // width={width / 8}
+        // width={
+        //   isXs ? '150' : isSm? '300' : isXl ? '150' : '150'
+        // }
+        onMouseEnter={(area) => onHover(area)}
+        onMouseLeave={(area) => onMouseOut(area)}
+        onClick={(area, _, event) => {
+          handleClickArea(area, event);
+        }}
+        fillColor="#1976d2"
+        styles={{
+          // display: 'block',
+          flexGrow: '1',
+          margin: "0 auto",
+          alignSelf: 'flex-end'
+        }}
+      />
+      <Button
+        sx={{ m: `${theme.spacing(2)} 0` }}
+        onClick={handleRecoverAll}
+      >
+        Recover All Muscles
+      </Button>
+      {hoveredArea && (
+        <span
+          className={classes.tooltip}
           style={{
-            top: anchorCoords[1],
-            left: anchorCoords[0],
+            top: `${hoveredArea.center[1]}px`,
+            left: `${hoveredArea.center[0]}px`,
           }}
         >
-          {selectedArea &&
-            Object.values(conditions).map((condition, index) => (
-              <MenuItem
-                key={index}
-                id={condition.toLowerCase()}
-                onClick={handleChange}
-              >
-                {condition}
-              </MenuItem>
-            ))}
-        </Menu>
+          {hoveredArea && hoveredArea.name}
+        </span>
+      )}
+      <Menu
+        id="bodyStatus-menu"
+        anchorEl={anchorEl}
+        autoFocus
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        style={{
+          top: anchorCoords[1],
+          left: anchorCoords[0],
+        }}
+      >
+        {selectedArea &&
+          Object.values(conditions).map((condition, index) => (
+            <MenuItem
+              key={index}
+              id={condition.toLowerCase()}
+              onClick={handleChange}
+            >
+              {condition}
+            </MenuItem>
+          ))}
+      </Menu>
       {/* </div> */}
     </div>
   );

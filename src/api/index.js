@@ -2,15 +2,15 @@
 
 import axios from "axios";
 
-// DEV API
+// // DEV API
 // const API = axios.create({ baseURL: "http://localhost:5000" });
 // DEPLOYMENT API
 const API = axios.create({ baseURL: "https://otrera-server.herokuapp.com/" });
 
 const EDB = axios.create(
-  { 
+  {
     baseURL: "https://exercisedb.p.rapidapi.com", headers: {
-      'x-rapidapi-host': 'exercisedb.p.rapidapi.com', 
+      'x-rapidapi-host': 'exercisedb.p.rapidapi.com',
       'x-rapidapi-key': '0fe601ec97msh3fea4f7f5465370p15768bjsn5313a531d719',
     }
   }
@@ -21,9 +21,8 @@ const EDB = axios.create(
 API.interceptors.request.use((config) => {
   console.log(`Authorization intercepter invoked.`);
   if (localStorage.getItem("profile")) {
-    const authHeader = `Bearer ${
-      JSON.parse(localStorage.getItem("profile")).token
-    }`
+    const authHeader = `Bearer ${JSON.parse(localStorage.getItem("profile")).token
+      }`
     console.log(`Adding authorization header to request: ${authHeader.slice(0, 11)}...`);
     config.headers.Authorization = authHeader;
   }
@@ -51,8 +50,8 @@ export const updateMovement = (id, updatedMovement) =>
 export const deleteMovement = (id) => API.delete(`movements/${id}`);
 
 export const createUser = (newUser) => API.post(`/users`, newUser);
-export const signup = (formData) => API.post('/users/signup', formData); 
-export const signin = (formData) => API.post('/users/signin', formData); 
+export const signup = (formData) => API.post('/users/signup', formData);
+export const signin = (formData) => API.post('/users/signin', formData);
 export const googleSignin = ({ profile, googleToken }) => API.post('/users/googleSignin', { profile, googleToken });
 export const fetchUsers = () => API.get(`/users`);
 export const fetchUser = (userId) => API.get(`/users/${userId}`);
@@ -61,10 +60,11 @@ export const createBodyStatus = (newBodyStatus) =>
   API.post(`/bodyStatuses`, newBodyStatus);
 export const createBodyStatusesByUser = (id, newBodyStatuses) =>
   API.post(`/bodyStatuses/user/${id}/multiple`, newBodyStatuses);
+export const postRecovery = (userId) => API.post(`/bodyStatuses/recover/user/${userId}`);
 export const fetchCurrentBodyStatusesByUser = (id) =>
   API.get(`/bodyStatuses/user/${id}/current`);
 
-export const createPlan = ({ plan, session }) => API.post(`/plans`, { plan, session});
+export const createPlan = ({ plan, session }) => API.post(`/plans`, { plan, session });
 export const duplicatePlan = (id) => API.post(`/plans/${id}/duplicate`);
 export const fetchPlans = () => API.get(`/plans`);
 export const fetchPlan = (id) => API.get(`/plans/${id}`);
