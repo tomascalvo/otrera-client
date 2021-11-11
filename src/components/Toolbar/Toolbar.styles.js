@@ -8,8 +8,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   brandContainer: {
     display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginLeft: theme.spacing(3),
   },
@@ -17,22 +22,14 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    display: 'flex',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
     flexGrow: 1,
   },
   icon: {
     marginLeft: theme.spacing(1),
     display: 'inline-block',
     alignItems: 'center',
-  },
-  toolbar: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  profile: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    // width: '400px',
   },
   userName: {
     display: 'flex',

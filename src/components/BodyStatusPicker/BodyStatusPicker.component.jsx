@@ -74,8 +74,6 @@ const BodyStatusPicker = ({
 
   const theme = useTheme();
   const classes = useStyles();
-
-
   // const width = useWindowSize()[1];
   // const width = useWindowSize();
   // const isXs = useMediaQuery(theme.breakpoints.only("xs"));

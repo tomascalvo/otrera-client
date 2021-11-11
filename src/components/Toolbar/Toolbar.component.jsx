@@ -1,7 +1,7 @@
+import React from "react";
+
 // hooks
 
-import React from // useState, useEffect
-"react";
 import { Link, useHistory } from "react-router-dom";
 import { useTheme } from "@mui/styles";
 import useStyles from "./Toolbar.styles";
@@ -10,30 +10,22 @@ import useStyles from "./Toolbar.styles";
 // components
 
 import Drawer from "./Drawer/Drawer.component";
+import Profile from "./Profile/Profile.component";
 
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Avatar,
-} from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
 
 import {
   FitnessCenter as BarbellIcon,
   Menu as MenuIcon,
-  Brightness3 as Brightness3Icon,
-  Brightness7 as Brightness7Icon,
 } from "@material-ui/icons";
 
 const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
   // hooks
 
-  const classes = useStyles();
-  const history = useHistory();
   // const dispatch = useDispatch();
+  const history = useHistory();
   const theme = useTheme();
+  const classes = useStyles(theme);
 
   // state
 
@@ -64,13 +56,12 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
       position="static"
       color="inherit"
       enableColorOnDark={true}
-      style={{ flexDirection: "row" }}
-      className={classes.appBar}
+      // className={classes.appBar}
     >
-      <div className={classes.brandContainer}>
+      <Toolbar className={classes.toolbar}>
         <IconButton
           size="large"
-          edge="start"
+          // edge="start"
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
@@ -84,51 +75,26 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
           open={state["left"]}
           toggleDrawer={toggleDrawer}
         />
-        <div className={classes.title}>
-          <Typography
-            variant="h6"
-            color="inherit"
-            component={Link}
-            to={"/"}
-            style={{ textDecoration: "none" }}
-          >
-            Otrera
-            <BarbellIcon className={classes.icon} />
-          </Typography>
-        </div>
-      </div>
-      <Toolbar className={classes.toolbar}>
-        {user ? (
-          <div className={classes.profile}>
-            <IconButton
-              aria-label="toggle dark mode"
-              onClick={handleDarkModeToggle}
-            >
-              {theme.palette.mode !== "dark" ? (
-                <Brightness3Icon />
-              ) : (
-                <Brightness7Icon />
-              )}
-            </IconButton>
-            <Avatar alt={user?.name} src={user?.image}>
-              {user.name.split(" ").map((word) => word.charAt(0))}
-            </Avatar>
+        <div className={classes.brandContainer}>
+          <div className={classes.title}>
             <Typography
-              className={classes.userName}
               variant="h6"
-              style={{ marginRight: 20, marginLeft: 20 }}
+              color="inherit"
+              component={Link}
+              to={"/"}
+              style={{ textDecoration: "none" }}
             >
-              {user.name}
+              Otrera
+              <BarbellIcon className={classes.icon} />
             </Typography>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleLogout}
-              className={classes.logout}
-            >
-              Log out
-            </Button>
           </div>
+        </div>
+        {user ? (
+          <Profile
+            user={user}
+            handleDarkModeToggle={handleDarkModeToggle}
+            handleLogout={handleLogout}
+          />
         ) : (
           <Button
             variant="contained"
