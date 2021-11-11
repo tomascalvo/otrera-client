@@ -2,9 +2,7 @@
 
 import axios from "axios";
 
-// // DEV API
-// const API = axios.create({ baseURL: "http://localhost:5000" });
-// DEPLOYMENT API
+// API
 const API = axios.create({ baseURL: "https://otrera-server.herokuapp.com/" });
 
 const EDB = axios.create(
