@@ -3,11 +3,8 @@
 import axios from "axios";
 
 // API
-const API = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URL });
-console.log('process.env');
-console.log(process.env);
-console.log('process.env.REACT_APP_API_BASE_URL');
-console.log(process.env.REACT_APP_API_BASE_URL);
+const API = axios.create({ baseURL: process.env.API_BASE_URL || process.env.REACT_APP_API_BASE_URL });
+console.log('process.env:', process.env);
 
 const EDB = axios.create(
   {
