@@ -36,19 +36,19 @@ const SessionsList = ({ sessions = "loading" }) => {
   if (sessions === "loading") {
     return (
       <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Grid item>
-        <CircularProgress style={{ margin: "150px auto" }} />
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Grid item>
+          <CircularProgress style={{ margin: "150px auto" }} />
+        </Grid>
       </Grid>
-    </Grid>
     );
   }
-  
+
   return (
     <Container style={{ padding: 0 }} maxWidth="md">
       {sessions.length < 1 ? (

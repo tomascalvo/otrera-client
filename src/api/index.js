@@ -3,7 +3,11 @@
 import axios from "axios";
 
 // API
-const API = axios.create({ baseURL: "https://otrera-server.herokuapp.com/" });
+const API = axios.create({ baseURL: process.env.REACT_APP_API_BASE_URL });
+console.log('process.env');
+console.log(process.env);
+console.log('process.env.REACT_APP_API_BASE_URL');
+console.log(process.env.REACT_APP_API_BASE_URL);
 
 const EDB = axios.create(
   {
@@ -76,9 +80,11 @@ export const fetchSessions = () => API.get(`/sessions`);
 export const fetchSession = (id) => API.get(`/sessions/${id}`);
 export const fetchSessionsByPlanAndUser = (planId, userId) =>
   API.get(`/sessions/plan/${planId}/user/${userId}`);
-export const fetchRecentSessions = (planId, userId) =>
+  export const fetchRecentSessions = (planId, userId) =>
   API.get(`/sessions/recent/plan/${planId}/user/${userId}`);
-export const fetchUpcomingSessions = (userId) => API.get(`/sessions/user/${userId}/upcoming`);
+  export const fetchPreviousSessions = (userId) =>
+    API.get(`/sessions/user/${userId}/previous`);
+  export const fetchUpcomingSessions = (userId) => API.get(`/sessions/user/${userId}/upcoming`);
 
 export const createPerformance = (newPerformance) => API.post(`/performances`, newPerformance);
 export const fetchPerformances = () => API.get(`/performances`);

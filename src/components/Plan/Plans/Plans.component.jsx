@@ -84,13 +84,13 @@ const Plans = () => {
 
   return (
     <>
-    <Backdrop
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      open={openAlert}
-      onClick={() => setOpenAlert(false)}
-    >
-      {openAlert && <SessionsAlert sessions={sessions} openAlert={openAlert} setOpenAlert={setOpenAlert} />}
-    </Backdrop>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openAlert}
+        onClick={() => setOpenAlert(false)}
+      >
+        {openAlert && <SessionsAlert sessions={sessions} openAlert={openAlert} setOpenAlert={setOpenAlert} />}
+      </Backdrop>
       <div className={classes.container}>
         <Container maxWidth="sm">
           <Typography
