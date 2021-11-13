@@ -32,7 +32,7 @@ const Home = () => {
         style={{
           position: "relative",
           height: "400px",
-          backgroundImage: `url(https://picsum.photos/id/${1015}/${800}/${450})`,
+          backgroundImage: `url(https://picsum.photos/id/${1015}/${1200}/${675})`,
           backgroundSize: "cover",
           backgroundColor: theme.palette.primary.main,
           display: "flex",
@@ -41,27 +41,29 @@ const Home = () => {
         }}
       >
         {isSmUp && (
-          <img
-            src={qrCode}
-            alt="app download QR code"
-            style={{
-              position: "relative",
-              width: "200px",
-              margin: "auto",
-              display: "block",
-            }}
-          />
+          <>
+            <img
+              src={qrCode}
+              alt="app download QR code"
+              style={{
+                position: "relative",
+                width: "200px",
+                margin: "auto",
+                display: "block",
+              }}
+            />
+            <Container
+              style={{
+                width: "100%",
+                padding: theme.spacing(3),
+              }}
+            >
+              <Typography variant="subtitle1" color="text.secondary">
+                Scan the code to download the app.
+              </Typography>
+            </Container>
+          </>
         )}
-        <Container
-          style={{
-            width: "100%",
-            padding: theme.spacing(3),
-          }}
-        >
-          <Typography variant="subtitle1" color="text.secondary">
-            Scan the code to download the app.
-          </Typography>
-        </Container>
       </div>
       <Container
         align="center"
