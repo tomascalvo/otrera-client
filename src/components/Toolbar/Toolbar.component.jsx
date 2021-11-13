@@ -61,7 +61,7 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
       <Toolbar className={classes.toolbar}>
         <IconButton
           size="large"
-          // edge="start"
+          edge="start"
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}

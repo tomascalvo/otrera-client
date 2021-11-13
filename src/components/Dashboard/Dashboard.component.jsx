@@ -26,7 +26,8 @@ const Dashboard = ({ user }) => {
   const classes = useStyles();
   const history = useHistory();
   const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down("xs"));
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  console.log(`isXs: ${isXs}`);
 
   // state
   // const EDBmovements = JSON.parse(localStorage.getItem("EDBmovements"));
@@ -141,9 +142,9 @@ const Dashboard = ({ user }) => {
       getSuggestions();
     }
   }, [
-    // EDBmovements.length, 
-    user, 
-    status
+    // EDBmovements.length,
+    user,
+    status,
   ]);
 
   // filter suggestions based on (current muscular) condition
@@ -213,14 +214,6 @@ const Dashboard = ({ user }) => {
           </Typography>
         </Box>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4} md={3} xl={2}>
-            <Paper className={classes.paper}>
-              <Typography component="h3" variant="h5">
-                Condition
-              </Typography>
-              <BodyStatusPicker setStatus={setStatus} />
-            </Paper>
-          </Grid>
           <Grid item xs={12} sm={8} md={9} xl={4}>
             <Paper className={classes.paper}>
               <Typography component="h3" variant="h5">
@@ -266,6 +259,14 @@ const Dashboard = ({ user }) => {
                   history.push(`/sessions/${workout.id}/perform`);
                 }}
               />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={4} md={3} xl={2}>
+            <Paper className={classes.paper}>
+              <Typography component="h3" variant="h5">
+                Condition
+              </Typography>
+              <BodyStatusPicker setStatus={setStatus} />
             </Paper>
           </Grid>
           <Grid item xs={12} sm={8} md={9} xl={4}>

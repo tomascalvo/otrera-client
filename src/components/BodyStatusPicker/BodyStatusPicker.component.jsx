@@ -256,7 +256,7 @@ const BodyStatusPicker = ({
       style={{
         position: "relative",
         // padding: "8px",
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(1),
         // height: '100%',
         width: "100%",
         display: 'flex',
@@ -267,10 +267,13 @@ const BodyStatusPicker = ({
     >
       <Box
         position="absolute"
-        right="16px"
         top="4px"
+        right="50%"
+        sx={{
+          transform: 'translateX(80px)'
+        }}
         zIndex="2"
-        sx={{ margin: "0 auto" }}
+        // sx={{ margin: "0 auto" }}
       >
         <Tooltip title={isFrontView ? "View Rear" : "View Front"}>
           <IconButton
@@ -314,7 +317,7 @@ const BodyStatusPicker = ({
         }}
       />
       <Button
-        sx={{ m: `${theme.spacing(2)} 0` }}
+        sx={{ mt: `${theme.spacing(2)}` }}
         onClick={handleRecoverAll}
       >
         Recover All Muscles
