@@ -5,7 +5,7 @@ import useStyles from "./Sessions.styles";
 
 // components
 
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Stack, Box, Button } from "@mui/material";
 
 import SessionsList from "./SessionsList/SessionsList.component";
 
@@ -14,7 +14,7 @@ import SessionsList from "./SessionsList/SessionsList.component";
 import { fetchPreviousSessions, fetchUpcomingSessions } from "../../../api/index";
 
 const Sessions = () => {
-  
+
   // hooks
   const classes = useStyles();
 
@@ -56,9 +56,10 @@ const Sessions = () => {
     <div className={classes.container}>
       <Container maxWidth="sm">
         <Typography
+          component="h1"
           variant="h2"
           align="center"
-          color="textPrimary"
+          color="text.primary"
           gutterBottom
         >
           Sessions
@@ -69,15 +70,43 @@ const Sessions = () => {
           color="textSecondary"
           paragraph
         >View previous workouts and upcoming workouts.</Typography>
+        <Stack
+          sx={{ pt: 4 }}
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+        >
+          <Button variant="contained">Perform next scheduled workout</Button>
+          <Button variant="outlined">Schedule new workout</Button>
+        </Stack>
       </Container>
-      <Typography>
-        Upcoming Workout Sessions
-      </Typography>
-      <SessionsList sessions={upcomingSessions} />
-      <Typography>
-        Previous Workout Sessions
-      </Typography>
-      <SessionsList sessions={previousSessions} />
+      <Container>
+        <Stack
+          sx={{ pt: 4 }}
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+        >
+          <Box>
+            <Typography
+              variant="h4"
+            >
+              Upcoming Workout Sessions
+            </Typography>
+            <SessionsList sessions={upcomingSessions} />
+
+          </Box>
+          <Box>
+
+            <Typography
+              variant="h4"
+            >
+              Previous Workout Sessions
+            </Typography>
+            <SessionsList sessions={previousSessions} />
+          </Box>
+        </Stack>
+      </Container>
     </div>
   );
 };
