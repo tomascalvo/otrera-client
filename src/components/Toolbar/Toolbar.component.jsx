@@ -81,7 +81,7 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
               variant="h6"
               color="inherit"
               component={Link}
-              to={"/"}
+              to={"/home"}
               style={{ textDecoration: "none" }}
             >
               Otrera

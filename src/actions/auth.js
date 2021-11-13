@@ -29,9 +29,17 @@ try {
 };
 
 export const googleSignin = ({ profile, token: googleToken }, history) => async (dispatch) => {
-  console.log('profile: ', profile, 'googleToken: ', googleToken);
+  console.log('googleSignin action invoked. profile: ', profile, 'googleToken: ', googleToken);
   try {
     const { data: { user, token }} = await api.googleSignin({ profile, googleToken });
+    console.log('user:');
+    console.dir(user);
+    console.log('token:');
+    console.dir(token);
+    if (!user || !token) {
+      console.log(`api.googleSignin returned undefined. Check that the server is running.`);
+      return;
+    }
     dispatch({ type: AUTH, data: { user, token }});
     history.push('/dashboard');
   } catch (error) {

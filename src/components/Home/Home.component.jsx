@@ -32,7 +32,7 @@ const Home = () => {
         style={{
           position: "relative",
           height: "400px",
-          backgroundImage: `url(https://picsum.photos/${800}/${450})`,
+          backgroundImage: `url(https://picsum.photos/id/${1015}/${800}/${450})`,
           backgroundSize: "cover",
           backgroundColor: theme.palette.primary.main,
           display: "flex",

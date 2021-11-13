@@ -4,8 +4,8 @@ import FileBase from "react-file-base64";
 
 import React, { useState } from "react";
 import useStyles from "./Auth.styles";
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 // constants
 
@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 
 // actions
 
-import { signin, signup, googleSignin } from '../../actions/auth';
+import { signin, signup, googleSignin } from "../../actions/auth";
 
 // components
 
@@ -90,12 +90,12 @@ const Auth = () => {
     console.log("google success res: ", res);
     const profile = res?.profileObj;
     const token = res?.tokenId;
-    dispatch(googleSignin({ profile, token }, history));    
-  }
+    dispatch(googleSignin({ profile, token }, history));
+  };
 
   const googleFailure = (error) => {
-    console.log('Google sign in was unsuccessful: ', error);
-  }
+    console.log("Google sign in was unsuccessful: ", error);
+  };
 
   // render
 
@@ -144,37 +144,35 @@ const Auth = () => {
                 handleChange={handleChange}
                 value={formData.email}
               />
-              {
-                isSignup && (
-                  <Grid item xs={12}>
-                    {formData?.image && (
-                      <img
-                        src={formData?.image}
-                        alt="Profile"
-                        className={classes.profileImage}
-                      />
-                    )}
-                    <Button
-                      component="label"
-                      variant="contained"
-                      fullWidth
-                      className={classes.fileUploadIcon}
-                    >
-                      <FileBase
-                        className={classes.fileInput}
-                        type="file"
-                        multiple={false}
-                        onDone={({ base64 }) =>
-                          setFormData((previous) => {
-                            return { ...previous, image: base64 }
-                          })
-                        }
-                      />
-                      {formData?.image ? "Change Image" : "Upload Image"}
-                    </Button>
-                  </Grid>
-                )
-              }
+              {isSignup && (
+                <Grid item xs={12}>
+                  {formData?.image && (
+                    <img
+                      src={formData?.image}
+                      alt="Profile"
+                      className={classes.profileImage}
+                    />
+                  )}
+                  <Button
+                    component="label"
+                    variant="contained"
+                    fullWidth
+                    className={classes.fileUploadIcon}
+                  >
+                    <FileBase
+                      className={classes.fileInput}
+                      type="file"
+                      multiple={false}
+                      onDone={({ base64 }) =>
+                        setFormData((previous) => {
+                          return { ...previous, image: base64 };
+                        })
+                      }
+                    />
+                    {formData?.image ? "Change Image" : "Upload Image"}
+                  </Button>
+                </Grid>
+              )}
               <Input
                 name="password"
                 label="Password"

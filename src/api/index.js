@@ -24,11 +24,12 @@ API.interceptors.request.use((config) => {
   if (localStorage.getItem("profile")) {
     const authHeader = `Bearer ${JSON.parse(localStorage.getItem("profile")).token
       }`
-    console.log(`Adding authorization header to request: ${authHeader.slice(0, 11)}...`);
+    console.log(`Adding authorization header to request: ${authHeader.length < 32 ? authHeader : authHeader.slice(0, 11)}...`);
     config.headers.Authorization = authHeader;
   }
   return config;
 }, (error) => {
+  console.log(`An error has occurred in the auth interceptor.`);
   return Promise.reject(error);
 });
 

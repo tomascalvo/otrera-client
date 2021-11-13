@@ -115,7 +115,7 @@ const App = ({ handleDarkModeToggle }) => {
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    history.push("/auth");
+    history.push("/home");
     setUser(null);
   };
 
@@ -151,7 +151,13 @@ const App = ({ handleDarkModeToggle }) => {
         />
         <main className={classes.main}>
           <Route exact path="/">
-            <Dashboard user={user} />
+            {
+              user ? (
+                <Dashboard user={user} />
+              ) : (
+                <Home />
+              )
+            }
           </Route>
           <Route exact path="/home">
             <Home />
