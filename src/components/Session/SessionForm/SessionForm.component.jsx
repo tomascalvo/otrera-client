@@ -5,24 +5,36 @@ import { useParams } from "react-router-dom";
 import useStyles from "./SessionForm.styles";
 import { useHistory } from "react-router-dom";
 
+// api
+
+import { createSession, fetchPlan } from "../../../api";
+
 // components
 
 import { Paper, Typography, Button } from "@mui/material";
-
 import SchedulingForm from "../../Plan/PlanForm/SchedulingForm/SchedulingForm.component.jsx";
-import { createSession, fetchPlan } from "../../../api";
+
+// auth
+
+const user = JSON.parse(localStorage.getItem("profile"))?.user;
 
 const SessionForm = () => {
+
+  console.log(`user:`)
+  console.dir(user);
+
   // hooks
+
   const classes = useStyles();
   let { id: workoutId } = useParams();
   const history = useHistory();
 
   // state
+
   const [planData, setPlanData] = useState({});
   const [sessionData, setSessionData] = useState({
       startTime: new Date(),
-      invitees: [],
+      invitees: [user],
   });
 
   // lifecycle
@@ -37,6 +49,7 @@ const SessionForm = () => {
   }, [workoutId]);
 
   // event handlers
+
   const handleSubmit = async () => {
     const submission = {
       ...sessionData,
@@ -44,6 +57,7 @@ const SessionForm = () => {
       invitees: sessionData?.invitees.map((invitee) => invitee?._id),
       leader: sessionData?.leader?._id,
     };
+
     await createSession(submission)
       .then(({ data: confirmation }) => {
         console.log("Session saved. New session: ", confirmation);
@@ -52,6 +66,8 @@ const SessionForm = () => {
       .catch((error) => console.log(error));
   };
 
+  // render
+  
   return (
     <main className={classes.layout}>
       <Paper className={classes.paper}>
