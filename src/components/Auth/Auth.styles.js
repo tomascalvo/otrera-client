@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundImage: `url(https://picsum.photos/id/${1037}/900/1350)`,
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
