@@ -36,7 +36,8 @@ const Movements = () => {
       </Container>
       <Container className={classes.cardGrid} maxWidth="lg">
         <Typography variant="h5" color="text.secondary" gutterBottom>
-          {movements.length} Results:
+          {/* {movements.length}  */}
+          Search Results:
         </Typography>
         <Grid container spacing={4}>
           {movements.map((movement, i) => (

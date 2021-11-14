@@ -1,8 +1,12 @@
-// hooks
 import React from "react";
+
+// hooks
+
+import { useHistory } from 'react-router-dom';
 import useStyles from "./MovementCard.styles";
 
 // components
+
 import {
   Grid,
   Card,
@@ -17,11 +21,25 @@ import {
 const MovementCard = ({
   movement: { bodyPart, equipment, gifUrl, id, name, target },
 }) => {
+
   // hooks
+  
+  const history = useHistory();
   const classes = useStyles();
+
+  // event handlers
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log('card clicked');
+    history.push(`/movements/${id}`);
+  }
+  
   return (
     <Grid item xs={6} sm={4} md={3} xl={3}>
-      <Card className={classes.card}>
+      <Card className={classes.card}
+        onClick={handleClick}
+      >
         {gifUrl ? (
           <CardMedia
             className={classes.cardMedia}

@@ -57,6 +57,8 @@ export const signin = (formData) => API.post('/users/signin', formData);
 export const googleSignin = ({ profile, googleToken }) => API.post('/users/googleSignin', { profile, googleToken });
 export const fetchUsers = () => API.get(`/users`);
 export const fetchUser = (userId) => API.get(`/users/${userId}`);
+export const addFavoriteMovement = (movementId) => API.patch(`/users/addFavorite/${movementId}`);
+export const removeFavoriteMovement = (movementId) => API.patch(`/users/removeFavorite/${movementId}`);
 
 export const createBodyStatus = (newBodyStatus) =>
   API.post(`/bodyStatuses`, newBodyStatus);
@@ -76,6 +78,7 @@ export const updatePlan = (id, updatedPlan) =>
 export const deletePlan = (id) => API.delete(`/plans/${id}`);
 
 export const createSession = (newSession) => API.post(`/sessions`, newSession);
+export const createSingleMovementSession = (movementId) => API.post(`/sessions/movement/${movementId}`);
 export const fetchSessions = () => API.get(`/sessions`);
 export const fetchSession = (id) => API.get(`/sessions/${id}`);
 export const fetchSessionsByPlanAndUser = (planId, userId) =>
