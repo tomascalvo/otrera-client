@@ -124,7 +124,7 @@ const MovementPicker = ({
 
   return (
     <Grid container>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={6} md={8}>
         <FormControl
           fullWidth
           style={{
@@ -221,7 +221,7 @@ const MovementPicker = ({
           />
         )}
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={6} md={4}>
         <MusclePicker
           muscles={muscles}
           addMuscle={addMuscle}

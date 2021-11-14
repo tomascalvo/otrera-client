@@ -55,7 +55,8 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
     <AppBar
       position="static"
       color="inherit"
-      enableColorOnDark={true}
+      elevation={4}
+      // enableColorOnDark={true}
       // className={classes.appBar}
     >
       <Toolbar className={classes.toolbar}>

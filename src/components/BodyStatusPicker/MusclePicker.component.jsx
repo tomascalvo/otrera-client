@@ -34,7 +34,9 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
   // layout
   // const [width, setWidth] = useState(0);
   const [hoveredArea, setHoveredArea] = useState(null);
-  const [anatomyMap, setAnatomyMap] = useState(anatomyMapper({ theme, isMusclePicker: true, }));
+  const [anatomyMap, setAnatomyMap] = useState(
+    anatomyMapper({ theme, isMusclePicker: true })
+  );
   const [isFrontView, setIsFrontView] = useState(true);
 
   // data
@@ -94,10 +96,25 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
       })
     );
   };
-  
+
   return (
-    <div style={{ position: "relative", padding: theme.spacing(2), display: 'flex', justifyContent: 'space-around'}}>
-      <Box position="absolute" right={0} top={theme.spacing(1)} zIndex="tooltip">
+    <div
+      style={{
+        position: "relative",
+        padding: theme.spacing(2),
+        display: "flex",
+        justifyContent: "space-around",
+      }}
+    >
+      <Box
+        position="absolute"
+        top="4px"
+        right="50%"
+        sx={{
+          transform: "translateX(80px)",
+        }}
+        zIndex="tooltip"
+      >
         <Tooltip title={isFrontView ? "View Rear" : "View Front"}>
           <IconButton
             aria-label={isFrontView ? "view rear" : "view front"}
@@ -110,7 +127,9 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
         </Tooltip>
       </Box>
       <ImageMapper
-        src={theme.palette.mode === "dark" ? anatomyImageInverted : anatomyImage}
+        src={
+          theme.palette.mode === "dark" ? anatomyImageInverted : anatomyImage
+        }
         map={anatomyMap}
         imgWidth={333}
         width={150}
@@ -119,11 +138,11 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
         onClick={(area) => {
           handleClickArea(area);
         }}
-        fillColor= {theme.palette.info.light || "#1976d2"}
+        fillColor={theme.palette.info.light || "#1976d2"}
         // fillColor= {theme.palette.action.hover || "#1976d2"}
         // strokeColor= {"rgba(128, 128, 128, 0.5)"}
-        strokeColor= {theme.palette.mode === "dark" ? "#fff" : "#000"}
-        style={{ margin: '0 auto' }}
+        strokeColor={theme.palette.mode === "dark" ? "#fff" : "#000"}
+        style={{ margin: "0 auto" }}
       />
       {hoveredArea && (
         <span

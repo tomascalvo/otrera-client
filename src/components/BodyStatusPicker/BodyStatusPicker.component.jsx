@@ -29,7 +29,7 @@ import {
   // bodyParts as bodyPartStrings,
   conditions,
 } from "./queryStrings";
-import { targets, bodyParts } from '../../constants/anatomicalTerms';
+import { targets, bodyParts } from "../../constants/anatomicalTerms";
 
 // api
 import {
@@ -66,7 +66,6 @@ const BodyStatusPicker = ({
     // console.log("status change");
   },
 }) => {
-
   // auth
 
   const userId = JSON.parse(localStorage.getItem("profile"))?.user?._id;
@@ -90,7 +89,6 @@ const BodyStatusPicker = ({
 
   // const [width, setWidth] = useState(window.innerWidth);
   // const [width, setWidth] = useState(useWindowSize()[0]);
-
 
   // layout
 
@@ -119,7 +117,7 @@ const BodyStatusPicker = ({
     );
     return () => {
       setAnatomyMap(anatomyMapper({ theme }));
-    }
+    };
   }, [bodyStatus, isFrontView, theme]);
 
   // data
@@ -142,7 +140,7 @@ const BodyStatusPicker = ({
     return () => {
       setAnatomyMap(anatomyMapper({ theme }));
       setBodyStatus({});
-    }
+    };
   }, [theme, userId]);
 
   useEffect(() => {
@@ -173,7 +171,11 @@ const BodyStatusPicker = ({
   };
 
   const toggleRotation = () => {
-    console.log(`Rotating BodyStatusPicker to display ${!isFrontView ? "anterior" : "posterior"} view.`);
+    console.log(
+      `Rotating BodyStatusPicker to display ${
+        !isFrontView ? "anterior" : "posterior"
+      } view.`
+    );
     setIsFrontView((previous) => !previous);
     setAnatomyMap(
       anatomyMapper({
@@ -190,7 +192,7 @@ const BodyStatusPicker = ({
     setSelectedArea(null);
     setAnchorEl(null);
     setAnchorCoords([0, 0]);
-  }
+  };
 
   // data
 
@@ -199,7 +201,10 @@ const BodyStatusPicker = ({
     // data
     const statusUpdate = { ...bodyStatus, [selectedArea.id]: event.target.id };
     try {
-      const { data: confirmedUpdate } = await updateStatus(userId, statusUpdate);
+      const { data: confirmedUpdate } = await updateStatus(
+        userId,
+        statusUpdate
+      );
       console.log("BodyStatus successfully posted", confirmedUpdate);
       setBodyStatus(confirmedUpdate);
       setAnatomyMap(
@@ -229,7 +234,7 @@ const BodyStatusPicker = ({
       // console.log("fullRecovery:")
       // console.dir(fullRecovery);
       const { data: recoveryConfirmation } = await postRecovery(userId);
-      console.log("recoveryConfirmation:")
+      console.log("recoveryConfirmation:");
       console.dir(recoveryConfirmation);
       setBodyStatus(recoveryConfirmation);
       setAnatomyMap(
@@ -246,7 +251,7 @@ const BodyStatusPicker = ({
     }
     // layout
     clearSelection();
-  }
+  };
 
   // render
 
@@ -259,10 +264,10 @@ const BodyStatusPicker = ({
         marginTop: theme.spacing(1),
         // height: '100%',
         width: "100%",
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        flexDirection: 'column'
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        flexDirection: "column",
       }}
     >
       <Box
@@ -270,10 +275,9 @@ const BodyStatusPicker = ({
         top="4px"
         right="50%"
         sx={{
-          transform: 'translateX(80px)'
+          transform: "translateX(80px)",
         }}
-        zIndex="2"
-        // sx={{ margin: "0 auto" }}
+        zIndex="tooltip"
       >
         <Tooltip title={isFrontView ? "View Rear" : "View Front"}>
           <IconButton
@@ -311,15 +315,12 @@ const BodyStatusPicker = ({
         fillColor="#1976d2"
         styles={{
           // display: 'block',
-          flexGrow: '1',
+          flexGrow: "1",
           margin: "0 auto",
-          alignSelf: 'flex-end'
+          alignSelf: "flex-end",
         }}
       />
-      <Button
-        sx={{ mt: `${theme.spacing(2)}` }}
-        onClick={handleRecoverAll}
-      >
+      <Button sx={{ mt: `${theme.spacing(2)}` }} onClick={handleRecoverAll}>
         Recover All Muscles
       </Button>
       {hoveredArea && (
