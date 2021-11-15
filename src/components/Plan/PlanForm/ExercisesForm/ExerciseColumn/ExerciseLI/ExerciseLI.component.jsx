@@ -1,4 +1,12 @@
 import React from "react";
+
+// hooks
+
+import { useTheme } from '@mui/styles';
+import useStyles from "./ExerciseLI.styles";
+
+// components
+
 import {
   ListItem,
   ListItemAvatar,
@@ -11,7 +19,8 @@ import {
 } from "@mui/material";
 import { Clear as ClearIcon, Add as AddIcon } from "@material-ui/icons";
 import { Draggable } from "react-beautiful-dnd";
-import useStyles from "./ExerciseLI.styles";
+
+// helper methods
 
 const ExerciseLI = ({
   exercise: { draggableId, movement, EDBmovement, reps, sets, index },
@@ -19,10 +28,11 @@ const ExerciseLI = ({
   setColumns,
   isSelected,
 }) => {
-  // diagnostic
-  // console.log("index:", index, typeof index);
 
-  const classes = useStyles();
+  // hooks
+
+  const theme = useTheme()
+  const classes = useStyles(theme);
 
   function handleSelect(e, buttonType) {
     e.preventDefault();
@@ -129,12 +139,13 @@ const ExerciseLI = ({
         >
           <ListItemAvatar>
             <Avatar
-              src={movement?.image || EDBmovement?.image}
-              alt={`Avatar of ${movement?.title || EDBmovement?.title}`}
+              src={movement?.image || movement?.gifUrl}
+              alt={`Avatar of ${movement?.title || movement?.name}`}
+              className={classes.avatarImage}
             />
           </ListItemAvatar>
           <div style={{ width: '100%' }}>
-            <ListItemText primary={`${movement?.title || EDBmovement?.title}`} />
+            <ListItemText primary={`${movement?.title || movement?.name}`} />
             {isSelected && (
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <TextField

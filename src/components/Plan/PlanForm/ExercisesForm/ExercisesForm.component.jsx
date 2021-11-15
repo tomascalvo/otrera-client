@@ -24,11 +24,11 @@ const ExercisesForm = ({ planData, setPlanData }) => {
 
   // state
   const [query, setQuery] = useState("");
-  const EDBmovements = JSON.parse(localStorage.getItem("EDBmovements")).map(
+  const EDBmovements = localStorage.getItem("EDBmovements") ? JSON.parse(localStorage.getItem("EDBmovements")).map(
     (EDBmovement, i) => {
       return conformToExercise(EDBmovement, i);
     }
-  );
+  ) : [];
   const [exerciseOptions, setExerciseOptions] = useState(EDBmovements || []);
   const [filteredOptions, setFilteredOptions] = useState(
     EDBmovements.slice(0, 9) || []
@@ -57,9 +57,9 @@ const ExercisesForm = ({ planData, setPlanData }) => {
             index,
             draggableId: parseInt(previous.length + index),
             movement,
-            reps: movement.reps.recommended,
-            sets: movement.reps.recommended,
-            resistance: movement.resistance,
+            reps: movement?.reps?.recommended,
+            sets: movement?.reps?.recommended,
+            resistance: movement?.resistance,
           })),
         ];
       });
