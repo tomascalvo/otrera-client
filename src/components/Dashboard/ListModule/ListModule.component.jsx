@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useTheme } from "@mui/styles";
+import useStyles from "./ListModule.styles";
 import { useHistory } from "react-router-dom";
 
 import moment from "moment";
@@ -8,7 +9,7 @@ import moment from "moment";
 // components
 
 import {
-  Container,
+  Box,
   List,
   ListItem,
   ListItemAvatar,
@@ -20,9 +21,41 @@ import {
   Button,
 } from "@mui/material";
 
-// api
+const LoadingAnimation = () => (
+  <Grid
+    container
+    spacing={0}
+    direction="column"
+    alignItems="center"
+    justifyContent="center"
+  >
+    <Grid item>
+      <CircularProgress style={{ margin: "150px auto" }} />
+    </Grid>
+  </Grid>
+);
 
-// import { createSession } from "../../../api";
+const ListArray = ({ label, array = [], handleClick, model }) => (
+  <List aria-label={label}>
+    {array.map((workout, i) => {
+      return (
+        <ListItem
+          button
+          onClick={() => handleClick(workout)}
+          key={i}
+          alignItems="flex-start"
+          disableGutters
+        >
+          {model === "plan" ? (
+            <SuggestedWorkout plan={workout} />
+          ) : (
+            <UpcomingSession session={workout} />
+          )}
+        </ListItem>
+      );
+    })}
+  </List>
+);
 
 const UpcomingSession = ({ session }) => (
   <>
@@ -55,49 +88,55 @@ const SuggestedWorkout = ({ plan }) => (
   </>
 );
 
+const AddContentButton = ({ model }) => {
+  const history = useHistory();
+  const theme = useTheme();
+  const classes = useStyles(theme);
+  return (
+    <div
+      className={classes.buttonDiv}
+    >
+      {model === "plan" ? (
+        <Button
+          variant="contained"
+          onClick={() => history.push("/plans")}
+          style={{
+            margin: "auto",
+          }}
+        >
+          Create a New Workout Plan
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          onClick={() => history.push("/plans")}
+          style={{
+            margin: "auto",
+          }}
+        >
+          Schedule a Workout
+        </Button>
+      )}
+    </div>
+  );
+};
+
 const ListModule = ({ array = [], model, label = "list", handleClick }) => {
   // hooks
-
   const theme = useTheme();
-  const history = useHistory();
+  const classes = useStyles(theme);
 
   return (
-    <Container style={{ padding: 0 }} maxWidth="md">
+    <Box className={classes.flexContainer}>
       {array === "loading" ? (
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Grid item>
-            <CircularProgress style={{ margin: "150px auto" }} />
-          </Grid>
-        </Grid>
+        <LoadingAnimation />
       ) : Array.isArray(array) && array.length > 0 ? (
-        <List aria-label={label}>
-          {array.map((workout, i) => {
-            // console.log(`ListModule.component workout:`);
-            // console.dir(workout);
-            return (
-              <ListItem
-                button
-                onClick={() => handleClick(workout)}
-                key={i}
-                alignItems="flex-start"
-                disableGutters
-              >
-                {model === "plan" ? (
-                  <SuggestedWorkout plan={workout} />
-                ) : (
-                  <UpcomingSession session={workout} />
-                )}
-              </ListItem>
-            )
-          }
-          )}
-        </List>
+        <ListArray
+          label={label}
+          array={array}
+          handleClick={handleClick}
+          model={model}
+        />
       ) : (
         <>
           <Typography
@@ -106,26 +145,10 @@ const ListModule = ({ array = [], model, label = "list", handleClick }) => {
           >
             No {label.toLowerCase()}.
           </Typography>
-          {model === "plan" ? (
-            <Button
-              variant="contained"
-              onClick={() => history.push("/plans")}
-              style={{ marginTop: theme.spacing(2) }}
-            >
-              Create a New Workout Plan
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={() => history.push("/plans")}
-              style={{ marginTop: theme.spacing(2) }}
-            >
-              Schedule a Workout
-            </Button>
-          )}
         </>
       )}
-    </Container>
+      <AddContentButton model={model} />
+    </Box>
   );
 };
 

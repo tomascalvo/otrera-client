@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useTheme } from "@mui/styles";
 import { useMediaQuery } from "@mui/material";
 
-import cx from 'classnames';
+import cx from "classnames";
 
 // components
 import { Container, Box, Grid, Paper, Typography, Button } from "@mui/material";
@@ -32,7 +32,6 @@ const Dashboard = ({ user }) => {
   console.log(`isXs: ${isXs}`);
 
   // state
-  // const EDBmovements = JSON.parse(localStorage.getItem("EDBmovements"));
   const [progress, setProgress] = useState([]);
   const [selectedGoal, setSelectedGoal] = useState("");
   const [upcomingSessions, setUpcomingSessions] = useState("loading");
@@ -52,16 +51,6 @@ const Dashboard = ({ user }) => {
   // get goals, upcoming sessions from the server based on user
 
   useEffect(() => {
-    // console.log('Dashboard.component useEffect 1: get goals, upcoming from server on user change');
-    // console.log(`Dashboard component user:`);
-    // console.dir(user);
-    // const checkEDB = async () => {
-    // //   if (!localStorage.getItem("EDBmovements")) {
-    // //     const { data: EDBmovements } = await fetchEDB();
-    // //     localStorage.setItem("EDBmovements", JSON.stringify(EDBmovements));
-    // //     setEDBmovements(EDBmovements);
-    // //   }
-    // // };
     const getUpcoming = async () => {
       try {
         const { data: dbSessions } = await fetchUpcomingSessions(user?._id);
@@ -80,7 +69,7 @@ const Dashboard = ({ user }) => {
         setProgress([]);
       }
     };
-    // checkEDB();
+
     if (user) {
       getUpcoming();
       fetchProgress();
@@ -90,41 +79,10 @@ const Dashboard = ({ user }) => {
   // get suggested plans from the server based on user
 
   useEffect(() => {
-    // console.log(
-    //   "Dashboard.component useEffect 2: get suggestions from server on user change, bodyStatus change"
-    // );
-    // console.log(
-    //   `Dashboard.component useEffect 2 dependencies: [user.name: ${user.name}, status: ${status}]`
-    // );
-    // console.log(`status:`);
-    // console.dir(status);
     const getSuggestions = async () => {
       try {
-        // console.log('user: ', user);
         const { data: dbSuggestions } = await suggestPlans();
-        // console.log('dbSuggestions: ', dbSuggestions);
-        // if (!Array.isArray(EDBmovements)) {
-        //   console.log('Cannot populate suggested workouts because EDBmovements is not an array.');
-        //   return;
-        // }
         if (Array.isArray(dbSuggestions)) {
-          //   const populatedSuggestions = dbSuggestions.map((suggestion) => {
-          //     const exercises = suggestion.exercises.map((el) => {
-          //       const movement = EDBmovements.find((EDBmovement) => {
-          //         return EDBmovement?.id === el.EDBmovement.toString();
-          //       });
-          //       return {
-          //         ...el,
-          //         movement: { ...movement, title: movement?.name },
-          //       };
-          //     });
-          //     return {
-          //       ...suggestion,
-          //       exercises,
-          //     };
-          //   });
-          //   console.log('populatedSuggestions: ', populatedSuggestions);
-          //   setSuggestions(populatedSuggestions);
           setSuggestions(dbSuggestions);
         } else {
           console.log(
@@ -143,53 +101,7 @@ const Dashboard = ({ user }) => {
     if (user) {
       getSuggestions();
     }
-  }, [
-    // EDBmovements.length,
-    user,
-    status,
-  ]);
-
-  // filter suggestions based on (current muscular) condition
-
-  // useEffect(() => {
-  //   console.log('useEffect 3: filter suggestions based on (current muscular) condition');
-  //   if (suggestions === "loading") {
-  //     return;
-  //   } else if (suggestions === []) {
-  //     setFilteredSuggestions([]);
-  //   } else {
-  //     const soreMuscles = Object.keys(status)
-  //       .filter((muscle) => {
-  //         return status[muscle] !== "recovered";
-  //       })
-  //       .map((muscleName) => {
-  //         if (muscleName.indexOf("-") !== -1) {
-  //           return muscleName.slice(0, muscleName.indexOf("-"));
-  //         } else {
-  //           return muscleName;
-  //         }
-  //       });
-  //       let filtered = "loading";
-  //       if (Array.isArray(suggestions)) {
-  //         filtered = suggestions.filter((suggestion) => {
-  //           const musclesWorked = suggestion.exercises.map((exercise) => {
-  //             return exercise?.movement?.target || exercise?.EDBmovement?.target;
-  //           });
-  //           const worksSoreMuscle = musclesWorked.some((muscleWorked) => {
-  //             return soreMuscles.some((soreMuscle) =>
-  //               soreMuscle.includes(muscleWorked)
-  //             );
-  //           });
-  //           if (worksSoreMuscle) {
-  //             return false;
-  //           } else {
-  //             return true;
-  //           }
-  //         });
-  //       }
-  //     setFilteredSuggestions(filtered);
-  //   }
-  // }, [EDBmovements, suggestions, status]);
+  }, [user, status]);
 
   // event handlers
 
@@ -249,7 +161,10 @@ const Dashboard = ({ user }) => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={4} md={3} xl={2}>
-            <Paper className={cx(classes.paper, classes.flexPaper)}>
+            <Paper className={cx(
+              classes.paper, 
+              // classes.flexPaper
+              )}>
               <Typography component="h3" variant="h5">
                 Upcoming Workouts
               </Typography>
