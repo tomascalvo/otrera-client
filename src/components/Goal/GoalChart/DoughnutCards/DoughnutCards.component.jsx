@@ -11,13 +11,13 @@ import useStyles from "./DoughnutCards.styles";
 // components
 
 import { Doughnut } from "react-chartjs-2";
-import { Card, CardContent, Typography, Grid, Button, IconButton, Box } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Button, IconButton, Box, Tooltip } from "@mui/material";
 import { DeleteForever as DeleteIcon } from '@mui/icons-material';
 import CountUp from "react-countup";
 
 // API
 
-import { deleteGoal } from '../../../../api/index';
+import { deleteGoal, createSingleMovementSession } from '../../../../api/index';
 
 const DoughnutChartCard = ({
   goal: {
@@ -67,6 +67,19 @@ const DoughnutChartCard = ({
     // e.preventDefault();
     setSelectedGoal(id);
   };
+
+  const handleAttempt = async (e) => {
+    e.preventDefault();
+    console.log('handleAttempt invoked');
+    try {
+      // invoke api method to create a new plan with just this movement and a new session with this plan and just the current user as invitee
+      const { data: { _id: sessionId }} = await createSingleMovementSession(movement?._id || EDBmovement?.id);
+      // navigate to performance page with useHistory hook
+      history.push(`/sessions/${sessionId}/perform`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleDeleteGoal = async (goalId) => {
     console.log(`deleteGoal event handler called for id: ${goalId}`)
@@ -187,14 +200,17 @@ const DoughnutChartCard = ({
               variant="contained" 
               // fullWidth 
               style={{ margin: `${theme.spacing(1)} 0`, flexGrow: 1}} 
-              onClick={() => history.push(`/movements/perform/${movement?._id || EDBmovement?.id}`)}
+              onClick={handleAttempt}
             >
               Attempt
             </Button>
-
+        <Tooltip
+          title="Quit goal"
+        >
           <IconButton variant="contained" color="inherit" size="large" style={{ flexShrink: 0 }} onClick={() => handleDeleteGoal(id)}>
             <DeleteIcon />
           </IconButton>
+        </Tooltip>
         </Box>
         </CardContent>
       </Card>

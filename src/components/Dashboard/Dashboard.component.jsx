@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import { useTheme } from "@mui/styles";
 import { useMediaQuery } from "@mui/material";
 
+import cx from 'classnames';
+
 // components
 import { Container, Box, Grid, Paper, Typography, Button } from "@mui/material";
 
@@ -215,7 +217,7 @@ const Dashboard = ({ user }) => {
         </Box>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={9} xl={4}>
-            <Paper className={classes.paper}>
+            <Paper className={cx(classes.paper, classes.flexPaper)}>
               <Typography component="h3" variant="h5">
                 Progress
               </Typography>
@@ -247,7 +249,7 @@ const Dashboard = ({ user }) => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={4} md={3} xl={2}>
-            <Paper className={classes.paper}>
+            <Paper className={cx(classes.paper, classes.flexPaper)}>
               <Typography component="h3" variant="h5">
                 Upcoming Workouts
               </Typography>

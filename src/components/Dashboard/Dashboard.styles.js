@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     height: "100%",
+  },
+  flexPaper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   }
 }));
 
