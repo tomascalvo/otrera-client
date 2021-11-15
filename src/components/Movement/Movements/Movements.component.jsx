@@ -41,7 +41,12 @@ const Movements = () => {
         </Typography>
         <Grid container spacing={4}>
           {movements.map((movement, i) => (
-            <MovementCard key={i} movement={movement} />
+            <Grid item xs={6} sm={4} md={3} xl={3} key={i}
+              styles={{ 
+                height: '100%' }}
+            >
+              <MovementCard key={i} movement={movement} />
+            </Grid>
           ))}
         </Grid>
       </Container>

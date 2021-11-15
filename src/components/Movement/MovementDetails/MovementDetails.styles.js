@@ -8,19 +8,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(2, 1, 1),
     },
-  },
-  card: {
     maxWidth: '400px',
     margin: '0 auto',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    // height: 0,
-    // padding: '50%',
-    objectFit: "cover",
-    // objectPosition: "50% 0%",
-    filter: darkModeFilter(theme),
   },
 }));
 

@@ -1,71 +1,204 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 // hooks
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { useTheme } from "@mui/styles";
 import useStyles from "./MovementCard.styles";
+
+// api
+
+import {
+  addFavoriteMovement,
+  removeFavoriteMovement,
+  createSingleMovementSession,
+} from "../../../../api/index.js";
 
 // components
 
 import {
-  Grid,
   Card,
+  CircularProgress,
   CardMedia,
+  CardHeader,
+  CardActions,
+  IconButton,
+  Collapse,
   CardContent,
   Typography,
-  // CardActions,
-  // Button,
-  CircularProgress,
 } from "@mui/material";
 
-const MovementCard = ({
-  movement: { bodyPart, equipment, gifUrl, id, name, target },
-}) => {
+import {
+  FavoriteBorder as FavoriteBorderIcon,
+  Favorite as FavoriteIcon,
+  FitnessCenter as DumbbellIcon,
+  ExpandMore as ExpandMoreIcon,
+} from "@mui/icons-material";
 
+import ExpandMore from "../../MovementDetails/ExpandMore";
+
+// helper methods
+
+import toTitleCase from "../../../../helper methods/toTitleCase";
+
+const MovementCard = ({
+  movement,
+  movement: { bodyPart, equipment, gifUrl, id: movementId, name, target },
+}) => {
   // hooks
-  
+
   const history = useHistory();
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
+
+  // state
+
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("profile"))?.user
+  );
+  const [isFavorite, setIsFavorite] = useState("loading...");
+  const [expanded, setExpanded] = React.useState(false);
+
+  // lifecycle
+
+  useEffect(() => {
+    setIsFavorite(
+      user?.favoriteMovements.find((favoriteMovement) => {
+        return favoriteMovement === movementId;
+      })
+        ? true
+        : false
+    );
+  }, [user?.favoriteMovements, movementId]);
 
   // event handlers
 
-  const handleClick = (e) => {
+  const handleFavorite = async (e) => {
     e.preventDefault();
-    console.log('card clicked');
-    history.push(`/movements/${id}`);
-  }
-  
+    console.log("handleFavorite event handler invoked");
+    const profile = JSON.parse(localStorage.getItem("profile"));
+    function updateProfile(updatedUser) {
+      if (updatedUser) {
+        setUser(updatedUser);
+        localStorage.setItem(
+          "profile",
+          JSON.stringify({ ...profile, user: updatedUser })
+        );
+      }
+      return;
+    }
+    if (
+      !user?.favoriteMovements.find((favoriteMovement) => {
+        return favoriteMovement === movementId;
+      })
+    ) {
+      try {
+        const { data: userWithNewFavorite } = await addFavoriteMovement(
+          movementId
+        );
+        console.log("userWithNewFavorite:");
+        console.dir(userWithNewFavorite);
+        updateProfile(userWithNewFavorite);
+        console.log("new favoriteMovement added to user");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data: userWithFewerFavorites } = await removeFavoriteMovement(
+          movementId
+        );
+        updateProfile(userWithFewerFavorites);
+        console.log("favoriteMovement removed from user");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleAttempt = async (e) => {
+    e.preventDefault();
+    console.log("handleAttempt invoked");
+    try {
+      // invoke api method to create a new plan with just this movement and a new session with this plan and just the current user as invitee
+      const {
+        data: { _id: sessionId },
+      } = await createSingleMovementSession(movementId);
+      // navigate to performance page with useHistory hook
+      history.push(`/sessions/${sessionId}/perform`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <Grid item xs={6} sm={4} md={3} xl={3}>
-      <Card className={classes.card}
-        onClick={handleClick}
-      >
-        {gifUrl ? (
-          <CardMedia
-            className={classes.cardMedia}
-            component="image"
-            height={"200"}
-            image={
-              gifUrl !== undefined
-                ? gifUrl
-                : "https://source.unsplash.com/random"
-            }
-            alt={name}
-            title={name}
-          />
-        ) : (
-          <CircularProgress style={{ margin: "75px auto" }} />
+    <Card className={classes.card}>
+      <CardHeader title={toTitleCase(name)} />
+      {gifUrl ? (
+        <CardMedia
+          className={classes.cardMedia}
+          component="img"
+          height="400"
+          image={gifUrl || movement?.image}
+          alt={name}
+          // title={name}
+        />
+      ) : (
+        <CircularProgress style={{ margin: "75px auto" }} />
+      )}
+      <CardActions disableSpacing>
+        {user && (
+          <>
+            {isFavorite !== "loading..." && (
+              <IconButton
+                aria-label="toggle favorites"
+                onClick={handleFavorite}
+              >
+                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+            )}
+            <IconButton aria-label="share" onClick={handleAttempt}>
+              <DumbbellIcon />
+            </IconButton>
+          </>
         )}
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5">
-            {name}
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+          style={{ marginLeft: "auto" }}
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse
+        in={expanded}
+        timeout="auto"
+        unmountOnExit
+        className={classes.collapse}
+      >
+        <CardContent className={classes.cardContent} sx={{ paddingTop: 0 } }>
+          <Typography variant="body2" color="text.secondary">
+            Region: {toTitleCase(bodyPart)}
           </Typography>
-          <Typography>region: {bodyPart}</Typography>
-          <Typography>muscle(s): {target}</Typography>
-          <Typography>equipment: {equipment}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Muscle(s): {toTitleCase(target)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Equipment: {toTitleCase(equipment)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Author:{" "}
+            {movementId?.length === 4 ? "ExerciseDB" : movement?.creator}
+          </Typography>
         </CardContent>
-      </Card>
-    </Grid>
+      </Collapse>
+    </Card>
   );
 };
 
