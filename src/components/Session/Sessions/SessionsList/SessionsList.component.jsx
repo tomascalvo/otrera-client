@@ -1,10 +1,10 @@
 import React from "react";
-
 import moment from "moment";
 
 // hooks
 
-import { useHistory } from "react-router-dom";
+import { useTheme } from '@mui/styles';
+import useStyles from './SessionsList.styles';
 
 // components
 
@@ -20,16 +20,17 @@ import {
   Typography,
 } from "@mui/material";
 
-const SessionsList = ({ sessions = "loading" }) => {
+const SessionsList = ({ 
+  sessions="loading", 
+  handleOnClick={function() {
+    console.log('SessionsList ListItem clicked');
+  }},
+}) => {
+
   // hooks
 
-  const history = useHistory();
-
-  // event handlers
-
-  const handleClick = (sessionId) => {
-    history.push(`/sessions/${sessionId}/perform`);
-  };
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   // render
 
@@ -68,16 +69,16 @@ const SessionsList = ({ sessions = "loading" }) => {
           {sessions.map((session, i) => (
             <ListItem
               button
-              onClick={() => handleClick(session.id)}
+              onClick={() => handleOnClick(session.id)}
               key={i}
               alignItems="flex-start"
               disableGutters
             >
               <ListItemAvatar>
-                <Avatar alt="workout" src={session.plan.image} />
+                <Avatar alt="workout" src={session?.plan?.image} className={session?.plan?.image.includes('d205bpvrqc9yn1.cloudfront.net') ? classes.gifUrl : ''} />
               </ListItemAvatar>
               <ListItemText
-                primary={session.plan.title}
+                primary={session?.plan?.title}
                 secondary={`${moment(session.startTime).format("MM/DD/YY LT")}`}
               />
             </ListItem>

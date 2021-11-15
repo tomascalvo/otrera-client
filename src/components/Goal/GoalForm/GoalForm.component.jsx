@@ -20,6 +20,7 @@ import MovementPicker from "../../Movement/Movements/MovementPicker/MovementPick
 import { createGoal } from "../../../api/index";
 
 const GoalForm = () => {
+
   // hooks
 
   const history = useHistory();
@@ -31,9 +32,9 @@ const GoalForm = () => {
   const blankForm = {
     title: "",
     movement: "",
-    resistance: undefined,
+    resistance: 0,
     reps: 1,
-    sets: undefined,
+    sets: 1,
     start: undefined,
     finish: undefined,
   };
@@ -42,6 +43,8 @@ const GoalForm = () => {
     JSON.parse(localStorage.getItem("EDBmovements")) || [];
 
   const [formData, setFormData] = useState(blankForm);
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState("");
   const [movementOptions, setMovementOptions] = useState(defaultMovements);
   const [isConfirmation, setIsConfirmation] = useState(false);
 
@@ -168,15 +171,32 @@ const GoalForm = () => {
               fullWidth
               type="number"
               value={formData?.resistance}
+              helperText={helperText}
+              error={error}
               inputProps={{
                 min: 0,
                 maxLength: 4,
                 step: "5",
+                // inputMode: 'numeric',
+                // pattern: '[0-9]*'
               }}
               onChange={(e) => {
-                setFormData((previous) => {
-                  return { ...previous, resistance: e.target.value };
-                });
+                const wholeNumberRegex = /^\d+$/;
+                if (e.target.value.match(wholeNumberRegex)) {
+                  console.log("Input passes regex match");
+                  setHelperText("");
+                  setError(false);
+                  setFormData((previous) => {
+                    return { ...previous, resistance: e.target.value }
+                  });
+                } else {
+                  // console.log("Input fails regex match");
+                  // setHelperText("Invalid entry: choose a whole number.");
+                  // setError(true);
+                  setFormData((previous) => {
+                    return { ...previous, resistance: e.target.value.replace(/[^0-9]/g, "") }
+                  });
+                }
               }}
             />
           </Grid>
@@ -191,6 +211,8 @@ const GoalForm = () => {
                 min: 1,
                 maxLength: 4,
                 step: "1",
+                // inputMode: 'numeric',
+                // pattern: '[0-9]*'
               }}
               onChange={(e) => {
                 setFormData((previous) => {
@@ -210,6 +232,8 @@ const GoalForm = () => {
                 min: 1,
                 maxLength: 2,
                 step: "1",
+                // inputMode: 'numeric',
+                // pattern: '[0-9]*'
               }}
               onChange={(e) => {
                 setFormData((previous) => {

@@ -3,6 +3,7 @@ import React from "react";
 // hooks
 
 import { useTheme } from '@mui/styles';
+import useStyles from './WorkoutPreview.styles';
 
 // components
 
@@ -20,6 +21,7 @@ const WorkoutPreview = ({ performance }) => {
   // hooks
 
   const theme = useTheme();
+  const classes = useStyles(theme);
   
   return (
     <div style={{ 
@@ -41,6 +43,7 @@ const WorkoutPreview = ({ performance }) => {
                   <Avatar
                     src={exercise?.movement?.image ?? exercise?.EDBmovement?.gifUrl}
                     alt={`Avatar of ${exercise?.movement?.title}`}
+                    className={classes.gifUrl}
                   />
                 </ListItemAvatar>
                 <ListItemText
