@@ -26,24 +26,25 @@ import {
   Typography,
   CardActions,
   IconButton,
+  Collapse,
 } from "@mui/material";
 
 import {
   FavoriteBorder as FavoriteBorderIcon,
   Favorite as FavoriteIcon,
   FitnessCenter as DumbbellIcon,
+  ExpandMore as ExpandMoreIcon,
 } from "@mui/icons-material";
+
+import ExpandMore from "./ExpandMore";
 
 // helper methods
 
 import toTitleCase from "../../../helper methods/toTitleCase";
 
 const MovementDetails = () => {
-
   // hooks
 
-  console.log("params:");
-  console.dir(useParams());
   const { id: movementId } = useParams();
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -56,6 +57,7 @@ const MovementDetails = () => {
   );
   const [movement, setMovement] = useState("loading...");
   const [isFavorite, setIsFavorite] = useState("loading...");
+  const [expanded, setExpanded] = React.useState(false);
 
   // lifecycle
 
@@ -129,16 +131,22 @@ const MovementDetails = () => {
 
   const handleAttempt = async (e) => {
     e.preventDefault();
-    console.log('handleAttempt invoked');
+    console.log("handleAttempt invoked");
     try {
       // invoke api method to create a new plan with just this movement and a new session with this plan and just the current user as invitee
-      const { data: { _id: sessionId }} = await createSingleMovementSession(movementId);
+      const {
+        data: { _id: sessionId },
+      } = await createSingleMovementSession(movementId);
       // navigate to performance page with useHistory hook
       history.push(`/sessions/${sessionId}/perform`);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   // render
 
@@ -158,35 +166,50 @@ const MovementDetails = () => {
         ) : (
           <CircularProgress style={{ margin: "75px auto" }} />
         )}
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            Region: {toTitleCase(movement?.bodyPart)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Muscle(s): {toTitleCase(movement?.target)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Equipment: {toTitleCase(movement?.equipment)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Author:{" "}
-            {movement?.id?.length === 4 ? "ExerciseDB" : movement?.creator}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
+        <CardActions 
+          disableSpacing
+          // style={{
+          //   display: 'flex',
+          //   justifyContent: 'space-between',
+          // }}
+        >
           {isFavorite !== "loading..." && (
             <IconButton aria-label="toggle favorites" onClick={handleFavorite}>
               {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
           )}
-          {
-            user && (
-              <IconButton aria-label="share" onClick={handleAttempt}>
-                <DumbbellIcon />
-              </IconButton>
-            )
-          }
+          {user && (
+            <IconButton aria-label="share" onClick={handleAttempt}>
+              <DumbbellIcon />
+            </IconButton>
+          )}
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+            style={{ marginLeft: 'auto' }}
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
         </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              Region: {toTitleCase(movement?.bodyPart)}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Muscle(s): {toTitleCase(movement?.target)}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Equipment: {toTitleCase(movement?.equipment)}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Author:{" "}
+              {movement?.id?.length === 4 ? "ExerciseDB" : movement?.creator}
+            </Typography>
+          </CardContent>
+        </Collapse>
       </Card>
     </Box>
   );
