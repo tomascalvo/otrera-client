@@ -39,7 +39,7 @@ import ExpandMore from "../../MovementDetails/ExpandMore";
 
 // helper methods
 
-import toTitleCase from "../../../../helper methods/toTitleCase";
+import toTitleCase from "../../../../helperMethods/toTitleCase";
 
 const MovementCard = ({
   movement,

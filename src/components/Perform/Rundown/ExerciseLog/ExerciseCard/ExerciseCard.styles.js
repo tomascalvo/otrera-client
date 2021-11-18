@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-import darkModeFilter from "../../../../../helper methods/darkModeFilter";
+import darkModeFilter from "../../../../../helperMethods/darkModeFilter";
 
 export default makeStyles((theme) => ({
   imageContainer: {
