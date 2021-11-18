@@ -1,9 +1,8 @@
 // hooks
 
 import React, { useState, useEffect } from "react";
-import { useTheme } from '@mui/styles';
+import { useTheme } from "@mui/styles";
 import useStyles from "./ExercisesForm.styles";
-
 
 // components
 
@@ -13,7 +12,6 @@ import ExerciseColumn from "./ExerciseColumn/ExerciseColumn.component";
 import MovementPicker from "../../../Movement/Movements/MovementPicker/MovementPicker.component";
 
 const ExercisesForm = ({ planData, setPlanData }) => {
-
   // hooks
 
   const theme = useTheme();
@@ -44,15 +42,11 @@ const ExercisesForm = ({ planData, setPlanData }) => {
   // drag and drop
 
   const onDragEnd = ({ source, destination }) => {
-
     // make sure we have a valid destination
     if (destination === undefined || destination === null) return null;
 
     // make sure we're actually moving the item
-    if (
-      source.index === destination.index
-    )
-      return null;
+    if (source.index === destination.index) return null;
 
     // set start and end column variables
     const start = columns[source.droppableId];
@@ -78,7 +72,7 @@ const ExercisesForm = ({ planData, setPlanData }) => {
 
       // update the state
       setColumns((state) => ({ ...state, [newCol.id]: newCol }));
-    } 
+    }
   };
 
   // event handlers
@@ -89,7 +83,7 @@ const ExercisesForm = ({ planData, setPlanData }) => {
       movement: value,
       draggableId: draggableIdCounter,
       index: columns.selections.list.length,
-    }
+    };
     setColumns((previous) => ({
       ...previous,
       selections: {
@@ -98,35 +92,41 @@ const ExercisesForm = ({ planData, setPlanData }) => {
       },
     }));
     setDraggableIdCounter((previous) => previous + 1);
-  }
+  };
 
   return (
     <>
-      <Typography variant="body2" gutterBottom className={classes.instructions}>
+      <Typography 
+        variant="body2" 
+        gutterBottom 
+        className={classes.instructions}
+        style={{ marginBottom: theme.spacing(3), }}
+      >
         Select exercises for the workout and change order, reps, and sets as
         desired.
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <MovementPicker 
+          <MovementPicker
             setMovements={setMovementOptions}
             movementOptions={movementOptions}
             autocomplete={true}
             setSelectedMovement={addExerciseToWorkout}
           />
         </Grid>
-        <DragDropContext onDragEnd={onDragEnd}>
-
-          <Grid item xs={12}>
-            <Typography variant="h6">Selected Exercises</Typography>
-            <ExerciseColumn
-              column={columns.selections}
-              columns={columns}
-              setColumns={setColumns}
-              isSelected={true}
-            />
-          </Grid>
-        </DragDropContext>
+        {columns.selections.list.length > 0 && (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Grid item xs={12}>
+              <Typography variant="h6">Selected Exercises</Typography>
+              <ExerciseColumn
+                column={columns.selections}
+                columns={columns}
+                setColumns={setColumns}
+                isSelected={true}
+              />
+            </Grid>
+          </DragDropContext>
+        )}
       </Grid>
     </>
   );

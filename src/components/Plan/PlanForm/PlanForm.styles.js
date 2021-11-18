@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
           padding: theme.spacing(3, 0, 5),
       },
       buttons: {
+          marginTop: theme.spacing(3),
           display: 'flex',
           justifyContent: 'flex-end',
       },

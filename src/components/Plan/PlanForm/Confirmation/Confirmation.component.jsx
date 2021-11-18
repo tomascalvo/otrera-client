@@ -2,6 +2,7 @@ import React from "react";
 
 // hooks
 
+import { useTheme } from '@mui/styles';
 import useStyles from "./Confirmation.styles";
 import { useHistory } from "react-router-dom";
 
@@ -11,12 +12,13 @@ import { createSession } from "../../../../api/index";
 
 // components
 
-import { Typography, Button } from "@mui/material";
+import { Typography, Stack, Button } from "@mui/material";
 
 const Confirmation = ({ plan, isSession, session, handleReset }) => {
   // hooks
 
-  const classes = useStyles();
+  const theme = useTheme()
+  const classes = useStyles(theme);
   const history = useHistory();
 
   // render
@@ -29,7 +31,7 @@ const Confirmation = ({ plan, isSession, session, handleReset }) => {
       <Typography variant="subtitle1" gutterBottom>
         Participants have been notified of your invitations.{" "}
       </Typography>
-      <div className={classes.buttons}>
+      <Stack direction="row" spacing={2} className={classes.buttons}>
         <Button
           variant="contained"
           color="primary"
@@ -59,7 +61,7 @@ const Confirmation = ({ plan, isSession, session, handleReset }) => {
         >
           Plan Another Workout
         </Button>
-      </div>
+      </Stack>
     </>
   );
 };

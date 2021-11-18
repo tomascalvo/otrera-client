@@ -3,7 +3,7 @@ import { alpha } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
     instructions: {
-        marginBottom: theme.spacing(4),
+        marginBottom: theme.spacing(3),
     },
     search: {
         position: 'relative',

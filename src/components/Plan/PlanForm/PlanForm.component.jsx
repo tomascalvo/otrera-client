@@ -1,7 +1,9 @@
 // hooks
 
 import React, { useState } from "react";
+import { useTheme } from "@mui/styles";
 import useStyles from "./PlanForm.styles";
+import { useMediaQuery } from "@mui/material";
 import moment from "moment";
 
 // components
@@ -10,10 +12,14 @@ import {
   Paper,
   Typography,
   Stepper,
+  MobileStepper,
   Step,
   StepLabel,
+  Stack,
   Button,
 } from "@mui/material";
+
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
 import getStepContent from "./getStepContent";
 
@@ -25,11 +31,11 @@ const steps = ["Description", "Invitations", "Exercises", "Review Workout"];
 
 const PlanForm = () => {
   // hooks
-
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
 
   // state
-
   const user = JSON.parse(localStorage.getItem("profile"))?.user;
 
   const defaultPlan = {
@@ -114,13 +120,51 @@ const PlanForm = () => {
         <Typography component="h1" variant="h4" align="center">
           New Workout
         </Typography>
-        <Stepper activeStep={activeStep} className={classes.stepper}>
-          {steps.map((label, i) => (
-            <Step key={i}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        {!isXs ? (
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map((label, i) => (
+              <Step key={i}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        ) : (
+          <MobileStepper
+            variant="dots"
+            steps={steps.length}
+            position="static"
+            activeStep={activeStep}
+            sx={{ maxWidth: 600, flexGrow: 1, my: theme.spacing(2) }}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={activeStep === steps.length}
+              >
+                Next
+                {theme.direction === "rtl" ? (
+                  <KeyboardArrowLeft />
+                ) : (
+                  <KeyboardArrowRight />
+                )}
+              </Button>
+            }
+            backButton={
+              <Button
+                size="small"
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                {theme.direction === "rtl" ? (
+                  <KeyboardArrowRight />
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
+                Back
+              </Button>
+            }
+          />
+        )}
         {getStepContent({
           steps,
           step: activeStep,
@@ -133,21 +177,25 @@ const PlanForm = () => {
           setSessionData,
           handleReset,
         })}
-        <div className={classes.buttons}>
-          {activeStep !== 0 && (
-            <Button onClick={handleBack} className={classes.button}>
-              Back
+        {activeStep !== steps.length && (
+          <Stack direction="row" spacing={1} className={classes.buttons}>
+            {activeStep !== 0 && (
+              <Button onClick={handleBack} className={classes.button}>
+                Back
+              </Button>
+            )}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              className={classes.button}
+            >
+              {activeStep === steps.length - 1
+                ? "Finalize Workout Plan"
+                : "Next"}
             </Button>
-          )}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNext}
-            className={classes.button}
-          >
-            {activeStep === steps.length - 1 ? "Finalize Workout Plan" : "Next"}
-          </Button>
-        </div>
+          </Stack>
+        )}
       </Paper>
     </main>
   );
