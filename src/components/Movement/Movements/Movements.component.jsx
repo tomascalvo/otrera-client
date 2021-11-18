@@ -20,9 +20,7 @@ const Movements = () => {
 
   // state
 
-  const defaultMovements =
-    JSON.parse(localStorage.getItem("EDBmovements")) || [];
-
+  const defaultMovements = [];
   const [movements, setMovements] = useState(defaultMovements);
 
   return (

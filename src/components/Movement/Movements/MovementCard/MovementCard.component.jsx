@@ -49,7 +49,7 @@ const MovementCard = ({
     image, 
     _id: movementId, 
     title, 
-    targets, 
+    targets = [], 
     likes = [] },
   setMovements,
   cardIndex,
