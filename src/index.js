@@ -16,8 +16,8 @@ import App from './App';
 
 // env
 dotenv.config();
-console.log('dotenv:');
-console.dir(dotenv);
+// console.log('dotenv:');
+// console.dir(dotenv);
 
 const store = createStore(reducers, compose(
     applyMiddleware(thunk),

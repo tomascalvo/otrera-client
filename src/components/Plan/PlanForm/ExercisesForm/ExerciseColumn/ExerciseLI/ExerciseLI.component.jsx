@@ -2,7 +2,7 @@ import React from "react";
 
 // hooks
 
-import { useTheme } from '@mui/styles';
+import { useTheme } from "@mui/styles";
 import useStyles from "./ExerciseLI.styles";
 
 // components
@@ -23,15 +23,17 @@ import { Draggable } from "react-beautiful-dnd";
 // helper methods
 
 const ExerciseLI = ({
-  exercise: { draggableId, movement, EDBmovement, reps, sets, index },
+  exercise: { draggableId, movement, reps="", sets="", index },
   columns,
   setColumns,
   isSelected,
 }) => {
 
+  console.log(`draggableId: ${draggableId}`);
+  
   // hooks
 
-  const theme = useTheme()
+  const theme = useTheme();
   const classes = useStyles(theme);
 
   function handleSelect(e, buttonType) {
@@ -51,7 +53,6 @@ const ExerciseLI = ({
       splicedArray.splice(lastIndex, 0, {
         draggableId,
         movement,
-        EDBmovement,
         sets,
         reps,
         index: lastIndex,
@@ -63,10 +64,8 @@ const ExerciseLI = ({
     let updatedSelections;
 
     if (buttonType === "select") {
-      updatedOptions = filterOutExercise(columns.options.list);
       updatedSelections = spliceInExercise(columns.selections.list);
     } else if (buttonType === "clear") {
-      updatedOptions = spliceInExercise(columns.options.list);
       updatedSelections = filterOutExercise(columns.selections.list);
     } else {
       return;
@@ -88,7 +87,6 @@ const ExerciseLI = ({
         ? {
             draggableId,
             movement,
-            EDBmovement,
             sets: parseInt(e.target.value),
             reps,
             index,
@@ -97,7 +95,6 @@ const ExerciseLI = ({
         ? {
             draggableId,
             movement,
-            EDBmovement,
             sets,
             reps: parseInt(e.target.value),
             index,
@@ -105,7 +102,6 @@ const ExerciseLI = ({
         : {
             draggableId,
             movement,
-            EDBmovement,
             sets,
             reps,
             index,
@@ -123,12 +119,12 @@ const ExerciseLI = ({
   return (
     <Draggable
       draggableId={draggableId.toString()}
-      key={draggableId}
+      // key={draggableId}
       index={parseInt(index)}
     >
       {(provided) => (
         <ListItem
-          key={draggableId}
+          // key={draggableId}
           role={undefined}
           dense
           button
@@ -144,10 +140,10 @@ const ExerciseLI = ({
               className={classes.avatarImage}
             />
           </ListItemAvatar>
-          <div style={{ width: '100%' }}>
+          <div style={{ width: "100%" }}>
             <ListItemText primary={`${movement?.title || movement?.name}`} />
             {isSelected && (
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <TextField
                   className={classes.setsReps}
                   label="Sets"

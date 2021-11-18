@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 // hooks
 
@@ -43,7 +43,16 @@ import toTitleCase from "../../../../helper methods/toTitleCase";
 
 const MovementCard = ({
   movement,
-  movement: { bodyPart, equipment, gifUrl, id: movementId, name, target },
+  movement: { 
+    // bodyPart, 
+    equipment, 
+    image, 
+    _id: movementId, 
+    title, 
+    targets, 
+    likes = [] },
+  setMovements,
+  cardIndex,
 }) => {
   // hooks
 
@@ -53,66 +62,37 @@ const MovementCard = ({
 
   // state
 
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("profile"))?.user
-  );
-  const [isFavorite, setIsFavorite] = useState("loading...");
+  const userId = JSON.parse(localStorage.getItem("profile"))?.user._id;
+  const isFavorite = likes.includes(userId);
   const [expanded, setExpanded] = React.useState(false);
-
-  // lifecycle
-
-  useEffect(() => {
-    setIsFavorite(
-      user?.favoriteMovements.find((favoriteMovement) => {
-        return favoriteMovement === movementId;
-      })
-        ? true
-        : false
-    );
-  }, [user?.favoriteMovements, movementId]);
 
   // event handlers
 
   const handleFavorite = async (e) => {
     e.preventDefault();
-    console.log("handleFavorite event handler invoked");
-    const profile = JSON.parse(localStorage.getItem("profile"));
-    function updateProfile(updatedUser) {
-      if (updatedUser) {
-        setUser(updatedUser);
-        localStorage.setItem(
-          "profile",
-          JSON.stringify({ ...profile, user: updatedUser })
-        );
+    // determine whether selected movement is a favorite or a non-favorite
+    try {
+      let updatedMovement;
+      if (isFavorite) {
+        // make an api patch request to remove favorite, sending movement._id as parameter
+        // receive an updated movement object as response
+        ({ data: updatedMovement } = await removeFavoriteMovement(movementId));
+        console.log(`got movement with favorite removed:`)
+        console.dir(updatedMovement);
+      } else {
+        // make an api patch request to add favorite, sending movement._id as parameter
+        // receive an updated movement object as response
+        ({ data: updatedMovement } = await addFavoriteMovement(movementId));
+        console.log(`got movement with favorite added:`)
+        console.dir(updatedMovement);
       }
-      return;
-    }
-    if (
-      !user?.favoriteMovements.find((favoriteMovement) => {
-        return favoriteMovement === movementId;
-      })
-    ) {
-      try {
-        const { data: userWithNewFavorite } = await addFavoriteMovement(
-          movementId
-        );
-        console.log("userWithNewFavorite:");
-        console.dir(userWithNewFavorite);
-        updateProfile(userWithNewFavorite);
-        console.log("new favoriteMovement added to user");
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        const { data: userWithFewerFavorites } = await removeFavoriteMovement(
-          movementId
-        );
-        updateProfile(userWithFewerFavorites);
-        console.log("favoriteMovement removed from user");
-      } catch (error) {
-        console.log(error);
-      }
+      // splice the response movement into state.movement
+      setMovements((previous) => {
+        return previous.slice(0, cardIndex).concat(updatedMovement, previous.slice(cardIndex + 1));
+      });
+      // change the heart icon variant from contained to outlined or vice versa
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -137,21 +117,21 @@ const MovementCard = ({
 
   return (
     <Card className={classes.card}>
-      <CardHeader title={toTitleCase(name)} />
-      {gifUrl ? (
+      <CardHeader title={toTitleCase(title)} />
+      {image ? (
         <CardMedia
           className={classes.cardMedia}
           component="img"
           height="400"
-          image={gifUrl || movement?.image}
-          alt={name}
-          // title={name}
+          image={image || movement?.gifUrl}
+          alt={title}
+          // title={title}
         />
       ) : (
         <CircularProgress style={{ margin: "75px auto" }} />
       )}
       <CardActions disableSpacing>
-        {user && (
+        {userId && (
           <>
             {isFavorite !== "loading..." && (
               <IconButton
@@ -183,14 +163,14 @@ const MovementCard = ({
         className={classes.collapse}
       >
         <CardContent className={classes.cardContent} sx={{ paddingTop: 0 } }>
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             Region: {toTitleCase(bodyPart)}
+          </Typography> */}
+          <Typography variant="body2" color="text.secondary">
+            Muscle(s): {toTitleCase(targets[0])}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Muscle(s): {toTitleCase(target)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Equipment: {toTitleCase(equipment)}
+            Equipment: {toTitleCase(equipment[0])}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Author:{" "}

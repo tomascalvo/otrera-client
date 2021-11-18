@@ -3,22 +3,27 @@ import { List } from "@mui/material";
 import { Droppable } from "react-beautiful-dnd";
 import ExerciseLI from "./ExerciseLI/ExerciseLI.component";
 import useStyles from "./ExerciseColumn.styles";
+import { useTheme } from '@mui/styles';
 
 const ExerciseColumn = ({ column, columns, setColumns, isSelected }) => {
-  const classes = useStyles();
+
+  // hooks
+  
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   return (
     <div className={classes.column}>
       <Droppable droppableId={column.id}>
         {(provided) => (
-          // <RootRef rootRef={provided.innerRef}>
-            <List ref={provided.innerRef}>
+            <List {...provided.droppableProps} ref={provided.innerRef}>
               {column?.list.length > 0 && column?.list
                 .sort((a, b) => a.index > b.index)
-                .map((exercise) => {
+                .map((exercise, i) => {
                   return (
                     <ExerciseLI
                       key={exercise.draggableId}
+                      draggableId={exercise.draggableId}
                       exercise={exercise}
                       columns={columns}
                       setColumns={setColumns}
@@ -28,7 +33,6 @@ const ExerciseColumn = ({ column, columns, setColumns, isSelected }) => {
                 })}
               {provided.placeholder}
             </List>
-          // </RootRef>
         )}
       </Droppable>
     </div>

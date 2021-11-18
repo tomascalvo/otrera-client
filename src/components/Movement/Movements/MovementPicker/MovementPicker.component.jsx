@@ -73,18 +73,18 @@ const MovementPicker = ({
   ];
 
   const [query, setQuery] = useState("");
-  const [muscles, setMuscles] = useState([]);
+  const [targets, setTargets] = useState([]);
   const [equipment, setEquipment] = useState("all");
 
   // lifecycle
 
   useEffect(() => {
-    const getMovements = async () => {
-      console.log("Movements.component useEffect getMovements() called");
+    const getStartingMovements = async () => {
+      console.log("Movements.component calls searchMovements()");
       handleSearch();
     };
-    getMovements();
-  }, [query, muscles, equipment]);
+    getStartingMovements();
+  }, [query, targets, equipment ]);
 
   // event handlers
 
@@ -94,11 +94,14 @@ const MovementPicker = ({
 
   const addMuscle = (muscleName) => {
     console.log("addMuscle invoked. argument: ", muscleName);
-    setMuscles([muscleName]);
+    // setTargets((previous) => [...previous, muscleName]);
+    setTargets([muscleName]);
   };
 
   const removeMuscle = (muscleName) => {
-    setMuscles(muscles.filter((muscle) => muscle !== muscleName));
+    setTargets((previous) => {
+      return previous.filter((muscle) => muscle !== muscleName);
+    });
   };
 
   const handleSearch = async (e) => {
@@ -106,7 +109,7 @@ const MovementPicker = ({
     // if (!e || e?.keyCode === 13) {
     const searchParams = {
       query: query !== "" ? query.toLowerCase().trim() : undefined,
-      target: muscles.length > 0 ? muscles : undefined,
+      targets: targets.length > 0 ? targets : undefined,
       equipment: equipment !== "all" ? equipment : undefined,
     };
 
@@ -154,9 +157,13 @@ const MovementPicker = ({
               disablePortal
               options={movementOptions}
               autoHighlight
-              getOptionLabel={(option) => option.name}
+              getOptionLabel={(option) => option?.title || option?.name}
               value={selectedMovement?.id}
-              onChange={setSelectedMovement}
+              onChange={(e, value) => {
+                e.preventDefault();
+                setSelectedMovement(e, value);
+                setQuery("");
+              }}
               renderOption={(props, option) => (
                 <Box
                   component="li"
@@ -170,7 +177,7 @@ const MovementPicker = ({
                     alt={option.name}
                     className={classes.optionImage}
                   />
-                  {option.name}
+                  {option?.title || option?.name}
                 </Box>
               )}
               renderInput={(params) => (
@@ -223,7 +230,7 @@ const MovementPicker = ({
       </Grid>
       <Grid item xs={6} md={4}>
         <MusclePicker
-          muscles={muscles}
+          muscles={targets}
           addMuscle={addMuscle}
           removeMuscle={removeMuscle}
           handleSearch={handleSearch}

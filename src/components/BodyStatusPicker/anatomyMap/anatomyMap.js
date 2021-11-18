@@ -106,9 +106,26 @@ const anatomyMap = ({
       }
     };
     if (isMusclePicker) {
+      const compareSelectionToArea = (selectionId, areaId) => {
+        if (selectionId.split('-')[0] !== areaId.split('-')[0]) {
+          return false;
+        } else {
+          if (!selectionId.split('-')[1]) {
+            return true;
+          } else if (selectionId.split('-')[1] === areaId.split('-')[1]) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+      }
+      // const targetIsSelected = selectedTargets.includes(muscle.id);
+      const targetIsSelected = selectedTargets.some((selectionId) => {
+        return compareSelectionToArea(selectionId, muscle.id);
+      })
+      const classIsSelected = selectedTargets.includes(muscle.class);
       if (
-        selectedTargets.includes(muscle.id) ||
-        selectedTargets.includes(muscle.class)
+        targetIsSelected || classIsSelected
         ) {
         return theme.palette.info.main || "#2196f3";
         // return theme.palette.action.selected || "#2196f3";

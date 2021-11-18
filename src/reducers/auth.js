@@ -1,7 +1,7 @@
 import { AUTH, LOGOUT } from '../constants/actionTypes';
 
 const authReducer = async (state = { authData: null }, action) => {
-  console.log(`authReducer invoked.`);
+  // console.log(`authReducer invoked.`);
   switch(action.type) {
     case AUTH:
       console.log(`setting localStorage profile to:`);

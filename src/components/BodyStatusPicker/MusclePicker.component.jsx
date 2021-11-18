@@ -76,12 +76,19 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
 
   const handleClickArea = (area) => {
     console.log(`${area.name} clicked: `, area);
-    const muscleClass = area.class;
-    console.log(muscleClass, "clicked");
-    if (muscles.includes(muscleClass)) {
-      removeMuscle(muscleClass);
+    // const muscleClass = area.class;
+    const muscleId = area.id.split('-')[0];
+    // console.log(muscleClass, "clicked");
+    console.log(muscleId, "clicked");
+    // if (muscles.includes(muscleClass)) {
+    //   removeMuscle(muscleClass);
+    // } else {
+    //   addMuscle(muscleClass);
+    // }
+    if (muscles.includes(muscleId)) {
+      removeMuscle(muscleId);
     } else {
-      addMuscle(muscleClass);
+      addMuscle(muscleId);
     }
   };
 

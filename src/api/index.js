@@ -3,9 +3,9 @@
 import axios from "axios";
 
 // API
-console.log('process.env:', process.env);
+// console.log('process.env:', process.env);
 const baseURL = process.env.API_BASE_URL || process.env.REACT_APP_API_BASE_URL;
-console.log('baseURL:', baseURL);
+// console.log('baseURL:', baseURL);
 const API = axios.create({ baseURL });
 
 const EDB = axios.create(
@@ -20,11 +20,11 @@ const EDB = axios.create(
 // !! create an interceptor to add the authorization header to requests
 
 API.interceptors.request.use((config) => {
-  console.log(`Authorization intercepter invoked.`);
+  // console.log(`Authorization intercepter invoked.`);
   if (localStorage.getItem("profile")) {
     const authHeader = `Bearer ${JSON.parse(localStorage.getItem("profile")).token
       }`
-    console.log(`Adding authorization header to request: ${authHeader.length < 32 ? authHeader : authHeader.slice(0, 11)}...`);
+    // console.log(`Adding authorization header to request: ${authHeader.length < 32 ? authHeader : authHeader.slice(0, 11)}...`);
     config.headers.Authorization = authHeader;
   }
   return config;
@@ -42,13 +42,15 @@ export const fetchEDBbyName = (query) => EDB.get(`/exercises/name/${query}`); //
 // MongoDB
 
 export const createMovement = (newMovement) =>
-  API.post(`/movements`, newMovement);
+API.post(`/movements`, newMovement);
 export const fetchMovements = () => API.get(`/movements`);
 export const fetchDefaultMovements = () => API.get(`/movements/default`);
 export const fetchMovement = (id) => API.get(`/movements/${id}`);
-export const searchMovements = ({ query, target, equipment }) => API.get(`/movements/${query}/${target}/${equipment}`);
+export const searchMovements = ({ query, targets, equipment }) => API.get(`/movements/${query}/${targets}/${equipment}`);
 export const updateMovement = (id, updatedMovement) =>
-  API.patch(`/movements/${id}`, updatedMovement);
+API.patch(`/movements/${id}`, updatedMovement);
+export const addFavoriteMovement = (movementId) => API.patch(`/movements/addFavorite/${movementId}`);
+export const removeFavoriteMovement = (movementId) => API.patch(`/movements/removeFavorite/${movementId}`);
 export const deleteMovement = (id) => API.delete(`movements/${id}`);
 
 export const createUser = (newUser) => API.post(`/users`, newUser);
@@ -57,17 +59,15 @@ export const signin = (formData) => API.post('/users/signin', formData);
 export const googleSignin = ({ profile, googleToken }) => API.post('/users/googleSignin', { profile, googleToken });
 export const fetchUsers = () => API.get(`/users`);
 export const fetchUser = (userId) => API.get(`/users/${userId}`);
-export const addFavoriteMovement = (movementId) => API.patch(`/users/addFavorite/${movementId}`);
-export const removeFavoriteMovement = (movementId) => API.patch(`/users/removeFavorite/${movementId}`);
 
 export const createBodyStatus = (newBodyStatus) =>
-  API.post(`/bodyStatuses`, newBodyStatus);
+API.post(`/bodyStatuses`, newBodyStatus);
 export const createBodyStatusesByUser = (id, newBodyStatuses) =>
   API.post(`/bodyStatuses/user/${id}/multiple`, newBodyStatuses);
 export const postRecovery = (userId) => API.post(`/bodyStatuses/recover/user/${userId}`);
 export const fetchCurrentBodyStatusesByUser = (id) =>
   API.get(`/bodyStatuses/user/${id}/current`);
-
+  
 export const createPlan = ({ plan, session }) => API.post(`/plans`, { plan, session });
 export const duplicatePlan = (id) => API.post(`/plans/${id}/duplicate`);
 export const fetchPlans = () => API.get(`/plans`);
@@ -82,16 +82,16 @@ export const createSingleMovementSession = (movementId) => API.post(`/sessions/m
 export const fetchSessions = () => API.get(`/sessions`);
 export const fetchSession = (id) => API.get(`/sessions/${id}`);
 export const fetchSessionsByPlanAndUser = (planId, userId) =>
-  API.get(`/sessions/plan/${planId}/user/${userId}`);
+API.get(`/sessions/plan/${planId}/user/${userId}`);
   export const fetchRecentSessions = (planId, userId) =>
   API.get(`/sessions/recent/plan/${planId}/user/${userId}`);
   export const fetchPreviousSessions = (userId) =>
-    API.get(`/sessions/user/${userId}/previous`);
+  API.get(`/sessions/user/${userId}/previous`);
   export const fetchUpcomingSessions = (userId) => API.get(`/sessions/user/${userId}/upcoming`);
-
-export const createPerformance = (newPerformance) => API.post(`/performances`, newPerformance);
-export const fetchPerformances = () => API.get(`/performances`);
-export const fetchPerformancesByMovement = (movementId, userId) => API.get(`performances/movement/${movementId}/user/${userId}`);
+  
+  export const createPerformance = (newPerformance) => API.post(`/performances`, newPerformance);
+  export const fetchPerformances = () => API.get(`/performances`);
+  export const fetchPerformancesByMovement = (movementId, userId) => API.get(`performances/movement/${movementId}/user/${userId}`);
 export const fetchPerformance = (id) => API.get(`/${id}`);
 
 export const createGoal = (newGoal) => API.post(`/goals`, newGoal);

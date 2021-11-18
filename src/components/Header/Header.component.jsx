@@ -29,7 +29,6 @@ const Header = ({
 
   const theme = useTheme();
   const classes = useStyles(theme);
-  console.log(classes)
   
   // render
 
