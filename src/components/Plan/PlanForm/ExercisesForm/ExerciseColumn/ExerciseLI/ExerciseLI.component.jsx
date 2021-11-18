@@ -28,8 +28,6 @@ const ExerciseLI = ({
   setColumns,
   isSelected,
 }) => {
-
-  console.log(`draggableId: ${draggableId}`);
   
   // hooks
 

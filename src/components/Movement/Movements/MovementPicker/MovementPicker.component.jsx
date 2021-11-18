@@ -155,14 +155,20 @@ const MovementPicker = ({
           <>
             <Autocomplete
               disablePortal
+              clearOnBlur
               options={movementOptions}
               autoHighlight
               getOptionLabel={(option) => option?.title || option?.name}
               value={selectedMovement?.id}
               onChange={(e, value) => {
+                // console.log('MovementPicker Autocomplete onChange invoked');
+                // console.log('value:');
+                // console.dir(value);
                 e.preventDefault();
-                setSelectedMovement(e, value);
-                setQuery("");
+                if (value !== null) {
+                  setSelectedMovement(e, value);
+                  setQuery("");
+                }
               }}
               renderOption={(props, option) => (
                 <Box
