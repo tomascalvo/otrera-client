@@ -128,7 +128,7 @@ const Dashboard = ({ user }) => {
           </Typography>
         </Box>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={8} md={9} xl={4}>
+          <Grid item xs={12} sm={8} md={9} >
             <Paper className={cx(classes.paper, classes.flexPaper)}>
               <Typography component="h3" variant="h5">
                 Progress
@@ -160,7 +160,7 @@ const Dashboard = ({ user }) => {
               )}
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={4} md={3} xl={2}>
+          <Grid item xs={12} sm={4} md={3} >
             <Paper className={cx(
               classes.paper, 
               // classes.flexPaper
@@ -178,7 +178,7 @@ const Dashboard = ({ user }) => {
               />
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={4} md={3} xl={2}>
+          <Grid item xs={12} sm={4} md={3} >
             <Paper className={classes.paper}>
               <Typography component="h3" variant="h5">
                 Condition
@@ -186,7 +186,7 @@ const Dashboard = ({ user }) => {
               <BodyStatusPicker setStatus={setStatus} />
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={9} xl={4}>
+          <Grid item xs={12} sm={8} md={9} >
             <Paper className={classes.paper}>
               <Typography component="h3" variant="h5">
                 Suggested Workouts

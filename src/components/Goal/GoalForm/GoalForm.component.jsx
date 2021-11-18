@@ -96,10 +96,12 @@ const GoalForm = () => {
         movement: newGoal.movement.id,
       });
 
-      console.log("createGoal confirmation:");
-      console.dir(confirmation);
+      history.push('/goals');
 
-      setIsConfirmation(true);
+      // console.log("createGoal confirmation:");
+      // console.dir(confirmation);
+
+      // setIsConfirmation(true);
     } catch (error) {
       console.log(error);
     }
