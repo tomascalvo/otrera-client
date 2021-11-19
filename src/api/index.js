@@ -57,8 +57,12 @@ export const createUser = (newUser) => API.post(`/users`, newUser);
 export const signup = (formData) => API.post('/users/signup', formData);
 export const signin = (formData) => API.post('/users/signin', formData);
 export const googleSignin = ({ profile, googleToken }) => API.post('/users/googleSignin', { profile, googleToken });
+export const suggestConnections = () => API.get(`/users/suggestions`);
 export const fetchUsers = () => API.get(`/users`);
 export const fetchUser = (userId) => API.get(`/users/${userId}`);
+
+export const createDyad = (otherId) => API.post(`/dyads/${otherId}`);
+export const fetchDyads = () => API.get(`/dyads`);
 
 export const createBodyStatus = (newBodyStatus) =>
 API.post(`/bodyStatuses`, newBodyStatus);

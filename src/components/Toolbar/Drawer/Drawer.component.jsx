@@ -24,6 +24,7 @@ import {
   CalendarToday as CalendarIcon,
   Timeline as TimelineIcon,
   Dashboard as DashboardIcon,
+  People as PeopleIcon
 } from "@mui/icons-material";
 
 const Drawer = ({ anchor, open, toggleDrawer }) => {
@@ -45,6 +46,8 @@ const Drawer = ({ anchor, open, toggleDrawer }) => {
         return <CalendarIcon />;
       case "GOALS":
         return <TimelineIcon />;
+      case "CONNECTIONS":
+        return <PeopleIcon />;
       default:
         return <MailIcon />;
     }
@@ -66,8 +69,8 @@ const Drawer = ({ anchor, open, toggleDrawer }) => {
           { title: "Goals", route: "/goals", icon: "GOALS" },
           { title: "Sessions", route: "/sessions", icon: "CALENDAR" },
           { title: "Workouts", route: "/plans", icon: "WORKOUTPLANS" },
-          //   { title: "My Workout Sessions", route: "/workouts/sessions", icon: 'WORKOUTSESSIONS'  },
           { title: "Exercises", route: "/movements", icon: "EXERCISES" },
+          { title: "Connections", route: "/connections", icon: "CONNECTIONS" },
         ]
         .filter((link) => {
           const hiddenLinks = [

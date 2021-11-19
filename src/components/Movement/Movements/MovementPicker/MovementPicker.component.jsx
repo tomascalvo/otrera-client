@@ -80,8 +80,12 @@ const MovementPicker = ({
 
   useEffect(() => {
     const getStartingMovements = async () => {
-      console.log("Movements.component calls searchMovements()");
-      handleSearch();
+      try {
+        console.log("Movements.component calls searchMovements()");
+        handleSearch();
+      } catch (error) {
+        console.log(error);
+      }
     };
     getStartingMovements();
   }, [query, targets, equipment ]);

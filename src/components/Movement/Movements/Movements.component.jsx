@@ -18,13 +18,12 @@ import MovementPicker from "./MovementPicker/MovementPicker.component";
 import MovementCard from "./MovementCard/MovementCard.component";
 
 const Movements = () => {
-  // hooks
 
+  // hooks
   const theme = useTheme();
   const classes = useStyles(theme);
 
   // state
-
   const defaultMovements = "loading...";
   const [movements, setMovements] = useState(defaultMovements);
 

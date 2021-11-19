@@ -35,6 +35,7 @@ import Goals from "./components/Goal/Goals/Goals.component";
 import GoalForm from "./components/Goal/GoalForm/GoalForm.component";
 import Perform from "./components/Perform/Perform.component";
 import Status from "./components/Status/Status.component";
+import Connections from './components/Connections/Connections.component';
 import Footer from "./components/Footer/Footer.component";
 
 const AppWrapper = () => {
@@ -203,6 +204,9 @@ const App = ({ handleDarkModeToggle }) => {
           </Route>
           <Route exact path="/goals/create">
             <GoalForm />
+          </Route>
+          <Route exact path="/connections/">
+            <Connections />
           </Route>
           <Route path="/">
             <Footer styles={{ marginTop: "auto" }} />
