@@ -50,14 +50,14 @@ const Chart = ({ goals, selectedGoal }) => {
   if (selectedGoal) {
     datasets = [getDataset(selectedGoal, theme.palette.primary.main)];
   } else {
-    console.log(`Chart.component is mapping through goals to get datasets`);
+    // console.log(`Chart.component is mapping through goals to get datasets`);
     datasets = sortGoals(goals).map((goal, i) => {
       const colors = ["primary", "secondary", "success", "warning", "info"];
       const color = theme.palette[colors[i % 5]].main;
       return getDataset(goal, color, goals);
     });
-    console.log(`datasets:`);
-    console.dir(datasets);
+    // console.log(`datasets:`);
+    // console.dir(datasets);
   }
 
   const movementName = EDBmovements.find((mvmnt) => {

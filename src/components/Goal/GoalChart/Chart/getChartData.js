@@ -99,7 +99,7 @@ export const getDataset = (goal, color, goals) => {
 
   // THIS METHOD TAKES ARGUMENTS GOAL, GOALS, AND COLOR AND RETURNS A DATASET
   
-  console.log(`getDataset called for goal ${goal.title}`);
+  // console.log(`getDataset called for goal ${goal.title}`);
 
   // GET DATES FOR X AXIS FROM GOALS (ALL GOALS DISPLAYED - MAY BE JUST ONE OR MULTIPLE)
   let dates;

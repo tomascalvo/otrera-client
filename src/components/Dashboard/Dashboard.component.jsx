@@ -29,7 +29,6 @@ const Dashboard = ({ user }) => {
   const history = useHistory();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("sm"));
-  console.log(`isXs: ${isXs}`);
 
   // state
   const [progress, setProgress] = useState([]);
