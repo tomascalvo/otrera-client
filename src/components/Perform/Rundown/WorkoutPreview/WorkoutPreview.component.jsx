@@ -48,7 +48,7 @@ const WorkoutPreview = ({ performance }) => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={`${
-                    exercise?.movement?.title || exercise?.EDBmovement.name
+                    exercise?.movement?.title || exercise?.EDBmovement?.name
                   }`}
                   secondary={exercise?.movement?.description}
                 />

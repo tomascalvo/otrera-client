@@ -45,7 +45,6 @@ const Connections = () => {
     const getSuggestions = async () => {
       try {
         const { data } = await suggestConnections();
-        // const { data } = await fetchUsers();
         setSuggestions(data);
       } catch (error) {
         setSuggestions([]);
