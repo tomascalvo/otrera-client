@@ -26,8 +26,8 @@ import { fetchSession, createPerformance } from "../../api/index";
 // import findMovement from "./findMovement";
 
 const Perform = () => {
-  // hooks
 
+  // hooks
   const classes = useStyles();
   let { id: sessionId } = useParams();
   const theme = useTheme();

@@ -8,6 +8,7 @@ import useStyles from "./Goals.styles";
 
 import { Container, Typography, Button } from "@mui/material";
 
+import Header from '../../Header/Header.component';
 import { DoughnutCards, GoalChart } from "../../index";
 
 // api
@@ -44,25 +45,11 @@ const Goals = () => {
 
   return (
     <>
+      <Header title="Progress" subheading="            Set goals and see your progress displayed as a chart. Goals require
+            your choice of movement and indicators: resistance, reps, or both."
+      />
       <div className={classes.container}>
         <Container maxWidth="sm">
-          <Typography
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Progress
-          </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Set goals and see your progress displayed as a chart. Goals require
-            your choice of movement and indicators: resistance, reps, or both.
-          </Typography>
           <Button
             variant="contained"
             fullWidth
