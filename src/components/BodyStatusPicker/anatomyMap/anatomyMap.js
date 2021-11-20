@@ -14,7 +14,7 @@ const anatomyMap = ({
     }
   }),
 }) => {
-  // console.log('anatomyMap isFrontView prop: ', isFrontView);
+  console.log(`anatomyMap theme.palette.mode: ${theme.palette.mode}`)
   const scaleCoords = (coords) => {
     const scaledCoords = coords.map((coord, i) => {
       const scaledCoord = coord * (finalWidth / startingWidth);
@@ -119,7 +119,6 @@ const anatomyMap = ({
           }
         };
       }
-      // const targetIsSelected = selectedTargets.includes(muscle.id);
       const targetIsSelected = selectedTargets.some((selectionId) => {
         return compareSelectionToArea(selectionId, muscle.id);
       })
@@ -127,12 +126,11 @@ const anatomyMap = ({
       if (
         targetIsSelected || classIsSelected
         ) {
+          // this is the color of the selected muscles for the exercise picker
         return theme.palette.info.main || "#2196f3";
-        // return theme.palette.action.selected || "#2196f3";
       } else {
-        return "rgba(128, 128, 128, 0.5)";
-        // return theme.palette.background.paper || "#404040";
-        // return theme.palette.action.disabled || "rgba(128, 128, 128, 0.5)";
+        // this is the color of the unselected muscles for the exercise picker
+        return theme.palette.mode === 'light' ? '#eee' : '#222';
       }
     } else {
       const muscleId = muscle?.id;

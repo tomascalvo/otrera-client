@@ -14,8 +14,8 @@ import {
 } from "@material-ui/icons";
 
 // assets
-import anatomyImage from "../../assets/anatomy-image-7.png";
-import anatomyImageInverted from "../../assets/anatomy-image-7-inverse.png";
+import anatomyImage from "../../assets/anatomy-image-8-444.png";
+import anatomyImageInverted from "../../assets/anatomy-image-8-bbb.png";
 // import {targets as targetStrings, bodyParts as bodyPartStrings, conditions } from "./queryStrings";
 
 // api
@@ -50,6 +50,7 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
   // }, [innerHeight, innerWidth]);
 
   useEffect(() => {
+    console.log(`MusclePicker.component theme.palette.mode: ${theme.palette.mode}`);
     setAnatomyMap(
       anatomyMapper({
         theme,
@@ -61,7 +62,7 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
     // return () => {
     //   setAnatomyMap(anatomyMapper({ theme, isMusclePicker: true, isFrontView, }));
     // }
-  }, [muscles, isFrontView, theme]);
+  }, [muscles, isFrontView, theme ]);
 
   // event handlers
 
@@ -140,6 +141,12 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
         map={anatomyMap}
         imgWidth={333}
         width={150}
+        onLoad={() => {
+          console.log('ImageMapper onLoad invoked');
+          console.log('current anatomyMap:');
+          console.dir(anatomyMap);
+        }
+      }
         onMouseEnter={(area) => onHover(area)}
         onMouseLeave={(area) => onMouseOut(area)}
         onClick={(area) => {
@@ -148,7 +155,7 @@ const MusclePicker = ({ muscles, addMuscle, removeMuscle }) => {
         fillColor={theme.palette.info.light || "#1976d2"}
         // fillColor= {theme.palette.action.hover || "#1976d2"}
         // strokeColor= {"rgba(128, 128, 128, 0.5)"}
-        strokeColor={theme.palette.mode === "dark" ? "#fff" : "#000"}
+        strokeColor={theme.palette.mode === "dark" ? "#888" : "#888"}
         style={{ margin: "0 auto" }}
       />
       {hoveredArea && (
