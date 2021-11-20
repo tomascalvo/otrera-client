@@ -63,6 +63,10 @@ export const fetchUser = (userId) => API.get(`/users/${userId}`);
 
 export const createDyad = (otherId) => API.post(`/dyads/${otherId}`);
 export const fetchDyads = () => API.get(`/dyads`);
+export const deleteDyad = (dyadId) => API.delete(`/dyads/delete/${dyadId}`);
+
+export const createConnectionRequest = (recipientId) => API.post(`/connectionRequests/${recipientId}`);
+export const deleteConnectionRequest = (recipientId) => API.delete(`/connectionRequests/${recipientId}`);
 
 export const createBodyStatus = (newBodyStatus) =>
 API.post(`/bodyStatuses`, newBodyStatus);

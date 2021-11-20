@@ -36,6 +36,7 @@ import GoalForm from "./components/Goal/GoalForm/GoalForm.component";
 import Perform from "./components/Perform/Perform.component";
 import Status from "./components/Status/Status.component";
 import Connections from './components/Connections/Connections.component';
+import UserProfile from './components/User/UserProfile/UserProfile.component.jsx';
 import Footer from "./components/Footer/Footer.component";
 
 const AppWrapper = () => {
@@ -207,6 +208,9 @@ const App = ({ handleDarkModeToggle }) => {
           </Route>
           <Route exact path="/connections/">
             <Connections />
+          </Route>
+          <Route exact path="/users/:userId">
+            <UserProfile />
           </Route>
           <Route path="/">
             <Footer styles={{ marginTop: "auto" }} />
