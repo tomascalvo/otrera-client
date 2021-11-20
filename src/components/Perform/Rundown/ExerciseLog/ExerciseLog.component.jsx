@@ -38,7 +38,7 @@ const ExerciseLog = ({
   return (
     <>
       <ExerciseCard
-        movement={performance.attempts[activeStep - 1]?.movement || performance.attempts[activeStep - 1]?.EDBmovement}
+        movement={performance.attempts[activeStep - 1]?.movement}
         goalResistance={performance.attempts[activeStep - 1]?.resistance}
         goalReps={performance.attempts[activeStep - 1]?.reps}
         goalSets={performance.attempts[activeStep - 1]?.sets}

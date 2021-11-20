@@ -24,6 +24,7 @@ import { fetchSession, createPerformance } from "../../api/index";
 // methods
 
 // import findMovement from "./findMovement";
+import getResistanceByEquipment from "../../helperMethods/getDefaultResistance";
 
 const Perform = () => {
 
@@ -143,7 +144,7 @@ const Perform = () => {
           const setsQuantity = exercise?.sets || 3;
           for (let i = 0; i < setsQuantity; i++) {
             attemptSets.push({
-              resistance: (exercise?.EDBmovement?.equipment === "barbell" || exercise?.movement?.equipment === "barbell") ? 45 : (exercise?.EDBmovement?.equipment === "dumbbell" || exercise?.movement?.equipment === "dumbbell") ? 5 : undefined,
+              resistance: getResistanceByEquipment(exercise.movement.equipment),
               reps: undefined,
             });
           }

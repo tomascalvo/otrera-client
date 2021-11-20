@@ -23,7 +23,6 @@ const DoughnutChartCard = ({
   goal: {
     _id: id,
     movement = undefined,
-    EDBmovement = undefined,
     resistance,
     reps,
     title = undefined,
@@ -73,7 +72,7 @@ const DoughnutChartCard = ({
     console.log('handleAttempt invoked');
     try {
       // invoke api method to create a new plan with just this movement and a new session with this plan and just the current user as invitee
-      const { data: { _id: sessionId }} = await createSingleMovementSession(movement?._id || EDBmovement?.id);
+      const { data: { _id: sessionId }} = await createSingleMovementSession(movement?._id);
       // navigate to performance page with useHistory hook
       history.push(`/sessions/${sessionId}/perform`);
     } catch (error) {
@@ -171,7 +170,7 @@ const DoughnutChartCard = ({
             }}
           />
           <Typography color="textSecondary" gutterBottom>
-            {EDBmovement?.name}
+            {movement?.title}
           </Typography>
           <Typography variant="h5">
             {resistance} lbs

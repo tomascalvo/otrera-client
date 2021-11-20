@@ -8,7 +8,15 @@ import { useMediaQuery } from "@mui/material";
 import cx from "classnames";
 
 // components
-import { Container, Box, Grid, Paper, Typography, Button } from "@mui/material";
+import {
+  Container,
+  Box,
+  Grid,
+  Paper,
+  Typography,
+  Button,
+  Tooltip,
+} from "@mui/material";
 
 import BodyStatusPicker from "../BodyStatusPicker/BodyStatusPicker.component.jsx";
 import ListModule from "./ListModule/ListModule.component";
@@ -127,11 +135,24 @@ const Dashboard = ({ user }) => {
           </Typography>
         </Box>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={8} md={9} >
+          <Grid item xs={12} sm={8} md={9}>
             <Paper className={cx(classes.paper, classes.flexPaper)}>
-              <Typography component="h3" variant="h5">
-                Progress
-              </Typography>
+              <Box
+                sx={{ display: 'flex' }}
+              >
+                <Tooltip title="View Goals" arial-label="View Goals" placement="right-start" arrow >
+                  <Typography
+                    component="h3"
+                    variant="h5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      history.push("/goals");
+                    }}
+                  >
+                    Progress
+                  </Typography>
+                </Tooltip>
+              </Box>
               {progress.length > 0 ? (
                 <div style={{ height: "100%" }}>
                   <GoalChart
@@ -159,11 +180,13 @@ const Dashboard = ({ user }) => {
               )}
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={4} md={3} >
-            <Paper className={cx(
-              classes.paper, 
-              // classes.flexPaper
-              )}>
+          <Grid item xs={12} sm={4} md={3}>
+            <Paper
+              className={cx(
+                classes.paper
+                // classes.flexPaper
+              )}
+            >
               <Typography component="h3" variant="h5">
                 Upcoming Workouts
               </Typography>
@@ -177,7 +200,7 @@ const Dashboard = ({ user }) => {
               />
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={4} md={3} >
+          <Grid item xs={12} sm={4} md={3}>
             <Paper className={classes.paper}>
               <Typography component="h3" variant="h5">
                 Condition
@@ -185,7 +208,7 @@ const Dashboard = ({ user }) => {
               <BodyStatusPicker setStatus={setStatus} />
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={8} md={9} >
+          <Grid item xs={12} sm={8} md={9}>
             <Paper className={classes.paper}>
               <Typography component="h3" variant="h5">
                 Suggested Workouts

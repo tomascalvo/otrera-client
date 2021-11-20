@@ -39,13 +39,10 @@ const GoalForm = () => {
     finish: undefined,
   };
 
-  const defaultMovements =
-    JSON.parse(localStorage.getItem("EDBmovements")) || [];
-
   const [formData, setFormData] = useState(blankForm);
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState("");
-  const [movementOptions, setMovementOptions] = useState(defaultMovements);
+  const [movementOptions, setMovementOptions] = useState([]);
   const [isConfirmation, setIsConfirmation] = useState(false);
 
   // lifecycle
@@ -93,7 +90,7 @@ const GoalForm = () => {
 
       const { data: confirmation } = await createGoal({
         ...newGoal,
-        movement: newGoal.movement.id,
+        movement: newGoal.movement._id,
       });
 
       history.push('/goals');

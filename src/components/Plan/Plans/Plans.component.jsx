@@ -17,6 +17,8 @@ import {
 import PlanCard from "./PlanCard/PlanCard.component";
 import SessionsAlert from "./SessionsAlert/SessionsAlert.component";
 
+import Header from "../../Header/Header.component";
+
 // api
 import { fetchPlans } from "../../../api/index";
 
@@ -89,28 +91,22 @@ const Plans = () => {
         open={openAlert}
         onClick={() => setOpenAlert(false)}
       >
-        {openAlert && <SessionsAlert sessions={sessions} openAlert={openAlert} setOpenAlert={setOpenAlert} />}
+        {openAlert && (
+          <SessionsAlert
+            sessions={sessions}
+            openAlert={openAlert}
+            setOpenAlert={setOpenAlert}
+          />
+        )}
       </Backdrop>
+      <Header
+        title="Workout Plans"
+        subheading="Start a workout, schedule a workout for later or create a new
+        workout plan. Filter by date created, scheduled start time, rating,
+        muscle group, or estimated duration."
+      />
       <div className={classes.container}>
         <Container maxWidth="sm">
-          <Typography
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Workout Plans
-          </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Start a workout, schedule a workout for later or create a new
-            workout plan. Filter by date created, scheduled start time, rating,
-            muscle group, or estimated duration.
-          </Typography>
           {workoutData.length < 1 ? (
             <Button
               variant="contained"

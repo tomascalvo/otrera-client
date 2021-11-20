@@ -5,8 +5,9 @@ import React from "react";
 
 // components
 
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 
+import Header from "../Header/Header.component";
 import BodyStatusPicker from "../BodyStatusPicker/BodyStatusPicker.component";
 
 const Status = () => {
@@ -18,36 +19,13 @@ const Status = () => {
   // lifecycle
 
   return (
-    <main>
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-        }}
-      >
-        <Container maxWidth="sm">
-          <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
-            Status
-          </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.secondary"
-            paragraph
-          >
-            Click a muscle to log its condition. Suggested workouts will be
+    <>
+      <Header
+        title="Status"
+        subheading="Click a muscle to log its condition. Suggested workouts will be
             filtered to exercise fully-recovered muscles and avoid muscles that
-            are fatigued, sore, injured, or impaired.
-          </Typography>
-        </Container>
-      </Box>
+            are fatigued, sore, injured, or impaired."
+      />
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid
           container
@@ -57,12 +35,11 @@ const Status = () => {
           justify="center"
         >
           <Grid item xs={12}>
-            <BodyStatusPicker 
-            />
+            <BodyStatusPicker />
           </Grid>
         </Grid>
       </Container>
-    </main>
+    </>
   );
 };
 

@@ -105,12 +105,12 @@ export const getDataset = (goal, color, goals) => {
   let dates;
   if (goals) {
     const sets = getSets(goals);
-    console.log(`goal ${goal.title} sets.length: ${sets.length}`);
+    // console.log(`goal ${goal.title} sets.length: ${sets.length}`);
     dates = getDates(sets);
   } else {
     dates = getDates(getSets(goal));
   }
-  console.log('dates.length: ', dates.length);
+  // console.log('dates.length: ', dates.length);
 
   // GET RESISTANCES FOR Y AXIS FROM GOAL (JUST THE ONE PARTICULAR GOAL BEING MAPPED RIGHT NOW)
   const data = dates
@@ -127,8 +127,8 @@ export const getDataset = (goal, color, goals) => {
       .sort((firstAttempt, secondAttempt) => {
         return moment(firstAttempt.attempted).isBefore(moment(secondAttempt.attempted)) ? -1 : 1;
       });
-      console.log(`{goal.title} attempts:`);
-      console.dir(setsAtThisMoment);
+      // console.log(`${goal.title} attempts:`);
+      // console.dir(setsAtThisMoment);
       if (setsAtThisMoment.length > 0) {
         return setsAtThisMoment;
       } else {
@@ -137,8 +137,8 @@ export const getDataset = (goal, color, goals) => {
     })
     .flat();
 
-  console.log(`data for goal ${goal.title}:`);
-  console.dir(data);
+  // console.log(`data for goal ${goal.title}:`);
+  // console.dir(data);
 
   let sortedData;
 
@@ -168,12 +168,12 @@ export const getDataset = (goal, color, goals) => {
     sortedData = separateSets(data);
   }
 
-  console.log('data: ');
-  console.dir(data);
-  console.log('mapped data: ');
-  console.dir(data.map((datum) => {
-    return {...datum, EDBmovement: datum?.EDBmovement?.name}
-  }));
+  // console.log('data: ');
+  // console.dir(data);
+  // console.log('mapped data: ');
+  // console.dir(data.map((datum) => {
+  //   return {...datum, EDBmovement: datum?.EDBmovement?.name}
+  // }));
 
   return {
       data: data.map((set) => {
