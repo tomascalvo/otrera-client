@@ -3,8 +3,8 @@ import moment from "moment";
 
 // hooks
 
-import { useTheme } from '@mui/styles';
-import useStyles from './SessionsList.styles';
+import { useTheme } from "@mui/styles";
+import useStyles from "./SessionsList.styles";
 
 // components
 
@@ -20,13 +20,14 @@ import {
   Typography,
 } from "@mui/material";
 
-const SessionsList = ({ 
-  sessions="loading", 
-  handleOnClick={function() {
-    console.log('SessionsList ListItem clicked');
-  }},
+const SessionsList = ({
+  sessions = "loading",
+  handleOnClick = {
+    function() {
+      console.log("SessionsList ListItem clicked");
+    },
+  },
 }) => {
-
   // hooks
 
   const theme = useTheme();
@@ -53,17 +54,7 @@ const SessionsList = ({
   return (
     <Container style={{ padding: 0 }} maxWidth="md">
       {sessions.length < 1 ? (
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Grid item>
-            <Typography>You have no workout sessions scheduled in the future.</Typography>
-          </Grid>
-        </Grid>
+        <Typography sx={{ m: `${theme.spacing(1)} 0` }} >No sessions.</Typography>
       ) : (
         <List aria-label="workout sessions">
           {sessions.map((session, i) => (
@@ -75,7 +66,17 @@ const SessionsList = ({
               disableGutters
             >
               <ListItemAvatar>
-                <Avatar alt="workout" src={session?.plan?.image} className={session?.plan?.image.includes('d205bpvrqc9yn1.cloudfront.net') ? classes.gifUrl : ''} />
+                <Avatar
+                  alt="workout"
+                  src={session?.plan?.image}
+                  className={
+                    session?.plan?.image.includes(
+                      "d205bpvrqc9yn1.cloudfront.net"
+                    )
+                      ? classes.gifUrl
+                      : ""
+                  }
+                />
               </ListItemAvatar>
               <ListItemText
                 primary={session?.plan?.title}
