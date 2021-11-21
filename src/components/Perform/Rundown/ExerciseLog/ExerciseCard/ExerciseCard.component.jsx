@@ -47,7 +47,7 @@ const ExerciseCard = ({
         {movement?.title || movement.name}
       </Typography>
       <Typography variant="body1" className={classes.text}>
-        {movement?.description || `${movement.equipment} exercise targeting the ${movement.target}`}
+        {movement?.description || `${movement.equipment} exercise targeting the ${movement.targets}`}
       </Typography>
       {movement?.instructions && (
         <List dense>

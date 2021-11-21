@@ -128,14 +128,14 @@ const Rundown = ({
       resistance: resistance,
       attempted: new Date(),
     };
-    console.log("updatedSet: ", updatedSet);
+    // console.log("updatedSet: ", updatedSet);
     sets.splice(setIndex, 1, updatedSet);
-    console.log("sets: ", sets);
+    // console.log("sets: ", sets);
     const updatedAttempt = {
       ...currentAttempt,
       sets,
     };
-    console.log("updatedAttempt: ", updatedAttempt);
+    // console.log("updatedAttempt: ", updatedAttempt);
     attempts.splice([activeStep - 1], 1, updatedAttempt);
     setPerformance((previous) => ({
       ...previous,
