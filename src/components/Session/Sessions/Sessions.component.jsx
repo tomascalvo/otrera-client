@@ -115,6 +115,7 @@ const Sessions = () => {
             <Typography variant="h5">Upcoming Workout Sessions</Typography>
             <SessionsList
               sessions={upcomingSessions}
+              setSessions={setUpcomingSessions}
               handleOnClick={handlePerformSession}
             />
           </Grid>
@@ -122,6 +123,7 @@ const Sessions = () => {
             <Typography variant="h5">Previous Workout Sessions</Typography>
             <SessionsList
               sessions={previousSessions}
+              setSessions={setPreviousSessions}
               handleOnClick={handleViewSessionDetails}
             />
           </Grid>
