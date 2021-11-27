@@ -23,8 +23,8 @@ import Header from "../../Header/Header.component";
 import { fetchPlans } from "../../../api/index";
 
 const Plans = () => {
-  // hooks
 
+  // hooks
   const classes = useStyles();
   const history = useHistory();
 
@@ -41,6 +41,8 @@ const Plans = () => {
   useEffect(() => {
     async function fetchData() {
       const { data } = await fetchPlans();
+      console.log("data:");
+      console.dir(data);
       setWorkoutData(data);
     }
     fetchData();

@@ -74,7 +74,7 @@ const Drawer = ({ anchor, open, toggleDrawer }) => {
         ]
         .filter((link) => {
           const hiddenLinks = [
-            "Dashboard", "Status", "Goals", "Sessions"
+            "Dashboard", "Status", "Goals", "Sessions", "Connections",
           ]
           return localStorage.getItem("profile") ? true : !hiddenLinks.includes(link.title);
         }).map(({ title, route, icon }, index) => (

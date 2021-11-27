@@ -59,11 +59,11 @@ const PlanCard = ({
     e.preventDefault();
     console.log(`PlanCard.component invokes async startWorkout(e).`);
     // search for a session to start. The session must match the plan shown on the PlanCard. The session must have the current user's _id under creator, leader, invitees, or attendees.
-    console.log(`PlanCard.component invokes api.fetchRecentSessions(planId=${planId}, user._id=${user._id}).`);
+    console.log(`PlanCard.component invokes api.fetchRecentSessions(planId=${planId}, user?._id=${user?._id}).`);
     try {
       const { data: existingSessions } = await fetchRecentSessions(
         planId,
-        user._id
+        user?._id
       );
       console.log(`existingSessions.length: ${existingSessions.length}`);
       // if there are already sessions scheduled for this plan for this user, create an alert asking the user if they want to perform a scheduled session or perform a new session for this plan
@@ -81,7 +81,7 @@ const PlanCard = ({
         data: { _id: sessionId },
       } = await createSession({
         plan: planId,
-        creator: user._id,
+        creator: user?._id,
       });
       // navigate to performance page with useHistory hook
       history.push(`/sessions/${sessionId}/perform`);
@@ -89,6 +89,13 @@ const PlanCard = ({
       console.log(error);
     }
   };
+
+  // render
+
+  if (!planId) {
+    return <CircularProgress style={{ margin: "75px auto" }} />
+
+  }
 
   return (
     <Grid item xs={12} sm={6} md={4} xl={3}>
@@ -175,7 +182,7 @@ const PlanCard = ({
           >
             Duplicate
           </Button> */}
-          {creator === user._id && (
+          {creator === user?._id && (
             <Button
               size="small"
               color="secondary"
