@@ -22,7 +22,7 @@ import {
 
 import { PersonRemove as RemoveIcon } from "@mui/icons-material";
 
-const user = JSON.parse(localStorage.getItem("profile")).user;
+const user = JSON.parse(localStorage.getItem("profile"))?.user;
 
 const CurrentConnectionsList = ({ connections, setConnections }) => {
 
