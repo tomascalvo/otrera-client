@@ -23,20 +23,23 @@ const Rundown = ({
     e.preventDefault();
     const attempts = performance.attempts;
     const currentAttempt = attempts[activeStep - 1];
-    // console.log("currentAttempt: ", currentAttempt);
     const sets = currentAttempt?.sets;
     const setIndex = parseInt(e.target.id.charAt(0));
     const currentSet = currentAttempt.sets[setIndex];
-    // console.log("currentSet: ", currentSet);
+    const parse = (value) => {
+      const parsed = parseInt(value);
+      if (isNaN(parsed)) { return ""; }
+      return parsed;
+    }
     const updatedSet = {
       ...currentSet,
       attempted:
         currentSet.attempted === undefined ? new Date() : currentSet.attempted,
       resistance: e.target.id.includes("resistance")
-        ? parseInt(e.target.value)
+        ? parse(e.target.value)
         : currentSet.resistance,
       reps: e.target.id.includes("reps")
-        ? parseInt(e.target.value)
+        ? parse(e.target.value)
         : currentSet.reps,
     };
     sets.splice(setIndex, 1, updatedSet);
