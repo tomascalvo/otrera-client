@@ -112,6 +112,8 @@ export const fetchPreviousSessions = (userId) =>
 export const fetchUpcomingSessions = (userId) =>
   API.get(`/sessions/user/${userId}/upcoming`);
 export const inviteUser = ({ userId, sessionId }) => API.patch(`/sessions/${sessionId}/invite/${userId}`);
+export const declineInvitation = (sessionId) =>
+  API.patch(`/sessions/${sessionId}/decline`);
 export const deleteSession = (sessionId) =>
   API.delete(`/sessions/${sessionId}`);
 

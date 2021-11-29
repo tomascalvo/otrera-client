@@ -7,7 +7,7 @@ import useStyles from "./Sessions.styles";
 // components
 
 import { Container, Typography, Grid, Stack, Box, Button } from "@mui/material";
-import Header from '../../Header/Header.component';
+import Header from "../../Header/Header.component";
 import SessionsList from "./SessionsList/SessionsList.component";
 
 // api
@@ -18,7 +18,6 @@ import {
 } from "../../../api/index";
 
 const Sessions = () => {
-
   // hooks
   const history = useHistory();
   const classes = useStyles();
@@ -72,8 +71,12 @@ const Sessions = () => {
   };
 
   return (
-    <div className={classes.container}>
-        <Header title="Sessions" subheading="View previous and upcoming workouts." />
+    <>
+    {/* <div className={classes.container}> */}
+      <Header
+        title="Sessions"
+        subheading="View previous and upcoming workouts."
+      />
       <Container maxWidth="sm">
         <Stack
           sx={{ pt: 4 }}
@@ -85,9 +88,7 @@ const Sessions = () => {
             <Button
               variant="contained"
               onClick={() => {
-                history.push(
-                  `/sessions/${upcomingSessions[0]._id}/perform`
-                );
+                history.push(`/sessions/${upcomingSessions[0]._id}/perform`);
               }}
             >
               Perform next scheduled workout
@@ -111,7 +112,7 @@ const Sessions = () => {
           spacing={4}
           // justifyContent="center"
         >
-          <Grid item xs={12} sm={6} >
+          <Grid item xs={12} sm={6}>
             <Typography variant="h5">Upcoming Workout Sessions</Typography>
             <SessionsList
               sessions={upcomingSessions}
@@ -119,7 +120,7 @@ const Sessions = () => {
               handleOnClick={handlePerformSession}
             />
           </Grid>
-          <Grid item xs={12} sm={6} >
+          <Grid item xs={12} sm={6}>
             <Typography variant="h5">Previous Workout Sessions</Typography>
             <SessionsList
               sessions={previousSessions}
@@ -129,7 +130,8 @@ const Sessions = () => {
           </Grid>
         </Grid>
       </Container>
-    </div>
+    {/* </div> */}
+    </>
   );
 };
 

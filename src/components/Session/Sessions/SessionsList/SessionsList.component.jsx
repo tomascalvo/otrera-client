@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 
 // hooks
 
@@ -8,26 +7,20 @@ import useStyles from "./SessionsList.styles";
 
 // api
 
-import { deleteSession } from '../../../../api/index';
+import { deleteSession, declineInvitation } from "../../../../api/index";
 
 // components
 
 import {
   Container,
   List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
   Grid,
   CircularProgress,
   Typography,
-  IconButton
+  Divider,
 } from "@mui/material";
 
-import {
-  Delete as DeleteIcon
-} from '@mui/icons-material';
+import SessionsListItem from "./SessionsListItem/SessionsListItem.component";
 
 const SessionsList = ({
   sessions = "loading",
@@ -38,12 +31,27 @@ const SessionsList = ({
     },
   },
 }) => {
-  
+
   // hooks
   const theme = useTheme();
   const classes = useStyles(theme);
 
   // event handlers
+
+  const handleDeclineInvite = async (e, sessionId) => {
+    e.preventDefault();
+    console.log('handleDeclineInvite invoked');
+    try {
+      const { data: confirmation } = await declineInvitation(sessionId);
+      setSessions((previous) => {
+        return previous.filter((el) => {
+          return el._id !== confirmation._id;
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleDeleteSession = async (e, sessionId) => {
     e.preventDefault();
@@ -52,44 +60,12 @@ const SessionsList = ({
       setSessions((previous) => {
         return previous.filter((el) => {
           return el._id !== deletion._id;
-        })
-      })
+        });
+      });
     } catch (error) {
       console.log(error);
     }
-  }
-
-  const SessionListItem = ({ session }) => (
-    <ListItem
-      // button
-      // onClick={() => handleOnClick(session.id)}
-      alignItems="flex-start"
-      // disableGutters
-      secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={(e) => handleDeleteSession(e, session._id)}>
-          <DeleteIcon />
-        </IconButton>
-      }
-    >
-      <ListItemAvatar>
-        <Avatar
-          alt="workout"
-          src={session?.plan?.image}
-          className={
-            session?.plan?.image.includes("d205bpvrqc9yn1.cloudfront.net")
-              ? classes.gifUrl
-              : ""
-          }
-          onClick={() => handleOnClick(session.id)}
-        />
-      </ListItemAvatar>
-      <ListItemText
-        primary={session?.plan?.title}
-        secondary={`Start Time: ${moment(session.startTime).format("MM/DD/YY LT")}`}
-        onClick={() => handleOnClick(session.id)}
-      />
-    </ListItem>
-  );
+  };
 
   // render
 
@@ -118,7 +94,17 @@ const SessionsList = ({
       ) : (
         <List aria-label="workout sessions">
           {sessions.map((session, i) => (
-            <SessionListItem session={session} key={i} />
+            <>
+            <SessionsListItem
+              key={i}
+              session={session}
+              handleDeclineInvite={handleDeclineInvite}
+              handleDeleteSession={handleDeleteSession}
+              handleOnClick={handleOnClick}
+              classes={classes}
+            />
+            <Divider variant="inset" component="li" />
+            </>
           ))}
         </List>
       )}
