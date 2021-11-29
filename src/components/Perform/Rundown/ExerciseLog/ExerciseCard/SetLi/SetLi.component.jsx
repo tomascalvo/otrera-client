@@ -73,7 +73,7 @@ const SetLi = ({
           <InputAdornment position="end">lbs</InputAdornment>
         ) : null,
       }}
-      // inputRef={input => input && input.focus()}
+      inputRef={(input) => input && input.focus()}
     />
   );
 
@@ -155,16 +155,16 @@ const SetLi = ({
 
   return (
     <ListItem disableGutters>
-      <Stack direction='row'>
-        <Box item xs={9} className={classes.gridItem}>
+      <Stack direction="row" sx={{ width: '100%', }}>
+        <Box item xs={9} className={classes.gridItem} sx={{ width: '100%'}}>
           <ResistanceInput />
           <RepsInput />
         </Box>
-        {!disabled && (
-          <Box item xs={3} className={classes.gridItem}>
-            <SetButtons />
-          </Box>
-        )}
+        <Box item xs={3} className={classes.gridItem} sx={{ 
+
+      }}>
+          {!disabled && <SetButtons />}
+        </Box>
       </Stack>
     </ListItem>
   );
