@@ -4,7 +4,6 @@ import { alpha } from '@mui/material/styles';
 const useStyles = makeStyles((theme) => ({
   heading: {
     margin: `${theme.spacing(2)} 0`,
-    border: '1px solid green',
   },
   instructions: {
     marginBottom: theme.spacing(0),
