@@ -1,7 +1,7 @@
 import React from "react";
 
 // hooks
-import { useTheme } from '@mui/styles';
+import { useTheme } from "@mui/styles";
 import useStyles from "./ExerciseCard.styles";
 
 // components
@@ -29,7 +29,6 @@ const ExerciseCard = ({
   completeSet,
   addSet,
 }) => {
-
   // hooks
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -47,7 +46,8 @@ const ExerciseCard = ({
         {movement?.title || movement.name}
       </Typography>
       <Typography variant="body1" className={classes.text}>
-        {movement?.description || `${movement.equipment} exercise targeting the ${movement.targets}`}
+        {movement?.description ||
+          `${movement.equipment} exercise targeting the ${movement.targets}`}
       </Typography>
       {movement?.instructions && (
         <List dense>
@@ -78,7 +78,7 @@ const ExerciseCard = ({
             goalReps={goalReps}
             goalSets={goalSets}
             disabled={
-              i === 0 ? false : sets[i - 1]?.reps === undefined ? true : false
+              i === 0 ? false : (sets[i - 1]?.reps === undefined || sets[i - 1]?.reps === "") ? true : false
             }
             actualResistance={set.resistance}
             actualReps={set.reps}
@@ -95,7 +95,6 @@ const ExerciseCard = ({
                 !(sets[i]?.reps >= goalReps)) ||
               false
             }
-
           />
         ))}
       </List>
