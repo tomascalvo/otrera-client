@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useTheme } from '@mui/styles';
 import useStyles from "./SessionForm.styles";
 import { useHistory } from "react-router-dom";
 
@@ -25,7 +26,8 @@ const SessionForm = () => {
 
   // hooks
 
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
   let { id: workoutId } = useParams();
   const history = useHistory();
 
@@ -85,6 +87,7 @@ const SessionForm = () => {
           color="primary"
           fullWidth
           className={classes.button}
+          sx={{ margin: `${theme.spacing(2)} 0 ${theme.spacing(3)}` }}
           onClick={handleSubmit}
         >
           Submit

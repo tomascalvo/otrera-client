@@ -1,10 +1,13 @@
 import moment from 'moment';
 
 // hooks
+
 import React, { useState, useEffect } from "react";
+import { useTheme } from '@mui/styles';
 import useStyles from "./SchedulingForm.styles";
 
 // components
+
 import { Typography, Grid, InputBase, List, TextField } from "@mui/material";
 import AdapterMoment from '@mui/lab/AdapterMoment'
 import {
@@ -16,6 +19,7 @@ import { Search as SearchIcon } from "@material-ui/icons";
 import ParticipantListItem from "./ParticipantListItem/ParticipantListItem.component";
 
 // api
+
 import { fetchUsers } from "../../../../api/index";
 
 const SchedulingForm = ({
@@ -23,18 +27,22 @@ const SchedulingForm = ({
   sessionData = { invitees: [] },
   setSessionData,
 }) => {
+
   // hooks
-  const classes = useStyles();
+
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   // state
+
   const [users, setUsers] = useState("loading");
   const [query, setQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   // lifecycle
 
-  // get a list of users on mount
   useEffect(() => {
+    // get a list of users on mount
     async function fetchData() {
       const { data: usersFromDb } = await fetchUsers();
       console.log('usersFromDb: ', usersFromDb);
@@ -44,8 +52,8 @@ const SchedulingForm = ({
     fetchData();
   }, []);
 
-  // filter users
   useEffect(() => {
+    // filter users
     if (users !== 'loading') {
       let usersToShow = users?.filter((user) => {
         const includesQuery = user.name
@@ -70,12 +78,12 @@ const SchedulingForm = ({
     <>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h6">Search Users</Typography>
+          <Typography variant="h6" sx={{ m: `${theme.spacing(2)} 0` }} className={classes.heading}>Search Users</Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
             <InputBase
+              startAdornment={
+                <SearchIcon />
+              }
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
@@ -128,7 +136,7 @@ const SchedulingForm = ({
           </List>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Start Date/Time</Typography>
+          <Typography variant="h6" sx={{ marginBottom : theme.spacing(2)}}>Start Date/Time</Typography>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             {/* <Grid container spacing={2}>
               <Grid item xs={8}> */}

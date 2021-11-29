@@ -15,11 +15,11 @@ const RepsInput = ({
       id={`${setIndex}reps`}
       label={`Reps`}
       className={classes.textField}
-      helperText={`Goal: ${goalReps}`}
-      onChange={handleRepsChange}
-      value={actualReps === undefined ? "" : actualReps}
       type="number"
       variant="outlined"
+      value={actualReps === undefined ? "" : actualReps}
+      onChange={handleRepsChange}
+      helperText={`Goal: ${goalReps}`}
       InputProps={{
         min: 0,
         maxLength: 3,

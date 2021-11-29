@@ -2,6 +2,10 @@ import { makeStyles } from "@mui/styles";
 import { alpha } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
+  heading: {
+    margin: `${theme.spacing(2)} 0`,
+    border: '1px solid green',
+  },
   instructions: {
     marginBottom: theme.spacing(0),
   },
@@ -15,18 +19,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
+      // marginLeft: theme.spacing(1),
       width: "auto",
     },
-  },
-  searchIcon: {
-    // padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
   inputRoot: {
     color: "inherit",
