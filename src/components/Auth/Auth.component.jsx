@@ -55,7 +55,9 @@ const Auth = () => {
 
   // state
 
-  const [isSignup, setIsSignup] = useState(true);
+  const hasAuthorized = localStorage.getItem('hasAuthorized');
+  
+  const [isSignup, setIsSignup] = useState(!hasAuthorized);
 
   const [showPassword, setShowPassword] = useState(false);
 
