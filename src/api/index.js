@@ -74,7 +74,8 @@ export const fetchDyads = () => API.get(`/dyads`);
 export const deleteDyad = (dyadId) => API.delete(`/dyads/delete/${dyadId}`);
 
 export const createConnectionRequest = (recipientId) =>
-  API.post(`/connectionRequests/${recipientId}`);
+API.post(`/connectionRequests/${recipientId}`);
+export const fetchMyInbox = () => API.get(`/connectionRequests/inbox`);
 export const deleteConnectionRequest = (recipientId) =>
   API.delete(`/connectionRequests/${recipientId}`);
 

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 // api
 
-import { suggestConnections, createDyad, fetchDyads } from "../../api/index";
+import { suggestConnections, createDyad, fetchDyads, fetchMyInbox } from "../../api/index";
 
 // components
 
@@ -21,6 +21,7 @@ import {
 import Header from "../Header/Header.component";
 import CurrentConnectionsList from "./CurrentConnectionsList/CurrentConnectionsList.component";
 import SuggestedConnectionsList from "./SuggestedConnectionsList/SuggestedConnectionsList.component";
+import Inbox from './Inbox/Inbox.component';
 
 const Connections = () => {
   // hooks
@@ -32,6 +33,7 @@ const Connections = () => {
 
   const [currentConnections, setCurrentConnections] = useState(undefined);
   const [suggestedConnections, setSuggestedConnections] = useState(undefined);
+  const [incoming, setIncoming] = useState(undefined);
 
   // lifecycle
 
@@ -54,8 +56,19 @@ const Connections = () => {
         console.log(error);
       }
     };
+    const getInbox = async () => {
+      try {
+        const { data } = await fetchMyInbox();
+        console.dir(data);
+        setIncoming(data);
+      } catch (error) {
+        setIncoming([]);
+        console.log(error);
+      }
+    }
     getConnections();
     getSuggestions();
+    getInbox();
   }, []);
 
   return (
@@ -79,6 +92,7 @@ const Connections = () => {
           item
           xs={12}
           sm={6}
+          lg={4}
           style={{
             display: "block",
             justifyContent: "space-around",
@@ -90,7 +104,7 @@ const Connections = () => {
             <CircularProgress style={{ margin: `${theme.spacing(2)} auto` }} />
           ) : currentConnections.length === 0 ? (
             <Stack direction="column">
-              <Typography variant="body1" align="center">
+              <Typography variant="body1" align="left">
                 No connections.
               </Typography>
               <Button
@@ -111,6 +125,7 @@ const Connections = () => {
           item
           xs={12}
           sm={6}
+          lg={4}
           style={
             {
               // border: "1px solid yellow"
@@ -122,7 +137,7 @@ const Connections = () => {
             <CircularProgress style={{ margin: `${theme.spacing(2)} auto` }} />
           ) : suggestedConnections.length === 0 ? (
             <Stack direction="column">
-              <Typography variant="body1" align="center">
+              <Typography variant="body1" align="left">
                 No one else is working out. Get a head start.
               </Typography>
               <Button
@@ -142,6 +157,19 @@ const Connections = () => {
               setSuggestions={setSuggestedConnections}
             />
           )}
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          lg={4}
+          style={{
+            display: "block",
+            justifyContent: "space-around",
+            // border: "1px solid orange",
+          }}
+        >
+          <Inbox incoming={incoming} />
         </Grid>
       </Grid>
     </>
