@@ -29,31 +29,31 @@ const SuggestedConnectionsList = ({ suggestions = [], setSuggestions }) => {
   // event handlers
 
   const handleSendRequest = async (e, recipientId) => {
-    console.log("handleSendRequest invoked");
+    // console.log("handleSendRequest invoked");
     e.preventDefault();
     try {
       const { data: confirmSent } = await createConnectionRequest(recipientId);
       if (confirmSent) {
-        console.log("connectionRequest successfully created.");
-        console.log("suggestions:");
-        console.dir(suggestions);
+        // console.log("connectionRequest successfully created.");
+        // console.log("suggestions:");
+        // console.dir(suggestions);
         setSuggestions((previous) => {
           const index = previous.findIndex(({suggestedUser}) => {
             return suggestedUser._id === confirmSent.recipient;
           });
-          console.log(`index: ${index}`);
+          // console.log(`index: ${index}`);
           const modifiedUserToSpliceIn = {
             ...previous[index],
             requestStatus: "pending",
           };
-          console.log(`modifiedUserToSpliceIn: `);
-          console.dir(modifiedUserToSpliceIn);
-          console.log("previous:");
-          console.dir(previous);
+          // console.log(`modifiedUserToSpliceIn: `);
+          // console.dir(modifiedUserToSpliceIn);
+          // console.log("previous:");
+          // console.dir(previous);
           const newSuggestions = [...previous];
           newSuggestions.splice(index, 1, modifiedUserToSpliceIn);
-          console.log("newSuggestions:");
-          console.dir(newSuggestions);
+          // console.log("newSuggestions:");
+          // console.dir(newSuggestions);
           return newSuggestions;
         });
       }
@@ -64,31 +64,31 @@ const SuggestedConnectionsList = ({ suggestions = [], setSuggestions }) => {
 
   const handleWithdrawRequest = async (e, recipientId) => {
     e.preventDefault();
-    console.log('handleWithdrawRequest invoked');
+    // console.log('handleWithdrawRequest invoked');
     try {
       const { data: confirmDeleted } = await deleteConnectionRequest(
         recipientId
       );
-      console.log('confirmDeleted');
-      console.dir(confirmDeleted);
+      // console.log('confirmDeleted');
+      // console.dir(confirmDeleted);
       if (confirmDeleted) {
         setSuggestions((previous) => {
           const index = previous.findIndex(({suggestedUser}) => {
             return suggestedUser._id === confirmDeleted.recipient;
           });
-          console.log(`index: ${index}`);
+          // console.log(`index: ${index}`);
           const updatedSuggestion = {
             ...previous[index],
             requestStatus: undefined,
           };
-          console.log('updatedSuggestion:');
-          console.dir(updatedSuggestion);
-          console.log('previous:');
-          console.dir(previous);
+          // console.log('updatedSuggestion:');
+          // console.dir(updatedSuggestion);
+          // console.log('previous:');
+          // console.dir(previous);
           // const updatedSuggestions = [...previous].splice(index, 1, updatedSuggestion);
           const updatedSuggestions = [...previous.slice(0, index), updatedSuggestion, ...previous.slice(index + 1)];
           console.log('updatedSuggestions:');
-          console.dir(updatedSuggestions);
+          // console.dir(updatedSuggestions);
           return updatedSuggestions;
         });
       }

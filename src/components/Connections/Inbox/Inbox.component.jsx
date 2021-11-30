@@ -1,6 +1,14 @@
 import React from "react";
 
+// hooks
+
 import { useTheme } from "@mui/styles";
+
+// api
+
+import { approveRequest, denyRequest } from "../../../api/index";
+
+// components
 
 import {
   Typography,
@@ -13,13 +21,73 @@ import {
   Avatar,
   ListItemText,
 } from "@mui/material";
+
 import {
   PersonAddAlt1 as ApproveIcon,
   PersonOff as DenyIcon,
 } from "@mui/icons-material";
 
-const Inbox = ({ incoming }) => {
+const Inbox = ({ incoming, setIncoming, setSuggestions, setConnections }) => {
+  // hooks
+
   const theme = useTheme();
+
+  // event handlers
+
+  const spliceOutRequest = (updatedRequest) => {
+    setIncoming((previous) => {
+      const index = previous.findIndex((request) => {
+        return request._id === updatedRequest._id;
+      });
+      const newIncoming = [...previous];
+      newIncoming.splice(index, 1);
+      return newIncoming;
+    });
+  };
+
+  const spliceOutSuggestion = (senderId) => {
+    setSuggestions((previous) => {
+      const index = previous.findIndex(({ suggestedUser }) => {
+        return suggestedUser._id === senderId;
+      });
+      const newSuggestions = [...previous];
+      newSuggestions.splice(index, 1);
+      return newSuggestions;
+    });
+  };
+
+  const handleApproval = async (e, requestId) => {
+    e.preventDefault();
+    try {
+      const {
+        data: { approvedRequest, newConnection },
+      } = await approveRequest(requestId);
+      if (approvedRequest) {
+        spliceOutRequest(approvedRequest);
+        spliceOutSuggestion(approvedRequest.sender);
+        setConnections((previous) => {
+          return [newConnection, ...previous];
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDenial = async (e, requestId) => {
+    e.preventDefault();
+    try {
+      const { data: deniedRequest } = await denyRequest(requestId);
+      if (deniedRequest) {
+        spliceOutRequest(deniedRequest);
+        spliceOutSuggestion(deniedRequest.sender);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // render
+
   return (
     <>
       <Typography variant="h5">Inbox</Typography>
@@ -47,12 +115,16 @@ const Inbox = ({ incoming }) => {
                 secondaryAction={
                   <>
                     <Tooltip title="approve connection request">
-                      <IconButton>
+                      <IconButton
+                        onClick={(e) => handleApproval(e, incomingRequest._id)}
+                      >
                         <ApproveIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="deny connection request">
-                      <IconButton>
+                      <IconButton
+                        onClick={(e) => handleDenial(e, incomingRequest._id)}
+                      >
                         <DenyIcon />
                       </IconButton>
                     </Tooltip>

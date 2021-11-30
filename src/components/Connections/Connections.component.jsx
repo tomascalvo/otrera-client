@@ -38,9 +38,12 @@ const Connections = () => {
   // lifecycle
 
   useEffect(() => {
+    // onmount, fetch current connections, suggested connections, and inbound connection requests from api
     const getConnections = async () => {
       try {
         const { data } = await fetchDyads();
+        // console.log('data:');
+        // console.dir(data);
         setCurrentConnections(data);
       } catch (error) {
         setCurrentConnections([]);
@@ -169,7 +172,7 @@ const Connections = () => {
             // border: "1px solid orange",
           }}
         >
-          <Inbox incoming={incoming} />
+          <Inbox incoming={incoming} setIncoming={setIncoming} setSuggestions={setSuggestedConnections} setConnections={setCurrentConnections} />
         </Grid>
       </Grid>
     </>
