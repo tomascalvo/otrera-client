@@ -18,7 +18,6 @@ import MovementPicker from "./MovementPicker/MovementPicker.component";
 import MovementCard from "./MovementCard/MovementCard.component";
 
 const Movements = () => {
-
   // hooks
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -38,13 +37,13 @@ const Movements = () => {
         <MovementPicker setMovements={setMovements} />
       </Container>
       <Container className={classes.cardGrid} maxWidth="lg">
-        <Typography variant="h5" color="text.secondary" gutterBottom>
+        {/* <Typography variant="h5" color="text.secondary" gutterBottom>
           Search Results:
-        </Typography>
+        </Typography> */}
         {movements === "loading..." ? (
           <Grid
             container
-            spacing={0}
+            spacing={1}
             direction="column"
             alignItems="center"
             justifyContent="center"
@@ -54,7 +53,7 @@ const Movements = () => {
             </Grid>
           </Grid>
         ) : movements.length > 0 ? (
-          <Grid container spacing={4}>
+          <Grid container spacing={2}>
             {movements.map((movement, i) => (
               <Grid
                 item

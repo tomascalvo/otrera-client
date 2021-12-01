@@ -20,12 +20,13 @@ import {
   Card,
   CircularProgress,
   CardMedia,
-  CardHeader,
   CardActions,
   IconButton,
   Collapse,
   CardContent,
   Typography,
+  Link,
+  Tooltip,
 } from "@mui/material";
 
 import {
@@ -43,14 +44,15 @@ import toTitleCase from "../../../../helperMethods/toTitleCase";
 
 const MovementCard = ({
   movement,
-  movement: { 
-    // bodyPart, 
-    equipment, 
-    image, 
-    _id: movementId, 
-    title, 
-    targets = [], 
-    likes = [] },
+  movement: {
+    // bodyPart,
+    equipment,
+    image,
+    _id: movementId,
+    title,
+    targets = [],
+    likes = [],
+  },
   setMovements,
   cardIndex,
 }) => {
@@ -77,18 +79,20 @@ const MovementCard = ({
         // make an api patch request to remove favorite, sending movement._id as parameter
         // receive an updated movement object as response
         ({ data: updatedMovement } = await removeFavoriteMovement(movementId));
-        console.log(`got movement with favorite removed:`)
+        console.log(`got movement with favorite removed:`);
         console.dir(updatedMovement);
       } else {
         // make an api patch request to add favorite, sending movement._id as parameter
         // receive an updated movement object as response
         ({ data: updatedMovement } = await addFavoriteMovement(movementId));
-        console.log(`got movement with favorite added:`)
+        console.log(`got movement with favorite added:`);
         console.dir(updatedMovement);
       }
       // splice the response movement into state.movement
       setMovements((previous) => {
-        return previous.slice(0, cardIndex).concat(updatedMovement, previous.slice(cardIndex + 1));
+        return previous
+          .slice(0, cardIndex)
+          .concat(updatedMovement, previous.slice(cardIndex + 1));
       });
       // change the heart icon variant from contained to outlined or vice versa
     } catch (error) {
@@ -117,7 +121,6 @@ const MovementCard = ({
 
   return (
     <Card className={classes.card}>
-      <CardHeader title={toTitleCase(title)} />
       {image ? (
         <CardMedia
           className={classes.cardMedia}
@@ -126,35 +129,50 @@ const MovementCard = ({
           image={image || movement?.gifUrl}
           alt={title}
           // title={title}
+          onClick={() => history.push(`movements/${movementId}`)}
         />
       ) : (
         <CircularProgress style={{ margin: "75px auto" }} />
       )}
-      <CardActions disableSpacing>
+      <CardContent sx={{ padding: `0 ${theme.spacing(2)}` }}>
+        <Link href={`/movements/${movementId}`} underline="hover">
+          {toTitleCase(title)}
+        </Link>
+      </CardContent>
+      <CardActions
+        disableSpacing
+        sx={{ padding: `- ${theme.spacing(1)}`, margin: 0 }}
+      >
         {userId && (
           <>
             {isFavorite !== "loading..." && (
-              <IconButton
-                aria-label="toggle favorites"
-                onClick={handleFavorite}
-              >
-                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
+              <Tooltip title={!isFavorite ? "Like" : "Unlike"}>
+                <IconButton
+                  aria-label="toggle favorites"
+                  onClick={handleFavorite}
+                >
+                  {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </IconButton>
+              </Tooltip>
             )}
-            <IconButton aria-label="share" onClick={handleAttempt}>
-              <DumbbellIcon />
-            </IconButton>
+            <Tooltip title="Perform Movement">
+              <IconButton aria-label="share" onClick={handleAttempt}>
+                <DumbbellIcon />
+              </IconButton>
+            </Tooltip>
           </>
         )}
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-          style={{ marginLeft: "auto" }}
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+        <Tooltip title={!expanded ? "Show Details" : "Hide Details"}>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+            style={{ marginLeft: "auto" }}
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </Tooltip>
       </CardActions>
       <Collapse
         in={expanded}
@@ -162,7 +180,7 @@ const MovementCard = ({
         unmountOnExit
         className={classes.collapse}
       >
-        <CardContent className={classes.cardContent} sx={{ paddingTop: 0 } }>
+        <CardContent className={classes.cardContent} sx={{ paddingTop: 0 }}>
           {/* <Typography variant="body2" color="text.secondary">
             Region: {toTitleCase(bodyPart)}
           </Typography> */}
@@ -170,11 +188,24 @@ const MovementCard = ({
             Muscle(s): {toTitleCase(targets[0])}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Equipment: {toTitleCase(equipment[0])}
+            Equipment: {equipment ? toTitleCase(equipment[0]) : "none"}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+          >
             Author:{" "}
-            {movementId?.length === 4 ? "ExerciseDB" : movement?.creator}
+            {movement.source ===
+            "https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb/" ? (
+              <Link
+                href="https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb/"
+                underline="hover"
+              >
+                ExerciseDb
+              </Link>
+            ) : (
+              movement?.creator
+            )}
           </Typography>
         </CardContent>
       </Collapse>
