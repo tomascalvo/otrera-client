@@ -1,6 +1,7 @@
 import React from "react";
 
 // hooks
+import { useHistory } from 'react-router-dom';
 import { useTheme } from "@mui/styles";
 import { useMediaQuery } from "@mui/material";
 import useStyles from "./Profile.styles";
@@ -20,13 +21,14 @@ import {
 import {
   Brightness3 as DarkModeIcon,
   Brightness7 as LightModeIcon,
-  PersonAdd,
+  Person as ProfileIcon,
   Settings,
   Logout,
 } from "@mui/icons-material";
 
 const Profile = ({ handleDarkModeToggle, user, handleLogout }) => {
   // hooks
+  const history = useHistory();
   const theme = useTheme();
   const classes = useStyles(theme);
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
@@ -98,16 +100,19 @@ const Profile = ({ handleDarkModeToggle, user, handleLogout }) => {
           <Avatar /> My account
         </MenuItem>
         <Divider /> */}
-        <MenuItem
-          aria-label="toggle dark mode" 
-          onClick={handleDarkModeToggle}
-        >
+        <MenuItem aria-label="view profile" onClick={() => history.push(`/users/${user._id}`)}>
           <ListItemIcon>
-          {theme.palette.mode !== "dark" ? (
-          <DarkModeIcon fontSize="small"/>
-        ) : (
-          <LightModeIcon fontSize="small"/>
-        )}
+            <ProfileIcon />
+          </ListItemIcon>
+          Profile
+        </MenuItem>
+        <MenuItem aria-label="toggle dark mode" onClick={handleDarkModeToggle}>
+          <ListItemIcon>
+            {theme.palette.mode !== "dark" ? (
+              <DarkModeIcon fontSize="small" />
+            ) : (
+              <LightModeIcon fontSize="small" />
+            )}
           </ListItemIcon>
           {theme.palette.mode !== "dark" ? "Dark" : "Light"} mode
         </MenuItem>
@@ -117,9 +122,7 @@ const Profile = ({ handleDarkModeToggle, user, handleLogout }) => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem
-          onClick={handleLogout}
-        >
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

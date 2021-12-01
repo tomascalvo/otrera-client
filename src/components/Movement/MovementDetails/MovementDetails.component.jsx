@@ -20,14 +20,13 @@ import {
 import MovementCard from "../Movements/MovementCard/MovementCard.component";
 
 const MovementDetails = () => {
-  // hooks
 
+  // hooks
   const { id: movementId } = useParams();
   const theme = useTheme();
   const classes = useStyles(theme);
 
   // state
-
   const [movement, setMovement] = useState("loading...");
 
   // lifecycle

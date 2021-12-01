@@ -56,14 +56,13 @@ const MovementCard = ({
   setMovements,
   cardIndex,
 }) => {
-  // hooks
 
+  // hooks
   const history = useHistory();
   const theme = useTheme();
   const classes = useStyles(theme);
 
   // state
-
   const userId = JSON.parse(localStorage.getItem("profile"))?.user._id;
   const isFavorite = likes.includes(userId);
   const [expanded, setExpanded] = React.useState(false);

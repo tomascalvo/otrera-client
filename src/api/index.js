@@ -48,6 +48,7 @@ export const createMovement = (newMovement) =>
   API.post(`/movements`, newMovement);
 export const fetchMovements = () => API.get(`/movements`);
 export const fetchDefaultMovements = () => API.get(`/movements/default`);
+export const fetchFavoriteMovements = (userId) => API.get(`/movements/favorites/${userId}`);
 export const fetchMovement = (id) => API.get(`/movements/${id}`);
 export const searchMovements = ({ query, targets, equipment }) =>
   API.get(`/movements/${query}/${targets}/${equipment}`);
@@ -94,6 +95,7 @@ export const createPlan = ({ plan, session }) =>
   API.post(`/plans`, { plan, session });
 export const duplicatePlan = (id) => API.post(`/plans/${id}/duplicate`);
 export const fetchPlans = () => API.get(`/plans`);
+export const fetchPlansByCreator = (creatorId) => API.get(`/plans/creator/${creatorId}`)
 export const fetchPlan = (id) => API.get(`/plans/${id}`);
 export const suggestPlans = (targetId = "me") =>
   API.get(`/plans/suggest/${targetId}`);
