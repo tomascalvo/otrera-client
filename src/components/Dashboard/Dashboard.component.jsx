@@ -166,8 +166,8 @@ const Dashboard = ({ user }) => {
           <Grid item xs={12} sm={4} md={3}>
             <Paper
               className={cx(
-                classes.paper
-                // classes.flexPaper
+                classes.paper,
+                classes.flexPaper
               )}
             >
               <Typography component="h3" variant="h5">
@@ -192,7 +192,10 @@ const Dashboard = ({ user }) => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={8} md={9}>
-            <Paper className={classes.paper}>
+            <Paper               className={cx(
+                classes.paper,
+                classes.flexPaper
+              )}>
               <Typography component="h3" variant="h5">
                 Suggested Workouts
               </Typography>
