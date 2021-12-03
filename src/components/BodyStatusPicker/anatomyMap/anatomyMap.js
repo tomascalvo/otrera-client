@@ -10,11 +10,11 @@ const anatomyMap = ({
   selectedTargets = [],
   theme = createTheme({
     palette: {
-      mode: 'dark',
-    }
+      mode: "dark",
+    },
   }),
 }) => {
-  console.log(`anatomyMap theme.palette.mode: ${theme.palette.mode}`)
+  console.log(`anatomyMap theme.palette.mode: ${theme.palette.mode}`);
   const scaleCoords = (coords) => {
     const scaledCoords = coords.map((coord, i) => {
       const scaledCoord = coord * (finalWidth / startingWidth);
@@ -99,38 +99,36 @@ const anatomyMap = ({
           return theme.palette.info.main || "#2196f3";
         case "unselected":
           return theme.palette.background.paper || "#404040";
-          // return theme.palette.divider || "rgba(255, 255, 255, 0.12)";
+        // return theme.palette.divider || "rgba(255, 255, 255, 0.12)";
         default:
           return theme.palette.background.def || "#f00";
-          // return "#ff0000";
+        // return "#ff0000";
       }
     };
     if (isMusclePicker) {
       const compareSelectionToArea = (selectionId, areaId) => {
-        if (selectionId.split('-')[0] !== areaId.split('-')[0]) {
+        if (selectionId.split("-")[0] !== areaId.split("-")[0]) {
           return false;
         } else {
-          if (!selectionId.split('-')[1]) {
+          if (!selectionId.split("-")[1]) {
             return true;
-          } else if (selectionId.split('-')[1] === areaId.split('-')[1]) {
+          } else if (selectionId.split("-")[1] === areaId.split("-")[1]) {
             return true;
           } else {
             return false;
           }
-        };
-      }
+        }
+      };
       const targetIsSelected = selectedTargets.some((selectionId) => {
         return compareSelectionToArea(selectionId, muscle.id);
-      })
+      });
       const classIsSelected = selectedTargets.includes(muscle.class);
-      if (
-        targetIsSelected || classIsSelected
-        ) {
-          // this is the color of the selected muscles for the exercise picker
+      if (targetIsSelected || classIsSelected) {
+        // this is the color of the selected muscles for the exercise picker
         return theme.palette.info.main || "#2196f3";
       } else {
         // this is the color of the unselected muscles for the exercise picker
-        return theme.palette.mode === 'light' ? '#eee' : '#222';
+        return theme.palette.mode === "light" ? "#eee" : "#222";
       }
     } else {
       const muscleId = muscle?.id;
@@ -246,9 +244,11 @@ const anatomyMap = ({
     areas: anteroposteriorSplit(
       medialSplit(
         Object.values(muscleData).map((muscle) => {
-          const classes = Array.isArray(muscle.classes)
-            ? muscle.classes.join("-")
-            : muscle.classes;
+          const classes = !muscle?.classes
+            ? ""
+            : Array.isArray(muscle?.classes)
+            ? muscle?.classes.join("-")
+            : muscle?.classes;
           return {
             ...muscle,
             name: muscle.displayName,

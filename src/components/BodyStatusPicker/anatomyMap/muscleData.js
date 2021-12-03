@@ -2,14 +2,41 @@ import polygons from "./musclePolygons";
 import { targets, bodyParts } from "../queryStrings";
 
 const muscleData = {
-  neck: {
-    id: bodyParts.neck,
-    displayName: "Neck",
+  skull: {
+    id: 'skull',
+    displayName: "Head",
     classes: bodyParts.neck,
-    coords: polygons.neck,
+    coords: {
+      anterior: polygons.skull.anterior,
+      posterior: polygons.skull.posterior,
+    },
     paired: false,
+    anterior: (polygons.skull.anterior),
+    posterior: (polygons.skull.posterior),
+  },
+  hand: {
+    id: 'hand',
+    displayName: "Hand",
+    classes: bodyParts.lowerArms,
+    coords: polygons.hand,
+    paired: true,
     anterior: true,
-    posterior: false,
+    posterior: true,
+    rotation: 1.25,
+    xOffset: -6,
+    yOffset: 0,
+  },
+  foot: {
+    id: 'foot',
+    displayName: "Foot",
+    classes: bodyParts.lowerLegs,
+    coords: polygons.foot,
+    paired: true,
+    anterior: (polygons.foot),
+    posterior: (polygons.foot),
+    rotation: -2,
+    xOffset: 2,
+    yOffset: 1,
   },
   trapezius: {
     id: targets.traps,
@@ -23,6 +50,18 @@ const muscleData = {
     rotation: -1.25,
     xOffset: 1,
     yOffset: 1,
+  },
+  neck: {
+    id: bodyParts.neck,
+    displayName: "Neck",
+    classes: bodyParts.neck,
+    coords: { 
+      anterior: polygons.neck.anterior,
+      posterior: polygons.neck.posterior,
+     },
+    paired: false,
+    anterior: (polygons.neck.anterior),
+    posterior: (polygons.neck.posterior),
   },
   chest: {
     id: targets.pectorals,

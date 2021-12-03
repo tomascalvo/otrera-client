@@ -225,14 +225,7 @@ const BodyStatusPicker = ({
 
   const handleRecoverAll = async (e) => {
     e.preventDefault();
-    console.log(`handleRecoverAll event handler invoked.`);
     try {
-      // const fullRecovery = [...targets, ...bodyParts].map((muscleName) => ({ [muscleName]: "recovered" }
-      // )).reduce((target, source) => {
-      //   return Object.assign(target, source);
-      // });
-      // console.log("fullRecovery:")
-      // console.dir(fullRecovery);
       const { data: recoveryConfirmation } = await postRecovery(userId);
       console.log("recoveryConfirmation:");
       console.dir(recoveryConfirmation);
