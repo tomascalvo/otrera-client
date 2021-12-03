@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   brandContainer: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
