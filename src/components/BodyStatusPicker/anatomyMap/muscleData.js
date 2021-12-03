@@ -23,7 +23,7 @@ const muscleData = {
     anterior: true,
     posterior: true,
     rotation: 1.25,
-    xOffset: -6,
+    xOffset: -10,
     yOffset: 0,
   },
   foot: {

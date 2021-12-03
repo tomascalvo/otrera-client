@@ -22,8 +22,10 @@ import {
 } from "@material-ui/icons";
 
 // assets
-import anatomyImageDark from "../../assets/anatomy-image-8-444.png";
-import anatomyImageLight from "../../assets/anatomy-image-8-bbb.png";
+// import anatomyImageDark from "../../assets/anatomy-image-8-444.png";
+// import anatomyImageLight from "../../assets/anatomy-image-8-bbb.png";
+import anatomyImageDark from "../../assets/anatomy-image-8-inverse.png";
+import anatomyImageLight from "../../assets/anatomy-image-8.png";
 import {
   // targets as targetStrings,
   // bodyParts as bodyPartStrings,
