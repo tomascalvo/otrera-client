@@ -22,8 +22,8 @@ import {
 } from "@material-ui/icons";
 
 // assets
-import anatomyImage from "../../assets/anatomy-image-7.png";
-import anatomyImageInverted from "../../assets/anatomy-image-7-inverse.png";
+import anatomyImageDark from "../../assets/anatomy-image-8-444.png";
+import anatomyImageLight from "../../assets/anatomy-image-8-bbb.png";
 import {
   // targets as targetStrings,
   // bodyParts as bodyPartStrings,
@@ -297,7 +297,7 @@ const BodyStatusPicker = ({
       {/* > */}
       <ImageMapper
         src={
-          theme.palette.mode === "dark" ? anatomyImageInverted : anatomyImage
+          theme.palette.mode === "dark" ? anatomyImageDark : anatomyImageLight
         }
         map={anatomyMap}
         imgWidth={333}

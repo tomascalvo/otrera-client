@@ -115,7 +115,7 @@ const Dashboard = ({ user }) => {
 
   return (
     <div className={!isXs ? classes.container : classes.mobileContainer}>
-        <Header title="Dashboard" subheading="" />
+      <Header title="Dashboard" subheading="" />
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={9}>
