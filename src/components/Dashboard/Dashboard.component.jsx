@@ -18,6 +18,7 @@ import {
   Tooltip,
 } from "@mui/material";
 
+import Header from '../Header/Header.component';
 import BodyStatusPicker from "../BodyStatusPicker/BodyStatusPicker.component.jsx";
 import ListModule from "./ListModule/ListModule.component";
 import GoalChart from "../Goal/GoalChart/GoalChart.component";
@@ -114,26 +115,8 @@ const Dashboard = ({ user }) => {
 
   return (
     <div className={!isXs ? classes.container : classes.mobileContainer}>
+        <Header title="Dashboard" subheading="" />
       <Container>
-        <Box
-        // classNames={classes.heading}
-        >
-          <Typography
-            component="h2"
-            variant={useMediaQuery(theme.breakpoints.up("sm")) ? "h2" : "h4"}
-            align="center"
-            color="textPrimary"
-            gutterBottom
-            styles={
-              {
-                // marginBottom: theme.spacing(3)
-                // marginBottom: '100px'
-              }
-            }
-          >
-            Dashboard
-          </Typography>
-        </Box>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={9}>
             <Paper className={cx(classes.paper, classes.flexPaper)}>
