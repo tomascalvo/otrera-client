@@ -11,8 +11,11 @@ const useStyles = makeStyles((theme) => ({
   },
   goalPicker: {
     marginTop: theme.spacing(1),
-    marginBotom: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    border: '1px solid red',
     flex: '0',
+    margin: '100px',
   },
   chartContainer: {
     // border: '1px solid red',

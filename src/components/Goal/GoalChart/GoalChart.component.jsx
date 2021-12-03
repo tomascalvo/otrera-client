@@ -26,20 +26,16 @@ const GoalChart = ({ goals = [], selectedGoal = "", setSelectedGoal }) => {
     return (
       <div
         className={classes.flexContainer}
-        // style={{ display: 'flex', flexDirection: 'column', height: '100%', maxHeight: '40vh'}}
       >
         <GoalPicker
           goals={goals}
           selectedGoal={selectedGoal}
           handleSelectChange={handleSelectChange}
           className={classes.goalPicker}
+          style={{ border: '1px solid red', margin: '20px', padding: '20px', }}
         />
         <div
           className={classes.chartContainer}
-          // style={{
-          //   flex: '1',
-          //   position: 'relative',
-          // }}
         >
           <Chart
             goals={goals}
