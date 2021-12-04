@@ -13,6 +13,7 @@ import { Container, Typography } from "@mui/material";
 // assets
 
 import qrCode from "../../assets/qr-code-2.png";
+import projectTitle from '../../constants/projectTitle';
 
 const Home = () => {
   // hooks
@@ -77,11 +78,11 @@ const Home = () => {
           Let's Train Together
         </Typography>
         <Typography variant="body" paragraph color="text.secondary">
-          The Otrera Fitness App has everything you need to start training, keep
+          The {projectTitle.short} Fitness App has everything you need to start training, keep
           training, and enjoy training more. Never laced up? We got you. Need a
           coach to keep pace or a friend to keep you company? We’re there. Want
           us to track your stats so you can track the scenery? No problem. Even
-          if you don’t feel like training today, Otrera has wellness tips to
+          if you don’t feel like training today, {projectTitle.short} has wellness tips to
           help you get ready for tomorrow. Start whenever and wherever you want
           — we’ll be right there with you.
         </Typography>

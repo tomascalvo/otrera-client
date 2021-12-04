@@ -19,6 +19,10 @@ import {
   Menu as MenuIcon,
 } from "@material-ui/icons";
 
+// constants
+
+import projectTitle from '../../constants/projectTitle';
+
 const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
   // hooks
 
@@ -85,7 +89,7 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
               to={"/home"}
               style={{ textDecoration: "none" }}
             >
-              Otrera
+              {projectTitle.short}
               <BarbellIcon className={classes.icon} />
             </Typography>
           </div>

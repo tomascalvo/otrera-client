@@ -28,12 +28,16 @@ import {
   createSession,
 } from "../../../../api/index";
 
+// constants
+
+import projectTitle from '../../../../constants/projectTitle';
+
 const PlanCard = ({
   workout: {
     _id: planId,
     title,
     image,
-    creator = { name: "Otrera" },
+    creator = { name: projectTitle.short },
     description,
   },
   setWorkoutData,

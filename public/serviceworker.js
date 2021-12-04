@@ -1,4 +1,4 @@
-const CACHE_NAME = "otrera-v1";
+const CACHE_NAME = "strength-v1";
 const urlsToCache = [ 'index.html', 'offline.html' ];
 
 const self = this;

@@ -4,6 +4,8 @@ import { Box, Typography, Link } from "@mui/material";
 
 import useStyles from "./Footer.styles";
 
+import projectTitle from '../../constants/projectTitle';
+
 const Footer = () => {
   const classes = useStyles();
   return (
@@ -11,7 +13,7 @@ const Footer = () => {
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright © "}
         <Link color="inherit" href="localhost:3000/">
-          Otrera
+          {projectTitle.short}
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
