@@ -5,5 +5,8 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     // width: '400px',
+  },
+  logout: {
+    whiteSpace: 'nowrap',
   }
-}))
+}));

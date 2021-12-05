@@ -12,25 +12,21 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  brandContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginLeft: theme.spacing(3),
-  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    display: 'inline-block',
-    whiteSpace: 'nowrap',
-    flexGrow: 1,
-  },
-  icon: {
-    marginLeft: theme.spacing(1),
-    display: 'inline-block',
+  brandContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    marginLeft: theme.spacing(0),
+    textDecoration: 'none',
+    color: 'red',
+  },
+  logo: {
+    marginLeft: theme.spacing(0),
   },
   userName: {
     display: 'flex',

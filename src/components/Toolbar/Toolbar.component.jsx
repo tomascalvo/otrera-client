@@ -2,7 +2,7 @@ import React from "react";
 
 // hooks
 
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useTheme } from "@mui/styles";
 import useStyles from "./Toolbar.styles";
 // import { useDispatch } from "react-redux";
@@ -12,12 +12,13 @@ import useStyles from "./Toolbar.styles";
 import Drawer from "./Drawer/Drawer.component";
 import Profile from "./Profile/Profile.component";
 
-import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, IconButton, Avatar, Link } from "@mui/material";
 
 import {
-  FitnessCenter as BarbellIcon,
   Menu as MenuIcon,
 } from "@material-ui/icons";
+
+import logo from '../../assets/strength-logo-3.svg';
 
 // constants
 
@@ -81,18 +82,15 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
           toggleDrawer={toggleDrawer}
         />
         <div className={classes.brandContainer}>
-          <div className={classes.title}>
+          <Link href='/home' style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', }}>
             <Typography
               variant="h6"
-              color="inherit"
-              component={Link}
-              to={"/home"}
-              style={{ textDecoration: "none" }}
+              color="text.primary"
             >
               {projectTitle.short}
-              <BarbellIcon className={classes.icon} />
             </Typography>
-          </div>
+            <Avatar alt="logo" src={logo} className={classes.logo} />
+          </Link>
         </div>
         {user ? (
           <Profile
