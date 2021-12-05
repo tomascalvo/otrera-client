@@ -3,7 +3,7 @@
   "name": "Strength Training",
   "icons": [
     {
-      "src": "/images/strength-logo-3.png",
+      "src": "./images/strength-logo-3.png",
       "type": "image/png",
       "sizes": "1024x1024",
       "purpose": "any maskable"
