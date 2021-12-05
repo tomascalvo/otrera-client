@@ -106,6 +106,7 @@ const ToolbarComponent = ({ user, handleLogout, handleDarkModeToggle }) => {
               e.preventDefault();
               history.push("/auth");
             }}
+            style={{ whiteSpace: 'nowrap' }}
           >
             Sign in
           </Button>
