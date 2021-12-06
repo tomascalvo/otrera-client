@@ -45,7 +45,7 @@ const Perform = () => {
       plan: {
         exercises: [],
       },
-      invitees: [],
+      invitees: [user._id],
     },
     attempts: [],
     completed: false,
