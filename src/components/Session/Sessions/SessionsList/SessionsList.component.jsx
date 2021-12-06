@@ -94,17 +94,17 @@ const SessionsList = ({
       ) : (
         <List aria-label="workout sessions">
           {sessions.map((session, i) => (
-            <>
-            <SessionsListItem
-              key={i}
-              session={session}
-              handleDeclineInvite={handleDeclineInvite}
-              handleDeleteSession={handleDeleteSession}
-              handleOnClick={handleOnClick}
-              classes={classes}
-            />
-            <Divider variant="inset" component="li" />
-            </>
+            <div key={i}>
+              <SessionsListItem
+                // key={i}
+                session={session}
+                handleDeclineInvite={handleDeclineInvite}
+                handleDeleteSession={handleDeleteSession}
+                handleOnClick={handleOnClick}
+                classes={classes}
+              />
+              <Divider variant="inset" component="li" />
+            </div>
           ))}
         </List>
       )}

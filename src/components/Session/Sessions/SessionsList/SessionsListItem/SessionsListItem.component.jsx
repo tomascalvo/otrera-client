@@ -24,16 +24,16 @@ const SessionsListItem = ({
   classes,
   handleOnClick,
 }) => {
-  const inviteeString = `Invitees: ${session.invitees
+  const inviteeString = session?.invitees?.length > 0 ? `Invitees: ${session.invitees
     .map((invitee) => {
       if (
         invitee._id === JSON.parse(localStorage.getItem("profile")).user._id
       ) {
         return "me";
       }
-      return invitee.name;
+      return invitee.firstName;
     })
-    .join(", ")}`;
+    .join(", ")}` : "none";
 
   return (
     <ListItem
@@ -88,6 +88,10 @@ const SessionsListItem = ({
           // primary={"Invitees"}
           secondary={inviteeString}
           onClick={() => handleOnClick(session.id)}
+        />
+        <ListItemText
+          primary={"Performance"}
+          secondary={session?.performance ? "exists" : "does not exist"}
         />
       </div>
     </ListItem>

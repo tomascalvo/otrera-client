@@ -78,7 +78,7 @@ const Home = () => {
           Let's Train Together
         </Typography>
         <Typography variant="body" paragraph color="text.secondary">
-          The {projectTitle.short} Fitness App has everything you need to start training, keep
+          The {projectTitle.long} App has everything you need to start training, keep
           training, and enjoy training more. Never laced up? We got you. Need a
           coach to keep pace or a friend to keep you company? We’re there. Want
           us to track your stats so you can track the scenery? No problem. Even
