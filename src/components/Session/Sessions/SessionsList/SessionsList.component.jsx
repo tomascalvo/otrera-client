@@ -5,10 +5,6 @@ import React from "react";
 import { useTheme } from "@mui/styles";
 import useStyles from "./SessionsList.styles";
 
-// api
-
-import { deleteSession, declineInvitation } from "../../../../api/index";
-
 // components
 
 import {
@@ -24,48 +20,17 @@ import SessionsListItem from "./SessionsListItem/SessionsListItem.component";
 
 const SessionsList = ({
   sessions = "loading",
-  setSessions,
   handleOnClick = {
     function() {
       console.log("SessionsList ListItem clicked");
     },
   },
+  handleDeleteSession, handleDeclineInvite,
 }) => {
 
   // hooks
   const theme = useTheme();
   const classes = useStyles(theme);
-
-  // event handlers
-
-  const handleDeclineInvite = async (e, sessionId) => {
-    e.preventDefault();
-    console.log('handleDeclineInvite invoked');
-    try {
-      const { data: confirmation } = await declineInvitation(sessionId);
-      setSessions((previous) => {
-        return previous.filter((el) => {
-          return el._id !== confirmation._id;
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleDeleteSession = async (e, sessionId) => {
-    e.preventDefault();
-    try {
-      const { data: deletion } = await deleteSession(sessionId);
-      setSessions((previous) => {
-        return previous.filter((el) => {
-          return el._id !== deletion._id;
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // render
 

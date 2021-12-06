@@ -86,6 +86,7 @@ const PlanCard = ({
       } = await createSession({
         plan: planId,
         creator: user?._id,
+        invitees: [user?._id],
       });
       // navigate to performance page with useHistory hook
       history.push(`/sessions/${sessionId}/perform`);

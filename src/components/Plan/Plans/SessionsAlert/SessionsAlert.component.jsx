@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import cx from 'classnames';
 
 // hooks
 
@@ -68,7 +69,7 @@ const SessionsAlert = ({ sessions, openAlert, setOpenAlert }) => {
               {moment(session.startTime).format("LT")}
               {"\n"}
               {session.invitees.length > 0
-                ? `${session.invitees.length + 1} Participant(s)`
+                ? `${session.invitees.length} Participant(s)`
                 : "Solo"}
             </Button>
           ))}
@@ -76,7 +77,7 @@ const SessionsAlert = ({ sessions, openAlert, setOpenAlert }) => {
           color="primary"
           variant="contained"
           size="medium"
-          className={classes.button}
+          className={cx(classes.button, classes.newSession)}
           onClick={async () => {
             try {
               const {

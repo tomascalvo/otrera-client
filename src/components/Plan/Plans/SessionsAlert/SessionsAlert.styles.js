@@ -8,5 +8,10 @@ export default makeStyles((theme) => ({
     button: {
         whiteSpace: 'pre-line',
         minHeight: '5rem',
+    },
+    newSession: {
+        whiteSpace: 'noWrap',
+        width: '300px',
+        // padding: theme.spacing(1),
     }
 }));

@@ -15,6 +15,7 @@ import SessionsList from "./SessionsList/SessionsList.component";
 import {
   fetchPreviousSessions,
   fetchUpcomingSessions,
+  deleteSession, declineInvitation
 } from "../../../api/index";
 
 const Sessions = () => {
@@ -70,6 +71,46 @@ const Sessions = () => {
     history.push(`/sessions/${sessionId}`);
   };
 
+  const handleDeclineInvite = async (e, sessionId) => {
+    e.preventDefault();
+    console.log('handleDeclineInvite invoked');
+    try {
+      const { data: confirmation } = await declineInvitation(sessionId);
+      setPreviousSessions((previous) => {
+        return previous.filter((el) => {
+          return el._id !== confirmation._id;
+        });
+      });
+      setUpcomingSessions((previous) => {
+        return previous.filter((el) => {
+          return el._id !== confirmation._id;
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteSession = async (e, sessionId) => {
+    e.preventDefault();
+    try {
+      const { data: deletion } = await deleteSession(sessionId);
+      setPreviousSessions((previous) => {
+        return previous.filter((el) => {
+          return el._id !== deletion._id;
+        });
+      });
+      setUpcomingSessions((previous) => {
+        return previous.filter((el) => {
+          return el._id !== deletion._id;
+        });
+      });
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
     {/* <div className={classes.container}> */}
@@ -116,7 +157,8 @@ const Sessions = () => {
             <Typography variant="h5">Upcoming Workout Sessions</Typography>
             <SessionsList
               sessions={upcomingSessions}
-              setSessions={setUpcomingSessions}
+              handleDeleteSession={handleDeleteSession}
+              handleDeclineInvite={handleDeclineInvite}
               handleOnClick={handlePerformSession}
             />
           </Grid>
@@ -124,7 +166,8 @@ const Sessions = () => {
             <Typography variant="h5">Previous Workout Sessions</Typography>
             <SessionsList
               sessions={previousSessions}
-              setSessions={setPreviousSessions}
+              handleDeleteSession={handleDeleteSession}
+              handleDeclineInvite={handleDeclineInvite}
               handleOnClick={handleViewSessionDetails}
             />
           </Grid>
