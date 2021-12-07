@@ -23,15 +23,14 @@ import { fetchSession, createPerformance } from "../../api/index";
 
 // methods
 
-// import findMovement from "./findMovement";
 import getResistanceByEquipment from "../../helperMethods/getDefaultResistance";
 
 const Perform = () => {
 
   // hooks
-  const classes = useStyles();
   let { id: sessionId } = useParams();
   const theme = useTheme();
+  const classes = useStyles(theme);
   const mediumUpWindow = useMediaQuery(theme.breakpoints.up("md"));
   const history = useHistory();
 
@@ -59,9 +58,7 @@ const Perform = () => {
 
   // chat
 
-  // const ENDPOINT = "localhost:7000";
-  // const [socket, setSocket] = useState(io(ENDPOINT));
-  // const socket = io(ENDPOINT);
+  const [hasChat, setHasChat] = useState(false);
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [composition, setComposition] = useState("");
@@ -85,8 +82,8 @@ const Perform = () => {
     const fetchSessionData = async () => {
       try {
         const { data: sessionData } = await fetchSession(sessionId);
-        // console.log("sessionData: ", sessionData);
         setSession(sessionData);
+        setHasChat(sessionData?.invitees?.length > 1)
 
         // emit socket join
 
@@ -110,32 +107,6 @@ const Perform = () => {
             }
           }
         );
-
-        // fetch exercise data for each exercise in plan
-
-        // const exerciseData = await Promise.all(
-        //   sessionData.plan.exercises.map(async (exercise) => {
-        //     const movement = await findMovement(exercise);
-        //     return {
-        //       ...exercise,
-        //       movement,
-        //     };
-        //   })
-        // );
-
-        // console.log("exerciseData: ", exerciseData);
-
-        // replace array of exercise ids with populated movement data
-
-        // const conformedSession = {
-        //   ...sessionData,
-        //   plan: {
-        //     ...sessionData.plan,
-        //     exercises: exerciseData,
-        //   },
-        // };
-
-        // setSession(conformedSession);
 
         // load attempts with default sets/reps/resistance into performance
 
@@ -307,7 +278,7 @@ const Perform = () => {
   // render
 
   return (
-    <main className={classes.layout}>
+    <main className={hasChat ? classes.chatLayout : classes.layout}>
       <Paper className={classes.paper}>
         <Typography component="h1" variant="h4" align="center" gutterBottom>
           {performance.session?.plan?.title}
@@ -322,8 +293,8 @@ const Perform = () => {
           <Grid
             item
             sm={12}
-            md={performance?.session?.invitees?.length > 1 ? 6 : 12}
-            lg={performance?.session?.invitees?.length > 1 ? 4 : 12}
+            md={hasChat ? 6 : 12}
+            lg={hasChat ? 4 : 12}
           >
             <Rundown
               performance={performance}
@@ -334,7 +305,7 @@ const Perform = () => {
               handleBack={handleBack}
             />
           </Grid>
-          {performance?.session?.invitees?.length > 1 && (
+          {hasChat && (
             <Hidden smDown>
               <Grid item sm={12} md={6} lg={8}>
                 <Chat
@@ -365,7 +336,7 @@ const Perform = () => {
             </Hidden>
           )}
         </Grid>
-        {performance?.session?.invitees?.length > 1 && !chatDialogOpen && (
+        {hasChat && !chatDialogOpen && (
           <Hidden mdUp>
             <ChatFAB onClick={handleOpenChat} />
           </Hidden>
