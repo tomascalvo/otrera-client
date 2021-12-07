@@ -5,7 +5,7 @@ const authReducer = async (state = { authData: null }, action) => {
   switch(action.type) {
     case AUTH:
       console.log(`setting localStorage profile to:`);
-      console.dir(action?.data);
+      // console.dir(action?.data);
       localStorage.setItem('profile', JSON.stringify({ ...action?.data }));
       localStorage.setItem('hasAuthorized', 'true');
       return { ...state, authData: action?.data };

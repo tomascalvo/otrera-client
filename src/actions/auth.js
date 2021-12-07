@@ -33,9 +33,9 @@ export const googleSignin = ({ profile, token: googleToken }, history) => async 
   try {
     const { data: { user, token }} = await api.googleSignin({ profile, googleToken });
     console.log('user:');
-    console.dir(user);
+    // console.dir(user);
     console.log('token:');
-    console.dir(token);
+    // console.dir(token);
     if (!user || !token) {
       console.log(`api.googleSignin returned undefined. Check that the server is running.`);
       return;

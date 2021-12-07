@@ -16,6 +16,8 @@ import {
 
 import SetLi from "./SetLi/SetLi.component";
 
+import toTitleCase from '../../../../../helperMethods/toTitleCase';
+
 const ExerciseCard = ({
   movement,
   goalResistance = undefined,
@@ -43,11 +45,11 @@ const ExerciseCard = ({
         />
       </div>
       <Typography variant="h4" className={classes.text} gutterBottom>
-        {movement?.title || movement.name}
+        {toTitleCase(movement?.title || movement.name)}
       </Typography>
       <Typography variant="body1" className={classes.text}>
         {movement?.description ||
-          `${movement.equipment} exercise targeting the ${movement.targets}`}
+          `A ${movement.equipment} exercise targeting the ${movement.targets}.`}
       </Typography>
       {movement?.instructions && (
         <List dense>
@@ -65,38 +67,41 @@ const ExerciseCard = ({
         Sets
       </Typography>
       <List disablePadding>
-        {sets.map((set, i) => (
-          <SetLi
-            key={i}
-            setIndex={i}
-            goalResistance={
-              sets[i - 1]?.resistance > goalResistance ||
-              (sets[i - 1]?.resistance && !goalResistance)
-                ? sets[i - 1]?.resistance
-                : goalResistance
-            }
-            goalReps={goalReps}
-            goalSets={goalSets}
-            disabled={
-              i === 0 ? false : (sets[i - 1]?.reps === undefined || sets[i - 1]?.reps === "") ? true : false
-            }
-            actualResistance={set.resistance}
-            actualReps={set.reps}
-            actualSets={sets.length}
-            handleResistanceChange={handleResistanceChange}
-            handleRepsChange={handleRepsChange}
-            clearSet={clearSet}
-            removeSet={removeSet}
-            completeSet={completeSet}
-            addSet={addSet}
-            isLast={i === sets.length - 1}
-            isLastActive={
-              ((sets[i + 1]?.reps === undefined || !sets[i + 1]) &&
-                !(sets[i]?.reps >= goalReps)) ||
-              false
-            }
-          />
-        ))}
+        {sets.map((set, i) => {
+          return (
+            <SetLi
+              key={i}
+              setIndex={i}
+              goalResistance={
+                sets[i - 1]?.resistance > goalResistance ||
+                  (sets[i - 1]?.resistance && !goalResistance)
+                  ? sets[i - 1]?.resistance
+                  : goalResistance
+              }
+              goalReps={goalReps}
+              goalSets={goalSets}
+              disabled={
+                i === 0 ? false : (sets[i - 1]?.reps === undefined || sets[i - 1]?.reps === "") ? true : false
+              }
+              // make actualResistance >= actualResistance of previous set
+              actualResistance={set.resistance}
+              actualReps={set.reps}
+              actualSets={sets.length}
+              handleResistanceChange={handleResistanceChange}
+              handleRepsChange={handleRepsChange}
+              clearSet={clearSet}
+              removeSet={removeSet}
+              completeSet={completeSet}
+              addSet={addSet}
+              isLast={i === sets.length - 1}
+              isLastActive={
+                ((sets[i + 1]?.reps === undefined || !sets[i + 1]) &&
+                  !(sets[i]?.reps >= goalReps)) ||
+                false
+              }
+            />)
+        }
+        )}
       </List>
     </>
   );

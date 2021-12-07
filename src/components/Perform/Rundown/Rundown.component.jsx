@@ -45,7 +45,16 @@ const Rundown = ({
     sets.splice(setIndex, 1, updatedSet);
     const updatedAttempt = {
       ...currentAttempt,
-      sets,
+      sets: sets.map((set, i) => {
+        if (i > setIndex) {
+          return {
+            ...set,
+            resistance: updatedSet.resistance,
+          }
+        } else {
+          return set;
+        }
+      }),
     };
     attempts.splice([activeStep - 1], 1, updatedAttempt);
     setPerformance((previous) => ({
